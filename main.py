@@ -3,7 +3,7 @@ import sys
 import pygame
 from Maze import Maze
 from Player import Player
-import mazes
+import config
 
 class MazeSearch:
 
@@ -13,21 +13,31 @@ class MazeSearch:
         
         pygame.display.set_caption("Menu")
 
-        self.smallMaze = Maze(mazes.small_maze)
-        self.player = Player(50, 50)
+        self.smallMaze = Maze(config.small_maze)
+        self.player = Player(1,1)
 
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
+                if event.key == pygame.K_UP:
+                    self.player.move_up()
+                elif event.key == pygame.K_DOWN:
+                    self.player.move_down()
+                elif event.key == pygame.K_RIGHT:
+                    self.player.move_right()
+                elif event.key == pygame.K_LEFT:
+                    self.player.move_left()
+                elif event.key == pygame.K_q:
                     sys.exit()
-
     def run_game(self):
+        time = pygame.time.Clock()
+
         while True:
             self.check_events()
             self.update_screen()
+            # self.player.move_down(ticks)
 
     def update_screen(self):
         pygame.display.flip()
