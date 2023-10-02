@@ -1,6 +1,7 @@
 import sys
 
 import pygame
+from Maze import Maze
 import mazes
 
 class MazeSearch:
@@ -11,16 +12,10 @@ class MazeSearch:
 
         self.sprite = pygame.image.load("resources/Down.png")
         self.sprite = pygame.transform.scale(self.sprite, (21,36))
-
-        squareScale = (48,48)
-        self.leaves = pygame.image.load("resources/Leaves.png")
-        self.leaves = pygame.transform.scale(self.leaves, squareScale)
-
-        self.path = pygame.image.load("resources/Path.png")
-        self.path = pygame.transform.scale(self.path, squareScale)
         
-        self.square_size = 50
         pygame.display.set_caption("Menu")
+
+        self.smallMaze = Maze(mazes.small_maze)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -37,33 +32,7 @@ class MazeSearch:
 
     def update_screen(self):
         pygame.display.flip()
-        self.display_maze(mazes.small_maze)
-
-    def display_maze(self, map):
-        y = 0
-        for i in map:
-            x = 0
-            char_array = [char for char in i]
-            for c in char_array:
-                match c:
-                    case 'A':
-                        self.screen.blit(self.path, dest = (x,y))
-                        self.screen.blit(self.sprite, dest = (x+12,y+8))
-                    case 'B':
-                        pygame.draw.rect(self.screen, (255,165,0), pygame.Rect(x, y, self.square_size, self.square_size))
-                    case 'X':
-                        self.screen.blit(self.leaves, dest = (x,y))
-                    case '|':
-                        self.screen.blit(self.leaves, dest = (x,y))
-                    case '-':
-                        self.screen.blit(self.leaves, dest = (x,y))
-                    case '+':
-                        self.screen.blit(self.leaves, dest = (x,y))
-                    case _:
-                        self.screen.blit(self.path, dest = (x,y))
-                x += self.square_size
-            y += self.square_size
-                
+        self.smallMaze.display_maze(self.screen)
 
 if __name__ == '__main__':
     maze_search = MazeSearch()
