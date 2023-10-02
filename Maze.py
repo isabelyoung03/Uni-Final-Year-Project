@@ -14,9 +14,6 @@ class Maze:
         self.path = pygame.image.load("resources/Path.png")
         self.path = pygame.transform.scale(self.path, squareScale)
 
-        self.sprite = pygame.image.load("resources/Down.png")
-        self.sprite = pygame.transform.scale(self.sprite, (21,36))
-
     def display_maze(self, screen):
         """ Displays the maze on the screen based on the map for the maze
         """
@@ -28,7 +25,6 @@ class Maze:
                 match c:
                     case 'A':
                         screen.blit(self.path, dest = (x,y))
-                        screen.blit(self.sprite, dest = (x+12,y+8))
                     case 'B':
                         pygame.draw.rect(screen, (255,165,0), pygame.Rect(x, y, self.square_size, self.square_size))
                     case 'X':
