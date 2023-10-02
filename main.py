@@ -8,8 +8,17 @@ class MazeSearch:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((800, 400))
-        self.image = pygame.image.load("resources/Down.png")
-        self.image = pygame.transform.scale(self.image, (21,36))
+
+        self.sprite = pygame.image.load("resources/Down.png")
+        self.sprite = pygame.transform.scale(self.sprite, (21,36))
+
+        squareScale = (48,48)
+        self.leaves = pygame.image.load("resources/Leaves.png")
+        self.leaves = pygame.transform.scale(self.leaves, squareScale)
+
+        self.path = pygame.image.load("resources/Path.png")
+        self.path = pygame.transform.scale(self.path, squareScale)
+        
         self.square_size = 50
         pygame.display.set_caption("Menu")
 
@@ -38,20 +47,20 @@ class MazeSearch:
             for c in char_array:
                 match c:
                     case 'A':
-                        pygame.draw.rect(self.screen, (160,82,45), pygame.Rect(x, y, self.square_size, self.square_size))
-                        self.screen.blit(self.image, dest = (x+8,y+8))
+                        self.screen.blit(self.path, dest = (x,y))
+                        self.screen.blit(self.sprite, dest = (x+12,y+8))
                     case 'B':
                         pygame.draw.rect(self.screen, (255,165,0), pygame.Rect(x, y, self.square_size, self.square_size))
                     case 'X':
-                        pygame.draw.rect(self.screen, (48,128,20), pygame.Rect(x, y, self.square_size, self.square_size))
+                        self.screen.blit(self.leaves, dest = (x,y))
                     case '|':
-                        pygame.draw.rect(self.screen, (91,91,91), pygame.Rect(x, y, self.square_size, self.square_size))
+                        self.screen.blit(self.leaves, dest = (x,y))
                     case '-':
-                        pygame.draw.rect(self.screen, (91,91,91), pygame.Rect(x, y, self.square_size, self.square_size))
+                        self.screen.blit(self.leaves, dest = (x,y))
                     case '+':
-                        pygame.draw.rect(self.screen, (183,183,183), pygame.Rect(x, y, self.square_size, self.square_size))
+                        self.screen.blit(self.leaves, dest = (x,y))
                     case _:
-                        pygame.draw.rect(self.screen, (160,82,45), pygame.Rect(x, y, self.square_size, self.square_size))
+                        self.screen.blit(self.path, dest = (x,y))
                 x += self.square_size
             y += self.square_size
                 
