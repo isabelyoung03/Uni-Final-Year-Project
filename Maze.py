@@ -14,6 +14,9 @@ class Maze:
         self.path = pygame.image.load("resources/Path.png")
         self.path = pygame.transform.scale(self.path, squareScale)
 
+        self.cupcake = pygame.image.load("resources/Cupcake.png")
+        self.cupcake = pygame.transform.scale(self.cupcake, (32,32))
+
     def display_maze(self, screen):
         """ Displays the maze on the screen based on the map for the maze
         """
@@ -24,7 +27,8 @@ class Maze:
             for c in char_array:
                 match c:
                     case 'G':
-                        pygame.draw.rect(screen, (255,165,0), pygame.Rect(x, y, self.square_size, self.square_size))
+                        screen.blit(self.path, dest = (x,y))
+                        screen.blit(self.cupcake, dest = (x+8,y+8))
                     case 'X':
                         screen.blit(self.leaves, dest = (x,y))
                     case '|':
