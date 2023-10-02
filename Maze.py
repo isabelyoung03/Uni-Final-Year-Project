@@ -23,9 +23,7 @@ class Maze:
             char_array = [char for char in i]
             for c in char_array:
                 match c:
-                    case 'A':
-                        screen.blit(self.path, dest = (x,y))
-                    case 'B':
+                    case 'G':
                         pygame.draw.rect(screen, (255,165,0), pygame.Rect(x, y, self.square_size, self.square_size))
                     case 'X':
                         screen.blit(self.leaves, dest = (x,y))

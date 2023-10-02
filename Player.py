@@ -12,11 +12,10 @@ class Player:
 
     """
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, maze_map):
         self.x = x #x coord for player in maze map
         self.y = y #y coord for player in maze map
-
-        self.speed = 1
+        self.map = maze_map #map of the maze
 
         self.sprite_width = 7
         self.sprite_height = 12
@@ -33,38 +32,51 @@ class Player:
 
         self.current_sprite = self.down_sprite
 
-    def get_screen_coords(self):
+    """
+    Returns the location of the player agent
+    """
+    def get_location(self):
         return (self.x,self.y)
     
-    def get_map_coords(self):
-        return 
     """
-    Moves player to the square above
+    Moves player to the square to the left
     """
-    def move_up(self):
-        self.y = self.y - 1
-        self.current_sprite = self.up_sprite
-
-    """
-    Moves player to the square below
-    """
-    def move_down(self):
-        self.y += 1
-        self.current_sprite = self.down_sprite
+    def move_left(self):
+        nextNode = self.map[self.y][self.x-1]
+        if nextNode == ' ' or nextNode == 'G':
+            self.x = self.x - 1
+            self.current_sprite = self.left_sprite
+        print(self.get_location())
 
     """
     Moves player to the square to the right
     """
     def move_right(self):
-        self.x += 1
-        self.current_sprite = self.right_sprite
+        nextNode = self.map[self.y][self.x+1]
+        if nextNode == ' ' or nextNode == 'G':
+            self.x = self.x + 1
+            self.current_sprite = self.right_sprite
+        print(self.get_location())
 
     """
-    Moves player to the square to the left
+    Moves player to the square below
     """
-    def move_left(self):
-        self.x = self.x - 1
-        self.current_sprite = self.left_sprite
+    def move_down(self):
+        nextNode = self.map[self.y+1][self.x]
+        if nextNode == ' ' or nextNode == 'G':
+            self.y = self.y + 1
+            self.current_sprite = self.down_sprite
+        print(self.get_location())
+
+    """
+    Moves player to the square above
+    """
+    def move_up(self):
+        nextNode = self.map[self.y-1][self.x]
+        if nextNode == ' ' or nextNode == 'G':
+            self.y = self.y - 1
+            self.current_sprite = self.up_sprite
+        print(self.get_location())
     
     """
     Draws the player on the screen

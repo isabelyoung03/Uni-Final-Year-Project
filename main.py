@@ -13,8 +13,8 @@ class MazeSearch:
         
         pygame.display.set_caption("Menu")
 
+        self.player = Player(1,1, config.small_maze)
         self.smallMaze = Maze(config.small_maze)
-        self.player = Player(1,1)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -32,12 +32,10 @@ class MazeSearch:
                 elif event.key == pygame.K_q:
                     sys.exit()
     def run_game(self):
-        time = pygame.time.Clock()
 
         while True:
             self.check_events()
             self.update_screen()
-            # self.player.move_down(ticks)
 
     def update_screen(self):
         pygame.display.flip()
