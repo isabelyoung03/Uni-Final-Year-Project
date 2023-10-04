@@ -1,6 +1,6 @@
 import pygame
-import config
 import sys
+import config
 
 """
 Displays the maze selection menu and returns the selected maze
@@ -12,8 +12,12 @@ def maze_selection_menu():
     menu_screen.fill(config.BLACK)
 
     display_text('Single-Agent and Multi-Agent Search in Maze Games', 20, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 50, menu_screen)
+    display_text('By Isabel Young', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 125, menu_screen)
     
-    display_text('By Isabel Young', 14, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 125, menu_screen)
+    display_text('Select maze size', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 200, menu_screen)
+    display_text('Small', 20, config.GREEN, 200, 230, menu_screen)
+    display_text('Medium', 20, config.GREEN, 300, 230, menu_screen)
+    display_text('Large', 20, config.GREEN, 400, 230, menu_screen)
 
     transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
     character = pygame.transform.scale(pygame.image.load("gui/resources/Down.png"), transformation)
