@@ -1,7 +1,8 @@
 import pygame
+from agents.Agent import Agent
 import config 
 
-class Player:
+class Player(Agent):
     """
     The player class for the program.
     Has starting coordinates and can be moved a square in any direction.
@@ -13,9 +14,7 @@ class Player:
     """
 
     def __init__(self, x, y, maze_map):
-        self.x = x #x coord for player in maze map
-        self.y = y #y coord for player in maze map
-        self.map = maze_map #map of the maze
+        Agent.__init__(self, x, y, maze_map)
 
         self.sprite_width = 7
         self.sprite_height = 12
@@ -31,12 +30,6 @@ class Player:
         self.left_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Left.png"), transformation)
 
         self.current_sprite = self.down_sprite
-
-    """
-    Returns the location of the player agent
-    """
-    def get_location(self):
-        return (self.x,self.y)
     
     """
     Moves player to the square to the left
@@ -46,7 +39,7 @@ class Player:
         nextNode = self.map[self.y][self.x-1]
         if nextNode == ' ' or nextNode == 'G':
             self.x = self.x - 1
-        print(self.get_location())
+        print("Player at " + str(self.get_location()))
 
     """
     Moves player to the square to the right
@@ -56,7 +49,7 @@ class Player:
         nextNode = self.map[self.y][self.x+1]
         if nextNode == ' ' or nextNode == 'G':
             self.x = self.x + 1
-        print(self.get_location())
+        print("Player at " + str(self.get_location()))
 
     """
     Moves player to the square below
@@ -66,7 +59,7 @@ class Player:
         nextNode = self.map[self.y+1][self.x]
         if nextNode == ' ' or nextNode == 'G':
             self.y = self.y + 1
-        print(self.get_location())
+        print("Player at " + str(self.get_location()))
 
     """
     Moves player to the square above
@@ -76,7 +69,7 @@ class Player:
         nextNode = self.map[self.y-1][self.x]
         if nextNode == ' ' or nextNode == 'G':
             self.y = self.y - 1
-        print(self.get_location())
+        print("Player at " + str(self.get_location()))
     
     """
     Draws the player on the screen
