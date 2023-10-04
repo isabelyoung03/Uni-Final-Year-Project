@@ -60,7 +60,7 @@ class MazeSearch:
         pygame.display.flip()
         self.maze.display_maze(screen)
         self.pl
-    
+        
     """
     Runs the program
     """
