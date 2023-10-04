@@ -1,5 +1,5 @@
-square_size = 50
-pixel_scale = 3
+MENU_SCREEN_WIDTH, MENU_SCREEN_HEIGHT = 600, 700
+SMALL_MAZE_SCREEN_WIDTH, SMALL_MAZE_SCREEN_HEIGHT = 800, 400
 small_maze =    ["+--------------+",
                 "|        XX    |",
                 "|XXX XXX X  XX |",
@@ -8,3 +8,5 @@ small_maze =    ["+--------------+",
                 "|X XXX XX  X XX|",
                 "|       XX     |",
                 "+--------------+"]
+square_size = 50
+pixel_scale = 3
