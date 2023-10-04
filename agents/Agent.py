@@ -1,5 +1,4 @@
 from abc import abstractmethod
-import config
 class Agent():
     def __init__(self, x, y, maze_map):
         self.x = x #x coord for player in maze map

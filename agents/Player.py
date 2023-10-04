@@ -16,10 +16,7 @@ class Player(Agent):
     def __init__(self, x, y, maze_map):
         Agent.__init__(self, x, y, maze_map)
 
-        self.sprite_width = 7
-        self.sprite_height = 12
-
-        transformation = (self.sprite_width*config.pixel_scale, self.sprite_height*config.pixel_scale)
+        transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
 
         self.down_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Down.png"), transformation)
 
@@ -75,6 +72,6 @@ class Player(Agent):
     Draws the player on the screen
     """
     def draw(self, screen):
-        screen_x_coord = self.x*config.square_size + self.sprite_height
-        screen_y_coord = self.y*config.square_size + self.sprite_width
+        screen_x_coord = self.x*config.SQUARE_SIZE + config.SPRITE_HEIGHT
+        screen_y_coord = self.y*config.SQUARE_SIZE + config.SPRITE_WIDTH
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))

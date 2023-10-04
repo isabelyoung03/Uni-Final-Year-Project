@@ -1,4 +1,5 @@
 import pygame
+import config
 
 class Maze:
     """ A maze which will be displayed on the screen
@@ -7,7 +8,6 @@ class Maze:
     def __init__(self, map):
         self.map = map
         squareScale = (48,48)
-        self.square_size = 50
         self.leaves = pygame.image.load("gui/resources/Leaves.png")
         self.leaves = pygame.transform.scale(self.leaves, squareScale)
 
@@ -39,5 +39,5 @@ class Maze:
                         screen.blit(self.leaves, dest = (x,y))
                     case _:
                         screen.blit(self.path, dest = (x,y))
-                x += self.square_size
-            y += self.square_size
+                x += config.SQUARE_SIZE
+            y += config.SQUARE_SIZE

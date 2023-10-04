@@ -4,31 +4,14 @@ import pygame
 from agents.Player import Player
 from environment.Maze import Maze
 import config
+from gui.menu import maze_selection_menu
 
 class MazeSearch:
     def __init__(self):
         pygame.init()
         self.maze = None
-        self.menu_screen = pygame.display.set_mode((config.MENU_SCREEN_WIDTH, config.MENU_SCREEN_HEIGHT))
         self.maze_screen = None
         self.player = None
-
-    """
-    Displays the maze selection menu and returns the selected maze
-    """
-    def maze_selection_menu(self):
-        pygame.display.set_caption("Menu")
-        selected_maze = None
-        while selected_maze == None:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        selected_maze = config.small_maze
-            self.menu_screen.fill((0, 0, 0))
-            pygame.display.flip()
-        return selected_maze
 
     """
     Runs the small maze on the screen
@@ -59,14 +42,14 @@ class MazeSearch:
     def update_maze_screen(self, screen):
         pygame.display.flip()
         self.maze.display_maze(screen)
-        self.pl
+        self.player.draw(screen)
         
     """
     Runs the program
     """
     def run(self):
         while True:
-            selected_maze = self.maze_selection_menu()
+            selected_maze = maze_selection_menu()
             pygame.display.set_caption("Small Maze")
             self.maze_screen = pygame.display.set_mode((config.SMALL_MAZE_SCREEN_WIDTH, config.SMALL_MAZE_SCREEN_HEIGHT))
             self.player = Player(1, 1, selected_maze)
