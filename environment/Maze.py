@@ -8,13 +8,13 @@ class Maze:
         self.map = map
         squareScale = (48,48)
         self.square_size = 50
-        self.leaves = pygame.image.load("resources/Leaves.png")
+        self.leaves = pygame.image.load("gui/resources/Leaves.png")
         self.leaves = pygame.transform.scale(self.leaves, squareScale)
 
-        self.path = pygame.image.load("resources/Path.png")
+        self.path = pygame.image.load("gui/resources/Path.png")
         self.path = pygame.transform.scale(self.path, squareScale)
 
-        self.cupcake = pygame.image.load("resources/Cupcake.png")
+        self.cupcake = pygame.image.load("gui/resources/Cupcake.png")
         self.cupcake = pygame.transform.scale(self.cupcake, (32,32))
 
     def display_maze(self, screen):

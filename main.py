@@ -1,8 +1,8 @@
 import sys
 
 import pygame
-from Maze import Maze
-from Player import Player
+from environment.Maze import Maze
+from agents.Player import Player
 import config
 
 class MazeSearch:

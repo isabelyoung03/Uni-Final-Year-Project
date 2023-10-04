@@ -3,8 +3,8 @@ pixel_scale = 3
 small_maze =    ["+--------------+",
                 "|        XX    |",
                 "|XXX XXX X  XX |",
-                "|    XXX   XX  |",
-                "|XXX   X  XX  G|",
-                "|  XXX XX  X XX|",
+                "|    X X   XX  |",
+                "|XXX   XX XX  G|",
+                "|X XXX XX  X XX|",
                 "|       XX     |",
                 "+--------------+"]

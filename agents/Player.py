@@ -22,13 +22,13 @@ class Player:
 
         transformation = (self.sprite_width*config.pixel_scale, self.sprite_height*config.pixel_scale)
 
-        self.down_sprite = pygame.transform.scale(pygame.image.load("resources/Down.png"), transformation)
+        self.down_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Down.png"), transformation)
 
-        self.up_sprite = pygame.transform.scale(pygame.image.load("resources/Up.png"), transformation)
+        self.up_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Up.png"), transformation)
 
-        self.right_sprite = pygame.transform.scale(pygame.image.load("resources/Right.png"), transformation)
+        self.right_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Right.png"), transformation)
 
-        self.left_sprite = pygame.transform.scale(pygame.image.load("resources/Left.png"), transformation)
+        self.left_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Left.png"), transformation)
 
         self.current_sprite = self.down_sprite
 
