@@ -49,7 +49,7 @@ class MazeSearch:
     """
     def run(self):
         while True:
-            selected_maze = maze_selection_menu()
+            selected_maze = maze_selection_menu() #make this return a maze
             pygame.display.set_caption("Small Maze")
             self.maze_screen = pygame.display.set_mode((config.SMALL_MAZE_SCREEN_WIDTH, config.SMALL_MAZE_SCREEN_HEIGHT))
             self.player = Player(1, 1, selected_maze)

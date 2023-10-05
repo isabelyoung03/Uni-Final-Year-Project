@@ -15,9 +15,18 @@ def maze_selection_menu():
     display_text('By Isabel Young', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 125, menu_screen)
     
     display_text('Select maze size', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 200, menu_screen)
-    display_text('Small', 20, config.GREEN, 200, 230, menu_screen)
-    display_text('Medium', 20, config.GREEN, 300, 230, menu_screen)
-    display_text('Large', 20, config.GREEN, 400, 230, menu_screen)
+    display_text('Small', 20, config.PINK, 200, 240, menu_screen)
+    display_text('Medium', 20, config.BLUE_HOVER, config.MENU_SCREEN_WIDTH // 2, 240, menu_screen)
+    display_text('Large', 20, config.BLUE, 400, 240, menu_screen)
+
+        
+    display_text('Select search algorithm', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 315, menu_screen)
+    display_text('Breadth-first', 20, config.BLUE, 150, 355, menu_screen)
+    display_text('Depth-first', 20, config.BLUE, config.MENU_SCREEN_WIDTH // 2, 355, menu_screen)
+    display_text('Uniform-cost', 20, config.PINK, 450, 355, menu_screen)
+    display_text('Greedy vs A*', 20, config.BLUE, 150, 415, menu_screen)
+    display_text('Minimax', 20, config.BLUE, config.MENU_SCREEN_WIDTH // 2, 415, menu_screen)
+    display_text('Expectimax', 20, config.BLUE, 450, 415, menu_screen)
 
     transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
     character = pygame.transform.scale(pygame.image.load("gui/resources/Down.png"), transformation)
@@ -33,6 +42,9 @@ def maze_selection_menu():
         pygame.display.flip()
     return selected_maze
 
+"""
+Display text string on the given screen, of a particular size and colour at location x,y
+"""
 def display_text(string, font_size, colour, x, y, screen):
     font = pygame.font.Font('freesansbold.ttf', font_size)
     text = font.render(string, True, colour)
