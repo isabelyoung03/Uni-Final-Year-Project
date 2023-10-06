@@ -5,6 +5,7 @@ from agents.Player import Player
 from environment.Maze import Maze
 import config
 from gui.menu import maze_selection_menu
+from gui.button import Button
 
 class MazeSearch:
     def __init__(self):

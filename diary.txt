@@ -1,2 +1,4 @@
 Week 1: This week I completed my project plan. I have also displayed my sprite on the GUI, as well as writing a function to display the maze. 
 I need to work out how to seperate and use the sprite sheet I have created.
+Week 2: I have made a function to draw out the small maze based on the map for the small maze in the config file. I made a method for moving and tested this with the arrows keys.
+I have started working on the menu page.
