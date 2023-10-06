@@ -43,6 +43,9 @@ def maze_selection_menu():
     for button in algo_buttons:
         button.draw(menu_screen) 
 
+    start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 480, hello, 100, 50)
+    start_button.draw(menu_screen)
+
     transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
     character = pygame.transform.scale(pygame.image.load("gui/resources/Down.png"), transformation)
     menu_screen.blit(character, dest = (config.MENU_SCREEN_WIDTH // 2 - config.SPRITE_WIDTH, 70))
