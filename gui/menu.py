@@ -21,7 +21,7 @@ def maze_selection_menu():
     display_text('Select maze size', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 200, menu_screen)
     
     small = Button('Small', 20, config.GREEN, config.BLACK, 200, 240, hello)
-    medium = Button('Medium', 20, config.PINK, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 240, hello)
+    medium = Button('Medium', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 240, hello)
     large = Button('Large', 20, config.GREEN, config.BLACK, 400, 240, hello)
 
     size_buttons = [small, medium, large]
@@ -33,7 +33,7 @@ def maze_selection_menu():
 
     breadth = Button('Breadth-first', 20, config.GREEN, config.BLACK, 150, 355, hello)
     depth = Button('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 355, hello)
-    uniform = Button('Uniform-cost', 20, config.PINK, config.BLACK, 450, 355, hello)
+    uniform = Button('Uniform-cost', 20, config.GREEN, config.BLACK, 450, 355, hello)
     greedy_a_star = Button('Greedy vs A*', 20, config.GREEN, config.BLACK, 150, 415, hello)
     minimax = Button('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 415, hello)
     expectimax = Button('Expectimax', 20, config.GREEN, config.BLACK, 450, 415, hello)
@@ -57,6 +57,10 @@ def maze_selection_menu():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     selected_maze = config.SMALL_MAZE_MAP
+            for button in size_buttons + algo_buttons:
+                button.handle_event(event)
+        for button in size_buttons + algo_buttons:
+            button.draw(menu_screen)
         pygame.display.flip()
     return selected_maze
 

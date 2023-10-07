@@ -1,0 +1,4 @@
+from button import Button
+class ButtonGroup():
+    def __init__(self, buttons: list = []): 
+        self.buttons = buttons
