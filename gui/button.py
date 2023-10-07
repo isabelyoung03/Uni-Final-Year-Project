@@ -5,12 +5,11 @@ import config
 Class for a button object which is printed on the screen and handles events when pressed
 """
 class Button:
-    def __init__(self, text, text_size, text_colour, background_colour, x, y, function, width=None, height=None):
+    def __init__(self, text, text_size, text_colour, background_colour, x, y, width=None, height=None):
         self.text = text
         self.text_size = text_size
         self.text_colour = text_colour
         self.background_colour = background_colour
-        self.function = function
         self.font = pygame.font.Font('freesansbold.ttf', self.text_size)
         self.text_surface = self.font.render(self.text, True, self.text_colour)
         self.selected_text_surface = self.font.render(self.text, True, config.PINK)
@@ -60,6 +59,12 @@ class Button:
     """
     def set_selected(self, selected):
         self.selected = selected
+
+    """
+    Get if the button is selected or not
+    """
+    def get_selected(self):
+        return self.selected
         
 
     

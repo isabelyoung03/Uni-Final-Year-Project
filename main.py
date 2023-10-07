@@ -6,6 +6,7 @@ from environment.Maze import Maze
 import config
 from gui.menu import maze_selection_menu
 from gui.button import Button
+from gui.button_group import ButtonGroup
 
 class MazeSearch:
     def __init__(self):

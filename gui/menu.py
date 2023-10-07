@@ -3,9 +3,6 @@ import sys
 from gui.button import Button
 import config
 
-
-def hello():
-    print("hello")
 """
 Displays the maze selection menu and returns the selected maze
 """
@@ -20,9 +17,9 @@ def maze_selection_menu():
     
     display_text('Select maze size', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 200, menu_screen)
     
-    small = Button('Small', 20, config.GREEN, config.BLACK, 200, 240, hello)
-    medium = Button('Medium', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 240, hello)
-    large = Button('Large', 20, config.GREEN, config.BLACK, 400, 240, hello)
+    small = Button('Small', 20, config.GREEN, config.BLACK, 200, 240)
+    medium = Button('Medium', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 240)
+    large = Button('Large', 20, config.GREEN, config.BLACK, 400, 240)
 
     size_buttons = [small, medium, large]
     
@@ -31,19 +28,19 @@ def maze_selection_menu():
         
     display_text('Select search algorithm', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 315, menu_screen)
 
-    breadth = Button('Breadth-first', 20, config.GREEN, config.BLACK, 150, 355, hello)
-    depth = Button('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 355, hello)
-    uniform = Button('Uniform-cost', 20, config.GREEN, config.BLACK, 450, 355, hello)
-    greedy_a_star = Button('Greedy vs A*', 20, config.GREEN, config.BLACK, 150, 415, hello)
-    minimax = Button('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 415, hello)
-    expectimax = Button('Expectimax', 20, config.GREEN, config.BLACK, 450, 415, hello)
+    breadth = Button('Breadth-first', 20, config.GREEN, config.BLACK, 150, 355)
+    depth = Button('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 355)
+    uniform = Button('Uniform-cost', 20, config.GREEN, config.BLACK, 450, 355)
+    greedy_a_star = Button('Greedy vs A*', 20, config.GREEN, config.BLACK, 150, 415)
+    minimax = Button('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 415)
+    expectimax = Button('Expectimax', 20, config.GREEN, config.BLACK, 450, 415)
 
     algo_buttons = [breadth, depth, uniform, greedy_a_star, minimax, expectimax]
 
     for button in algo_buttons:
         button.draw(menu_screen) 
 
-    start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 480, hello, 100, 50)
+    start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 480, 100, 50)
     start_button.draw(menu_screen)
 
     transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
