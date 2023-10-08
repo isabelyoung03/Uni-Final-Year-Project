@@ -3,9 +3,10 @@ from gui.button import Button
 A group of buttons where only one can be selected at a time
 """
 class ButtonGroup():
-    
+
     def __init__(self, buttons: list = []): 
         self.buttons = buttons
+        buttons[0].set_selected(True)
 
     """
     Draw each button in the group on the screen
