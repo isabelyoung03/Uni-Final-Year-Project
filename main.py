@@ -4,7 +4,7 @@ import pygame
 from agents.Player import Player
 from environment.Maze import Maze
 import config
-from gui.menu import maze_selection_menu
+from gui.menu import Menu
 from gui.button import Button
 from gui.button_group import ButtonGroup
 
@@ -51,7 +51,8 @@ class MazeSearch:
     """
     def run(self):
         while True:
-            selected_maze = maze_selection_menu() #make this return a maze
+            menu = Menu()
+            selected_maze = menu.maze_selection_menu() #make this return a maze
             pygame.display.set_caption("Small Maze")
             self.maze_screen = pygame.display.set_mode((config.SMALL_MAZE_SCREEN_WIDTH, config.SMALL_MAZE_SCREEN_HEIGHT))
             self.player = Player(1, 1, selected_maze)
