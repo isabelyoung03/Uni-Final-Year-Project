@@ -9,18 +9,18 @@ from gui.option_button import OptionButton
 
 class Menu:
     def __init__(self):
-        small = OptionButton('Small', 20, config.GREEN, config.BLACK, 200, 240, MazeSize.SMALL)
-        medium = OptionButton('Medium', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 240, MazeSize.MEDIUM)
+        small = OptionButton('Small', 20, config.GREEN, config.BLACK, 140, 240, MazeSize.SMALL)
+        medium = OptionButton('Medium', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 40, 240, MazeSize.MEDIUM)
         large = OptionButton('Large', 20, config.GREEN, config.BLACK, 400, 240, MazeSize.LARGE)
 
         self.size_button_group = ButtonGroup([small, medium, large])
 
-        breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 150, 355, SearchAlgoType.BREADTH)
-        depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 355, SearchAlgoType.DEPTH)
-        uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 450, 355, SearchAlgoType.UNIFORM)
-        greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 150, 415, SearchAlgoType.GREEDY_A_STAR)
-        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2, 415, SearchAlgoType.MINIMAX)
-        expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, 450, 415, SearchAlgoType.EXPECTIMAX)
+        breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 90, 355, SearchAlgoType.BREADTH)
+        depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
+        uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
+        greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 90, 415, SearchAlgoType.GREEDY_A_STAR)
+        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 415, SearchAlgoType.MINIMAX)
+        expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, 400, 415, SearchAlgoType.EXPECTIMAX)
 
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, greedy_a_star, minimax, expectimax])
 

@@ -34,13 +34,12 @@ class Button:
         if self.button_with_background:
             pygame.draw.rect(screen, self.background_colour, self.rectangle)
             textRect = self.text_surface.get_rect()
-            textRect.center = (self.x, self.y)
+            textRect.center = (self.x + self.rectangle.width // 2, self.y + self.rectangle.height // 2)
         else:
             pygame.draw.rect(screen, self.background_colour, self.rectangle)
             text_x = self.x + (self.rectangle.width - self.text_surface.get_width()) / 2
             text_y = self.y + (self.rectangle.height - self.text_surface.get_height()) / 2
-            textRect = self.text_surface.get_rect()
-            textRect.topleft = (text_x, text_y)
+            textRect = self.text_surface.get_rect(topleft=(text_x, text_y))
         if self.selected:
             screen.blit(self.selected_text_surface, textRect)
         else:
