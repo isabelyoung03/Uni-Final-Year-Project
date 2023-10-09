@@ -55,7 +55,7 @@ class MazeSearch:
             menu = Menu()
             selected_maze = menu.maze_selection_menu() #make this return a maze
             pygame.display.set_caption("Small Maze")
-            self.maze_screen = pygame.display.set_mode((config.SMALL_MAZE_SCREEN_WIDTH, config.SMALL_MAZE_SCREEN_HEIGHT))
+            self.maze_screen = pygame.display.set_mode((config.MEDIUM_MAZE_SCREEN_WIDTH, config.MEDIUM_MAZE_SCREEN_HEIGHT))
             self.player = Player(1, 1, selected_maze)
             self.maze = Maze(selected_maze)
             self.run_small_maze()

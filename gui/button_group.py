@@ -30,9 +30,3 @@ class ButtonGroup():
     """
     def get_result(self):
         return self.selected_button.get_selected_value()
-    
-    """
-    Get the button that is selected
-    """
-    def get_selected_button(self):
-        return self.selected_button
