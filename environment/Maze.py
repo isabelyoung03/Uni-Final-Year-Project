@@ -22,9 +22,11 @@ class Maze:
         self.cupcake = pygame.transform.scale(self.cupcake, (32,32))
 
         self.maze_screen = pygame.display.set_mode((maze_size.get_width(), maze_size.get_height()))
+    
+    """ 
+    Displays the maze on the screen based on the map for the maze
+    """
     def display_maze(self, screen):
-        """ Displays the maze on the screen based on the map for the maze
-        """
         y = 0
         for i in self.map:
             x = 0
