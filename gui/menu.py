@@ -1,7 +1,9 @@
 import pygame
 import sys
+from agents.Player import Player
 from enums.search_algorithm_type import SearchAlgoType
 from enums.size import MazeSize
+from environment.Maze import Maze
 from gui.button import Button
 from gui.button_group import ButtonGroup
 import config
@@ -33,22 +35,23 @@ class Menu:
     """
     def maze_selection_menu(self):
         pygame.display.set_caption("Menu")
-        selected_maze = None
+        maze = None
 
-        while selected_maze == None:
+        while maze == None:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button.rectangle.collidepoint(event.pos): #if start button is pressed
-                        selected_maze = self.size_button_group.get_result().value
+                        selected_maze_size = self.size_button_group.get_result()
                         selected_search_algo = self.algo_button_group.get_result()
-                        print(selected_search_algo)
+                        player = Player(1, 1, selected_maze_size.value) #give player algo at some point
+                        maze = Maze(selected_maze_size, player)
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)
             self.draw()
             pygame.display.flip()
-        return selected_maze
+        return maze
 
     """
     Draw the menu screen
