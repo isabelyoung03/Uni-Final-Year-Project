@@ -45,8 +45,9 @@ class ButtonGroup():
     """
     Get the selected button from this group
     """
-    # def get_result(self):
-    #     for button in self.buttons:
-    #         if button.get_selected:
-    #             return button. NEED TO MAKE AN ENUM!!!
+    def get_result(self):
+        for button in self.buttons:
+            if button.get_selected:
+                print(button.get_selected_value)
+                return button.get_selected_value
 
