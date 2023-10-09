@@ -24,7 +24,6 @@ class ButtonGroup():
                     self.selected_button.set_selected(False) #deselect previous selected button
                     self.selected_button = button 
                     self.selected_button.set_selected(True)
-        print(self.selected_button.get_selected_value())
 
     """
     Get the selected button from this group

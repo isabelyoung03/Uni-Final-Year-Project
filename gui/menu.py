@@ -19,7 +19,7 @@ class Menu:
         depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
         uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
         greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 90, 415, SearchAlgoType.GREEDY_A_STAR)
-        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 415, SearchAlgoType.MINIMAX)
+        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 43, 415, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, 400, 415, SearchAlgoType.EXPECTIMAX)
 
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, greedy_a_star, minimax, expectimax])
@@ -39,8 +39,8 @@ class Menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.start_button.rectangle.collidepoint(event.pos): #if start button is pressed
                         selected_maze = config.SMALL_MAZE_MAP
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)
