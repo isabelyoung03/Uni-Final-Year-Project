@@ -41,6 +41,10 @@ class Menu:
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button.rectangle.collidepoint(event.pos): #if start button is pressed
+                        selected_maze = self.size_button_group.get_result()
+                        print(selected_maze)
+                        selected_search_algo = self.algo_button_group.get_result()
+                        print(selected_search_algo)
                         selected_maze = config.SMALL_MAZE_MAP
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)

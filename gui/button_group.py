@@ -20,16 +20,19 @@ class ButtonGroup():
     def handle_event(self, event):
         for button in self.buttons:
             if button.handle_event(event):
-                if self.selected_button != button:
-                    self.selected_button.set_selected(False) #deselect previous selected button
-                    self.selected_button = button 
-                    self.selected_button.set_selected(True)
+                self.selected_button = button
+                button.set_selected(True)
+            if self.selected_button != button:
+                button.set_selected(False)
 
     """
     Get the selected button from this group
     """
     def get_result(self):
-        for button in self.buttons:
-            if button.get_selected:
-                print(button.get_selected_value)
-                return button.get_selected_value
+        return self.selected_button.get_selected_value()
+    
+    """
+    Get the button that is selected
+    """
+    def get_selected_button(self):
+        return self.selected_button

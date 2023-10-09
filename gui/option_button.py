@@ -1,3 +1,4 @@
+import pygame
 from gui.button import Button
 
 """
@@ -14,5 +15,10 @@ class OptionButton(Button):
     def get_selected_value(self):
         return self.selected_value
         
-
+    """
+    Handles events such as clicking on the button
+    """
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return self.rectangle.collidepoint(event.pos)
     
