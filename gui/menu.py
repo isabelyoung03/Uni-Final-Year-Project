@@ -31,7 +31,7 @@ class Menu:
         self.menu_screen = pygame.display.set_mode((config.MENU_SCREEN_WIDTH, config.MENU_SCREEN_HEIGHT))
 
     """
-    Displays the maze selection menu and returns the selected maze
+    Displays the maze selection menu and returns the selected maze size and search algorithm
     """
     def maze_selection_menu(self):
         pygame.display.set_caption("Menu")
@@ -45,13 +45,12 @@ class Menu:
                     if self.start_button.rectangle.collidepoint(event.pos): #if start button is pressed
                         selected_maze_size = self.size_button_group.get_result()
                         selected_search_algo = self.algo_button_group.get_result()
-                        player = Player(1, 1, selected_maze_size.value) #give player algo at some point
-                        maze = Maze(selected_maze_size, player)
+                        maze = Maze(selected_maze_size)
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)
             self.draw()
             pygame.display.flip()
-        return maze
+        return (maze, selected_search_algo)
 
     """
     Draw the menu screen

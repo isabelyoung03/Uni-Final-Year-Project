@@ -1,4 +1,3 @@
-import sys
 import pygame
 import config
 
@@ -6,10 +5,9 @@ class Maze:
     """ A maze which will be displayed on the screen
         Initiated with a map of the maze
     """
-    def __init__(self, maze_size, player):
+    def __init__(self, maze_size):
         self.map = maze_size.value
         self.maze_size = maze_size
-        self.player = player
 
         squareScale = (48,48)
         self.leaves = pygame.image.load("gui/resources/Leaves.png")
@@ -48,35 +46,3 @@ class Maze:
                         screen.blit(self.path, dest = (x,y))
                 x += config.SQUARE_SIZE
             y += config.SQUARE_SIZE
-
-
-    """
-    Runs the small maze on the screen
-    """
-    def run(self):
-        pygame.display.set_caption(self.maze_size.to_string() + " Maze")
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        self.player.move_up()
-                    elif event.key == pygame.K_DOWN:
-                        self.player.move_down()
-                    elif event.key == pygame.K_RIGHT:
-                        self.player.move_right()
-                    elif event.key == pygame.K_LEFT:
-                        self.player.move_left()
-                    elif event.key == pygame.K_q:
-                        sys.exit()
-            self.update_maze_screen()
-        
-    """
-    Updates the maze screen as changes happen
-    """
-    def update_maze_screen(self):
-        self.maze_screen.fill(config.BLACK)
-        self.display_maze(self.maze_screen)
-        self.player.draw(self.maze_screen)
-        pygame.display.flip()

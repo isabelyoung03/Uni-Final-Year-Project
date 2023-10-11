@@ -1,0 +1,16 @@
+from abc import ABC, abstractmethod
+class SearchAlgorithm(ABC):
+    """
+    Get best move 
+    """
+    @abstractmethod
+    def get_next_move():
+        pass
+
+class BreadthFirstSearch(SearchAlgorithm):
+    def get_next_move(agent, current_location, goal_location):
+        pass
+
+class DepthFirstSearch(SearchAlgorithm):
+    def get_next_move(agent, current_location, goal_location):
+        pass
