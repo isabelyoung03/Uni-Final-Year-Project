@@ -6,7 +6,7 @@ SMALL_MAZE_SCREEN_WIDTH, SMALL_MAZE_SCREEN_HEIGHT = 800, 400
 SMALL_MAZE_MAP =    ["+--------------+",
                     "|        XX    |",
                     "|XXX XXX X  XX |",
-                    "|    X X   XX  |",
+                    "|    X X   XXX |",
                     "|XXX   XX XX  G|",
                     "|X XXX XX  X XX|",
                     "|       XX     |",

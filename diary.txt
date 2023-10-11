@@ -7,3 +7,4 @@ I have started working on the menu page. I decided not to use a sprite sheet and
 Week 3: I have completed the menu page. 
     11/10/2023: Today I completed the maps for the medium and large mazes. I have now finished the work I planned for this week.
                 I am now going to begin next weeks work: depth and breadth first search.
+                I have completed depth first search.

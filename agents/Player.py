@@ -1,3 +1,4 @@
+import time
 import pygame
 from agents.Agent import Agent
 import config 
@@ -31,9 +32,7 @@ class Player(Agent):
     """
     def move_left(self):
         self.current_sprite = self.left_sprite
-        nextNode = self.map[self.y][self.x-1]
-        if nextNode == ' ' or nextNode == 'G':
-            self.x = self.x - 1
+        self.x = self.x - 1
         print("Player at " + str(self.get_location()))
 
     """
@@ -41,9 +40,7 @@ class Player(Agent):
     """
     def move_right(self):
         self.current_sprite = self.right_sprite
-        nextNode = self.map[self.y][self.x+1]
-        if nextNode == ' ' or nextNode == 'G':
-            self.x = self.x + 1
+        self.x = self.x + 1
         print("Player at " + str(self.get_location()))
 
     """
@@ -51,9 +48,7 @@ class Player(Agent):
     """
     def move_down(self):
         self.current_sprite = self.down_sprite
-        nextNode = self.map[self.y+1][self.x]
-        if nextNode == ' ' or nextNode == 'G':
-            self.y = self.y + 1
+        self.y = self.y + 1
         print("Player at " + str(self.get_location()))
 
     """
@@ -61,9 +56,7 @@ class Player(Agent):
     """
     def move_up(self):
         self.current_sprite = self.up_sprite
-        nextNode = self.map[self.y-1][self.x]
-        if nextNode == ' ' or nextNode == 'G':
-            self.y = self.y - 1
+        self.y = self.y - 1
         print("Player at " + str(self.get_location()))
     
     """
@@ -74,12 +67,17 @@ class Player(Agent):
         screen_y_coord = self.y*config.SQUARE_SIZE + config.SPRITE_WIDTH
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
 
+    """
+    Decide on a path to follow based on the search algorithm
+    """
     def decide(self):
         if not self.goal_achieved:
             path = self.search_algorithm.search(self.x, self.y)
             if path:
                 print(path)
                 self.goal_achieved = True
-                print("Goal achieved!")
+                print("Path found to goal! Following...")
+                return path
             else:
                 print("No solution to goal!")
+        return []
