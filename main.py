@@ -8,6 +8,7 @@ from gui.menu import Menu
 from gui.button import Button
 from gui.option_button import OptionButton
 from gui.button_group import ButtonGroup
+from search_algorithms.depth_first import DepthFirstSearch
 from world_controller import WorldController
 
 class MazeSearch:
@@ -23,7 +24,9 @@ class MazeSearch:
             selected_options = menu.maze_selection_menu()
             maze = selected_options[0]
             search_algorithm = selected_options[1]
-            player = Player(1,1, maze.map)
+            print(search_algorithm)
+            depth_first_search = DepthFirstSearch(maze)
+            player = Player(1,1, depth_first_search)
             world_controller = WorldController(maze, player)
             world_controller.run()
 

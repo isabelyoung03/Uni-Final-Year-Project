@@ -1,16 +1,15 @@
 from abc import abstractmethod
 class Agent():
-    def __init__(self, x, y, maze_map):
+    def __init__(self, x, y, search_algorithm):
         self.x = x #x coord for player in maze map
         self.y = y #y coord for player in maze map
-        self.map = maze_map #map of the maze
+        self.search_algorithm = search_algorithm #search algorithm the agent follows
 
     """
     Returns the location of the agent
     """
     def get_location(self):
         return (self.x,self.y)
-    
 
     @abstractmethod
     def move_left(self):

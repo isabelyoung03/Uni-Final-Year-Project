@@ -18,8 +18,6 @@ class Maze:
 
         self.cupcake = pygame.image.load("gui/resources/Cupcake.png")
         self.cupcake = pygame.transform.scale(self.cupcake, (32,32))
-
-        self.maze_screen = pygame.display.set_mode((maze_size.get_width(), maze_size.get_height()))
     
     """ 
     Displays the maze on the screen based on the map for the maze
@@ -46,3 +44,8 @@ class Maze:
                         screen.blit(self.path, dest = (x,y))
                 x += config.SQUARE_SIZE
             y += config.SQUARE_SIZE
+
+    #checks if the location is not a barrier
+    def check_valid_location(self, row, column):
+        location = self.map[row][column]
+        return location != 'X' and location != '|' and location != '-' and location != '+'
