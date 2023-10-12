@@ -23,7 +23,6 @@ class WorldController:
     Runs the maze on the screen
     """
     def run(self):
-        pygame.display.set_caption(self.maze.maze_size.to_string() + " Maze")
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
