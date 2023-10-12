@@ -1,12 +1,17 @@
 from search_algorithms.Search_algo import SearchAlgorithm
 
-
+"""
+Depth-first search
+"""
 class DepthFirstSearch(SearchAlgorithm):
     def __init__(self, maze):
         self.maze = maze
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
+    """
+    Searches the maze and returns a path to the goal
+    """
     def search(self, start_x, start_y, path=None):
         if path is None:
             path = []
