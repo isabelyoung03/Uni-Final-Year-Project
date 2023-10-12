@@ -27,6 +27,6 @@ class DepthFirstSearch(SearchAlgorithm):
                 if result:
                     return result
         path.pop()        
-        return []
+        return [] #if no solution found
 
         

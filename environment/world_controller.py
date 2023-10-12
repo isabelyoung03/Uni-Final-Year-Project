@@ -29,14 +29,6 @@ class WorldController:
                 if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    # if event.key == pygame.K_UP:
-                    #     self.player.move_up()
-                    # elif event.key == pygame.K_DOWN:
-                    #     self.player.move_down()
-                    # elif event.key == pygame.K_RIGHT:
-                    #     self.player.move_right()
-                    # elif event.key == pygame.K_LEFT:
-                    #     self.player.move_left()
                     if event.key == pygame.K_q:
                         sys.exit()
             self.follow_path(self.player.decide())
@@ -49,8 +41,6 @@ class WorldController:
         MOVE_PLAYER = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_PLAYER, self.movement_delay)
         path_index = 0  
-        new_x = self.player.x
-        new_y = self.player.y 
 
         while path_index < len(path):
             for event in pygame.event.get():
