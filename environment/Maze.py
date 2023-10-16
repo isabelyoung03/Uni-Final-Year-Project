@@ -49,3 +49,7 @@ class Maze:
     def check_valid_location(self, row, column):
         location = self.map[row][column]
         return location != 'X' and location != '|' and location != '-' and location != '+'
+    
+    #Return maze size enum
+    def get_maze_size(self):
+        return self.maze_size

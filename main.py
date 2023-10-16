@@ -25,6 +25,7 @@ class MazeSearch:
             selected_options = menu.maze_selection_menu()
             maze = selected_options[0]
             search_algorithm_enum = selected_options[1]
+            pygame.display.set_caption(maze.maze_size.to_string() + " " + search_algorithm_enum.value +  " Search Maze")
             world_controller = WorldControllerFactory.create_new(maze, 1, 1, search_algorithm_enum)
             world_controller.run()
 
