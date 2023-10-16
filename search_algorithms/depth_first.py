@@ -1,3 +1,4 @@
+from enums.search_algorithm_type import SearchAlgoType
 from search_algorithms.Search_algo import SearchAlgorithm
 
 """
@@ -34,4 +35,5 @@ class DepthFirstSearch(SearchAlgorithm):
         path.pop()        
         return [] #if no solution found
 
-        
+    def get_enum(self):
+        return SearchAlgoType.DEPTH

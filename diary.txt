@@ -8,3 +8,7 @@ Week 3: I have completed the menu page.
     11/10/2023: Today I completed the maps for the medium and large mazes. I have now finished the work I planned for this week.
                 I am now going to begin next weeks work: depth and breadth first search.
                 I have completed depth first search.
+
+Week 4: 
+    16/10/2023: Today I have started working on uniform-cost search. 
+                I have prepared for this by creating a Ghost class and a factory class for it.

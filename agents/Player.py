@@ -1,7 +1,8 @@
 import time
 import pygame
 from agents.Agent import Agent
-import config 
+import config
+from enums.search_algorithm_type import SearchAlgoType 
 
 class Player(Agent):
     """
@@ -16,6 +17,8 @@ class Player(Agent):
 
     def __init__(self, x, y, search_algorithm):
         Agent.__init__(self, x, y, search_algorithm)
+        self.x = x
+        self.y = y
         self.goal_achieved = False
 
         transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
@@ -26,6 +29,13 @@ class Player(Agent):
         self.left_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Left.png"), transformation)
 
         self.current_sprite = self.down_sprite
+
+        self.strict_path = None #strict path to follow for depth-first and breadth-first as no opponents
+        self.path_index = 0
+
+        print(search_algorithm.get_enum())
+        if search_algorithm.get_enum() == SearchAlgoType.BREADTH or search_algorithm.get_enum() == SearchAlgoType.DEPTH:
+            self.strict_path = self.find_path()
     
     """
     Moves player to the square to the left
@@ -68,16 +78,36 @@ class Player(Agent):
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
 
     """
-    Decide on a path to follow based on the search algorithm
+    Decide on a path to follow based on the search algorithm (only for breadth or depth first search)
     """
-    def decide(self):
-        if not self.goal_achieved:
-            path = self.search_algorithm.search(self.x, self.y)
-            if path:
-                print(path)
-                self.goal_achieved = True
-                print("Path found to goal! Following...")
-                return path
-            else:
-                print("No solution to goal!")
+    def find_path(self):
+        path = self.search_algorithm.search(self.x, self.y)
+        if path:
+            print(path)
+            print("Path found to goal! Following...")
+            return path
+        else:
+            print("No solution to goal!")
         return []
+
+    """
+    Follow the path from the algorithm - for depth and breadth first
+    """
+    def follow_path(self):
+        if self.path_index < len(self.strict_path):
+            i, j = self.strict_path[self.path_index]
+            if j - self.x == 1:
+                self.move_right()
+            elif j - self.x == -1:
+                self.move_left()
+            elif i - self.y == 1:
+                self.move_down()
+            elif i - self.y == -1:
+                self.move_up()
+            self.path_index += 1 
+
+    def decide(self):
+        if self.strict_path is not None:
+            self.follow_path()
+        else:
+            print("Making decisions...")

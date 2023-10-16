@@ -10,3 +10,10 @@ class SearchAlgorithm(ABC):
     @abstractmethod
     def search(self):
         pass
+
+    """
+    Return enum for search algorithm
+    """
+    @abstractmethod
+    def get_enum(self):
+        pass 
