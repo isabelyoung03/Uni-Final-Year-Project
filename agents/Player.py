@@ -96,13 +96,13 @@ class Player(Agent):
     def follow_path(self):
         if self.path_index < len(self.strict_path):
             i, j = self.strict_path[self.path_index]
-            if j - self.x == 1:
+            if i - self.x == 1:
                 self.move_right()
-            elif j - self.x == -1:
+            elif i - self.x == -1:
                 self.move_left()
-            elif i - self.y == 1:
+            elif j - self.y == 1:
                 self.move_down()
-            elif i - self.y == -1:
+            elif j - self.y == -1:
                 self.move_up()
             self.path_index += 1 
 

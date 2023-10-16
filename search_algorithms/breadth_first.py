@@ -22,16 +22,16 @@ class BreadthFirstSearch(SearchAlgorithm):
             path = queue.popleft()
             x, y = path[-1]
 
-            if self.maze.map[x][y] == 'G':
+            if self.maze.map[y][x] == 'G':
                 return path #goal has been found
             
             for i, j in SearchAlgorithm.movements: #for each possible next square
-                new_row = x + i
-                new_col = y + j
-                if self.maze.check_valid_location(new_row,new_col) and 0 <= new_row < self.y_axis_length and 0 <= new_col < self.x_axis_length:
-                    if (new_row, new_col) not in path:
+                new_x = x + i
+                new_y = y + j
+                if self.maze.check_valid_location(new_x, new_y) and 0 <= new_y < self.y_axis_length and 0 <= new_x < self.x_axis_length:
+                    if (new_x, new_y) not in path:
                         new_path = list(path)
-                        new_path.append((new_row, new_col))
+                        new_path.append((new_x, new_y))
                         queue.append(new_path)
 
         return [] #if no solution found
