@@ -48,13 +48,13 @@ class WorldController:
                 elif event.type == MOVE_PLAYER:
                     if path_index < len(path):
                         i, j = path[path_index]
-                        if j - self.player.x == 1:
+                        if i - self.player.x == 1:
                             self.player.move_right()
-                        if j - self.player.x == -1:
+                        if i - self.player.x == -1:
                             self.player.move_left()
-                        if i - self.player.y == 1:
+                        if j - self.player.y == 1:
                             self.player.move_down()
-                        if i - self.player.y == -1:
+                        if j - self.player.y == -1:
                             self.player.move_up()
                         path_index += 1 
             self.render()  

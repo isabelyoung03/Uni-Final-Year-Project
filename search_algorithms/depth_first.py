@@ -19,16 +19,16 @@ class DepthFirstSearch(SearchAlgorithm):
         if (start_x, start_y) in path:
             return None #been here before so no solution
         
-        if self.maze.map[start_x][start_y] == 'G':
+        if self.maze.map[start_y][start_x] == 'G':
             return path #goal has been found
 
         path.append((start_x, start_y))
 
         for i, j in SearchAlgorithm.movements:
-            new_row = start_x + i
-            new_col = start_y + j
-            if self.maze.check_valid_location(new_row,new_col) and 0 <= new_row < self.y_axis_length and 0 <= new_col < self.x_axis_length:
-                result = self.search(new_row, new_col, path)
+            new_x = start_x + i
+            new_y = start_y + j
+            if self.maze.check_valid_location(new_x, new_y) and 0 <= new_y < self.y_axis_length and 0 <= new_x < self.x_axis_length:
+                result = self.search(new_x, new_y, path)
                 if result:
                     return result
         path.pop()        

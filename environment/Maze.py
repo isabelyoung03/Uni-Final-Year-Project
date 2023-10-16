@@ -46,6 +46,6 @@ class Maze:
             y += config.SQUARE_SIZE
 
     #checks if the location is not a barrier
-    def check_valid_location(self, row, column):
-        location = self.map[row][column]
+    def check_valid_location(self, x, y):
+        location = self.map[y][x]
         return location != 'X' and location != '|' and location != '-' and location != '+'
