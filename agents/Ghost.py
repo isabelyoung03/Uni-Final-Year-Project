@@ -14,7 +14,7 @@ class Ghost(Agent):
     def __init__(self, x, y):
         Agent.__init__(self, x, y, None)
 
-        transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
+        transformation = (8*config.PIXEL_SCALE, 12*config.PIXEL_SCALE)
 
         self.right_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Ghost_Right.png"), transformation)
         self.left_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Ghost_Left.png"), transformation)

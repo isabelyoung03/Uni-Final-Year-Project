@@ -3,9 +3,10 @@ import pygame
 import config
 
 class WorldController:
-    def __init__(self, maze, player):
+    def __init__(self, maze, player, ghosts):
         self.maze = maze
         self.player = player
+        self.ghosts = ghosts
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 500 
@@ -17,6 +18,8 @@ class WorldController:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
         self.player.draw(self.screen)
+        for ghost in self.ghosts:
+            ghost.draw(self.screen)
         pygame.display.flip()
 
     """
