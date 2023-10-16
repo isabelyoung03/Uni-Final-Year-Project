@@ -20,6 +20,7 @@ class DepthFirstSearch(SearchAlgorithm):
             return None #been here before so no solution
         
         if self.maze.map[start_y][start_x] == 'G':
+            path.append((start_x, start_y))
             return path #goal has been found
 
         path.append((start_x, start_y))
