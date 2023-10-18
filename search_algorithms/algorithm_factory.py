@@ -1,6 +1,7 @@
 from search_algorithms.breadth_first import BreadthFirstSearch
 from enums.search_algorithm_type import SearchAlgoType
 from search_algorithms.depth_first import DepthFirstSearch
+from search_algorithms.uniform_cost import UniformCostSearch
 
 """
 Factory class for creating a new search algorithm based on the enum and maze supplied
@@ -13,7 +14,7 @@ class SearchAlgorithmFactory():
         elif search_algo_type == SearchAlgoType.DEPTH:
             return DepthFirstSearch(maze)
         elif search_algo_type == SearchAlgoType.UNIFORM:
-            return DepthFirstSearch(maze)
+            return UniformCostSearch(maze)
         elif search_algo_type == SearchAlgoType.GREEDY_A_STAR:
             return DepthFirstSearch(maze)
         elif search_algo_type == SearchAlgoType.MINIMAX:

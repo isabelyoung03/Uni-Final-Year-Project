@@ -9,7 +9,7 @@ class WorldController:
         self.ghosts = ghosts
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 500 
+        self.movement_delay = 1000 
 
     """
     Update the player
