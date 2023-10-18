@@ -12,3 +12,5 @@ Week 3: I have completed the menu page.
 Week 4: 
     16/10/2023: Today I have started working on uniform-cost search. 
                 I have prepared for this by creating a Ghost class and a factory class for it.
+    18/10/2023: I have created an enum for ghost behaviour, and created a random movement behaviour to be used in uniform-cost maze.
+                I have made it so that the path to the goal for uniform-cost is only recalculated if any of the ghosts move position.

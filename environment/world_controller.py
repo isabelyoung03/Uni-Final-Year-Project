@@ -11,13 +11,36 @@ class WorldController:
         self.timer = pygame.time.Clock()
         self.movement_delay = 500 
 
+    """
+    Update the player
+    """
     def update_player(self):
         self.player.decide()
 
-    def update_ghosts(self):
+    """
+    Get the player to calculate its path to the goal as the environment has changed
+    """
+    def player_calculate_path(self):
+        opponent_locations = []
         for ghost in self.ghosts:
-            ghost.decide()
+            opponent_locations.append(ghost.get_location())
+        self.player.find_path(opponent_locations)
 
+    """
+    Update each the ghosts
+
+    Return true if any of the ghosts have changed position, otherwise false
+    """
+    def update_ghosts(self):
+        changes = False
+        for ghost in self.ghosts:
+            if ghost.decide():
+                changes = True
+        return changes
+
+    """
+    Render world on the screen
+    """
     def render(self):
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
@@ -31,6 +54,7 @@ class WorldController:
     """
     def run(self):
         pygame.display.set_caption(self.maze.maze_size.to_string() + " Maze")
+        self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
         while True:
@@ -41,6 +65,7 @@ class WorldController:
                     if event.key == pygame.K_q:
                         sys.exit()
                 elif event.type == MOVE_AGENTS:
-                        self.update_ghosts()
-                        self.update_player()
-                        self.render()
+                    if self.update_ghosts(): #if any ghosts move
+                        self.player_calculate_path() #recalculate player path
+                    self.update_player()
+                    self.render()

@@ -14,7 +14,7 @@ class BreadthFirstSearch(SearchAlgorithm):
     """
     Searches the maze and returns a path to the goal
     """
-    def search(self, start_x, start_y):
+    def search(self, start_x, start_y, opponent_locations):
         queue = deque()
         queue.append([(start_x, start_y)])
 

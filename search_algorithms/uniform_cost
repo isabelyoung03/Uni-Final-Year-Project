@@ -5,10 +5,11 @@ from search_algorithms.Search_algo import SearchAlgorithm
 Uniform-cost search
 """
 class UniformCostSearch(SearchAlgorithm):
-    def __init__(self, maze):
+    def __init__(self, maze, opponent_locations):
         self.maze = maze
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
+        self.opponent_locations = opponent_locations
 
     """
     Searches the maze and returns best square to go to next
@@ -17,4 +18,4 @@ class UniformCostSearch(SearchAlgorithm):
         print("searching")
 
     def get_enum(self):
-        return SearchAlgoType.DEPTH
+        return SearchAlgoType.UNIFORM

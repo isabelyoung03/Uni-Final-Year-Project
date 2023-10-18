@@ -29,37 +29,53 @@ class Ghost(Agent):
     
     """
     Moves ghost to the square to the left
+
+    Returns true if move successful, otherwise false
     """
     def move_left(self):
         nextNode = self.map[self.y][self.x-1]
         if nextNode == ' ':
             self.x = self.x - 1
             self.current_sprite = self.left_sprite
+            return True
+        return False
 
     """
     Moves ghost to the square to the right
+
+    Returns true if move successful, otherwise false
     """
     def move_right(self):
         nextNode = self.map[self.y][self.x+1]
         if nextNode == ' ':
             self.x = self.x + 1
             self.current_sprite = self.right_sprite
+            return True
+        return False
 
     """
     Moves ghost to the square below
+
+    Returns true if move successful, otherwise false
     """
     def move_down(self):
         nextNode = self.map[self.y+1][self.x]
         if nextNode == ' ':
             self.y = self.y + 1
+            return True
+        return False
 
     """
     Moves ghost to the square above
+
+    Returns true if move successful, otherwise false
     """
     def move_up(self):
         nextNode = self.map[self.y-1][self.x]
         if nextNode == ' ':
             self.y = self.y - 1
+            return True
+        return False
     
     """
     Draws the ghost on the screen
@@ -71,18 +87,20 @@ class Ghost(Agent):
 
     """
     Decide on a next move
+
+    Returns true if move happened, false otherwise
     """
     def decide(self):
         if self.behaviour == GhostBehaviour.RANDOM:
             random_integer = random.randint(1, 5)
             if random_integer == 1:
-                self.move_down()
+                return self.move_down()
             elif random_integer == 2:
-                self.move_left()
+                return self.move_left()
             elif random_integer == 3:
-                self.move_right()
+                return self.move_right()
             elif random_integer == 4:
-                self.move_up()
-
+                return self.move_up()
         elif self.behaviour == GhostBehaviour.INTELLIGENT:
             pass #add intelligence here...
+        return False #did not move, no need to update search

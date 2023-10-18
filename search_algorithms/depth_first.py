@@ -13,7 +13,7 @@ class DepthFirstSearch(SearchAlgorithm):
     """
     Searches the maze and returns a path to the goal
     """
-    def search(self, start_x, start_y, path=None):
+    def search(self, start_x, start_y, opponent_locations, path=None):
         if path is None:
             path = []
 
@@ -30,7 +30,7 @@ class DepthFirstSearch(SearchAlgorithm):
             new_x = start_x + i
             new_y = start_y + j
             if self.maze.check_valid_location(new_x, new_y) and 0 <= new_y < self.y_axis_length and 0 <= new_x < self.x_axis_length:
-                result = self.search(new_x, new_y, path)
+                result = self.search(new_x, new_y, opponent_locations, path)
                 if result:
                     return result
         path.pop()        

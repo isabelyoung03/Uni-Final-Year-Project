@@ -33,9 +33,7 @@ class Player(Agent):
         self.strict_path = None #strict path to follow for depth-first and breadth-first as no opponents
         self.path_index = 0
 
-        print(search_algorithm.get_enum())
-        if search_algorithm.get_enum() == SearchAlgoType.BREADTH or search_algorithm.get_enum() == SearchAlgoType.DEPTH:
-            self.strict_path = self.find_path()
+        self.path_to_follow = None
     
     """
     Moves player to the square to the left
@@ -80,37 +78,34 @@ class Player(Agent):
     """
     Decide on a path to follow based on the search algorithm (only for breadth or depth first search)
     """
-    def find_path(self):
-        path = self.search_algorithm.search(self.x, self.y)
+    def find_path(self, opponent_locations):
+        path = self.search_algorithm.search(self.x, self.y, opponent_locations)
         if path:
             print(path)
             print("Path found to goal! Following...")
-            return path
+            self.path_to_follow = path
         else:
             print("No solution to goal!")
-        return []
 
     """
     Follow the path from the algorithm - for depth and breadth first
     """
     def follow_path(self):
-        if self.path_index < len(self.strict_path):
-            i, j = self.strict_path[self.path_index]
-            if i - self.x == 1:
-                self.move_right()
-            elif i - self.x == -1:
-                self.move_left()
-            elif j - self.y == 1:
-                self.move_down()
-            elif j - self.y == -1:
-                self.move_up()
-            self.path_index += 1 
+        if self.path_to_follow is not None:
+            if self.path_index < len(self.path_to_follow):
+                i, j = self.path_to_follow[self.path_index]
+                if i - self.x == 1:
+                    self.move_right()
+                elif i - self.x == -1:
+                    self.move_left()
+                elif j - self.y == 1:
+                    self.move_down()
+                elif j - self.y == -1:
+                    self.move_up()
+                self.path_index += 1 
 
     """
     Decide on a next move
     """
     def decide(self):
-        if self.strict_path is not None:
-            self.follow_path()
-        else:
-            print("Making decisions...")
+        self.follow_path()
