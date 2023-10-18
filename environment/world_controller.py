@@ -9,13 +9,16 @@ class WorldController:
         self.ghosts = ghosts
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 1000 
+        self.movement_delay = 2000 
+
+    def player_decide(self):
+        return self.player.decide()
 
     """
     Update the player
     """
-    def update_player(self):
-        self.player.decide()
+    def update_player(self, action):
+        return self.player.execute(action)
 
     """
     Get the player to calculate its path to the goal as the environment has changed
@@ -26,15 +29,21 @@ class WorldController:
             opponent_locations.append(ghost.get_location())
         self.player.find_path(opponent_locations)
 
+    def ghosts_decide(self):
+        ghost_actions = []
+        for ghost in self.ghosts:
+            ghost_actions.append(ghost.decide())
+        return ghost_actions
+
     """
     Update each the ghosts
 
     Return true if any of the ghosts have changed position, otherwise false
     """
-    def update_ghosts(self):
+    def update_ghosts(self, ghost_actions):
         changes = False
-        for ghost in self.ghosts:
-            if ghost.decide():
+        for i in range(len(ghost_actions)):
+            if self.ghosts[i].execute(ghost_actions[i]):
                 changes = True
         return changes
 
@@ -54,6 +63,7 @@ class WorldController:
     """
     def run(self):
         pygame.display.set_caption(self.maze.maze_size.to_string() + " Maze")
+        self.render()
         self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
@@ -65,7 +75,9 @@ class WorldController:
                     if event.key == pygame.K_q:
                         sys.exit()
                 elif event.type == MOVE_AGENTS:
-                    if self.update_ghosts(): #if any ghosts move
-                        self.player_calculate_path() #recalculate player path
-                    self.update_player()
+                    player_action = self.player_decide() #decide players next move
+                    ghost_actions = self.ghosts_decide() #decide all ghosts next moves
+                    self.update_player(player_action)
+                    if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
+                        self.player_calculate_path() #recalculate player path for next round
                     self.render()

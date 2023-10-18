@@ -26,3 +26,11 @@ class Agent():
     @abstractmethod
     def move_up(self):
         pass
+
+    @abstractmethod
+    def decide(self):
+        pass
+
+    @abstractmethod
+    def execute(self, action):
+        pass

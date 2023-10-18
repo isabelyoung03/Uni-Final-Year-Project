@@ -2,6 +2,7 @@ import time
 import pygame
 from agents.Agent import Agent
 import config
+from enums.action import Action
 from enums.search_algorithm_type import SearchAlgoType 
 
 class Player(Agent):
@@ -81,9 +82,9 @@ class Player(Agent):
     def find_path(self, opponent_locations):
         path = self.search_algorithm.search(self.x, self.y, opponent_locations)
         if path:
-            print(path)
-            print("Path found to goal! Following...")
+            print("Updated path to goal! Following...")
             self.path_to_follow = path
+            self.path_index = 0
         else:
             print("No solution to goal!")
 
@@ -91,21 +92,36 @@ class Player(Agent):
     Follow the path from the algorithm - for depth and breadth first
     """
     def follow_path(self):
+        action = Action.IDLE
         if self.path_to_follow is not None:
             if self.path_index < len(self.path_to_follow):
                 i, j = self.path_to_follow[self.path_index]
                 if i - self.x == 1:
-                    self.move_right()
+                    action = Action.RIGHT
                 elif i - self.x == -1:
-                    self.move_left()
+                    action = Action.LEFT
                 elif j - self.y == 1:
-                    self.move_down()
+                    action = Action.DOWN
                 elif j - self.y == -1:
-                    self.move_up()
+                    action = Action.UP
                 self.path_index += 1 
+        return action
 
     """
     Decide on a next move
     """
     def decide(self):
-        self.follow_path()
+        return self.follow_path()
+
+    """
+    Execute specified action
+    """
+    def execute(self, action):
+        if action == Action.DOWN:
+            self.move_down()
+        elif action == Action.LEFT:
+            self.move.left()
+        elif action == Action.RIGHT:
+            self.move_right()
+        elif action == Action.UP:
+            self.move_up()

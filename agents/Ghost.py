@@ -2,6 +2,7 @@ import random
 import pygame
 from agents.Agent import Agent
 import config
+from enums.action import Action
 from enums.ghost_behaviour import GhostBehaviour 
 
 class Ghost(Agent):
@@ -88,19 +89,35 @@ class Ghost(Agent):
     """
     Decide on a next move
 
-    Returns true if move happened, false otherwise
+    Returns tAction enum
     """
     def decide(self):
         if self.behaviour == GhostBehaviour.RANDOM:
             random_integer = random.randint(1, 5)
             if random_integer == 1:
-                return self.move_down()
+                return Action.DOWN
             elif random_integer == 2:
-                return self.move_left()
+                return Action.LEFT
             elif random_integer == 3:
-                return self.move_right()
+                return Action.RIGHT
             elif random_integer == 4:
-                return self.move_up()
+                return Action.UP
         elif self.behaviour == GhostBehaviour.INTELLIGENT:
             pass #add intelligence here...
-        return False #did not move, no need to update search
+        return Action.IDLE
+    
+    """
+    Execute specified action
+    """
+    def execute(self, action):
+        if action == Action.DOWN:
+            self.move_down()
+        elif action == Action.LEFT:
+            self.move_left()
+        elif action == Action.RIGHT:
+            self.move_right()
+        elif action == Action.UP:
+            self.move_up()
+        else:
+            return False #did not move
+        return True
