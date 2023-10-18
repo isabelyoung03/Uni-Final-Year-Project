@@ -53,3 +53,7 @@ class Maze:
     #Return maze size enum
     def get_maze_size(self):
         return self.maze_size
+    
+    #Return map as a 2D array
+    def get_map(self):
+        return self.map

@@ -106,6 +106,9 @@ class Player(Agent):
                 self.move_up()
             self.path_index += 1 
 
+    """
+    Decide on a next move
+    """
     def decide(self):
         if self.strict_path is not None:
             self.follow_path()

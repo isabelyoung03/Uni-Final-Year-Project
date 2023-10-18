@@ -16,7 +16,7 @@ class WorldController:
 
     def update_ghosts(self):
         for ghost in self.ghosts:
-            ghost.move_right()
+            ghost.decide()
 
     def render(self):
         self.screen.fill(config.BLACK)
