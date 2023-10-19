@@ -16,11 +16,11 @@ class Player(Agent):
 
     """
 
-    def __init__(self, x, y, search_algorithm):
+    def __init__(self, x, y, search_algorithm, goal):
         Agent.__init__(self, x, y, search_algorithm)
         self.x = x
         self.y = y
-        self.goal_achieved = False
+        self.goal = goal
 
         transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
 
@@ -93,6 +93,8 @@ class Player(Agent):
     """
     def follow_path(self):
         action = Action.IDLE
+        print("Path index: " + str(self.path_index))
+        print("Path to follow: " + str(self.path_to_follow))
         if self.path_to_follow is not None:
             if self.path_index < len(self.path_to_follow):
                 i, j = self.path_to_follow[self.path_index]
@@ -105,6 +107,8 @@ class Player(Agent):
                 elif j - self.y == -1:
                     action = Action.UP
                 self.path_index += 1 
+        print(action)
+        print("-----")
         return action
 
     """

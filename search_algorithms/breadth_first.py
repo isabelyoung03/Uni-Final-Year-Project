@@ -6,8 +6,9 @@ from search_algorithms.Search_algo import SearchAlgorithm
 Breadth-first search 
 """
 class BreadthFirstSearch(SearchAlgorithm):
-    def __init__(self, maze):
+    def __init__(self, maze, goal):
         self.maze = maze
+        self.goal = goal
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
@@ -22,7 +23,7 @@ class BreadthFirstSearch(SearchAlgorithm):
             path = queue.popleft()
             x, y = path[-1]
 
-            if self.maze.map[y][x] == 'G':
+            if (x, y) == self.goal.get_location():
                 return path #goal has been found
             
             for i, j in SearchAlgorithm.movements: #for each possible next square

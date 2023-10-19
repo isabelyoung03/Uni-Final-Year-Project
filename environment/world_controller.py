@@ -3,13 +3,14 @@ import pygame
 import config
 
 class WorldController:
-    def __init__(self, maze, player, ghosts):
+    def __init__(self, maze, player, ghosts, goal):
         self.maze = maze
         self.player = player
         self.ghosts = ghosts
+        self.goal = goal
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 2000 
+        self.movement_delay = 1000 
 
     def player_decide(self):
         return self.player.decide()
@@ -53,6 +54,7 @@ class WorldController:
     def render(self):
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
+        self.goal.draw(self.screen)
         self.player.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
@@ -63,10 +65,12 @@ class WorldController:
     """
     def run(self):
         pygame.display.set_caption(self.maze.maze_size.to_string() + " Maze")
+        goal_achieved = False
         self.render()
         self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
+        i = 0
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -74,10 +78,17 @@ class WorldController:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
-                elif event.type == MOVE_AGENTS:
+                elif event.type == MOVE_AGENTS and not self.goal.get_achieved():
+                    print("--- Cycle " + str(i) + " ---")
                     player_action = self.player_decide() #decide players next move
                     ghost_actions = self.ghosts_decide() #decide all ghosts next moves
-                    self.update_player(player_action)
+                    goal_achieved = self.update_player(player_action)
                     if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
                         self.player_calculate_path() #recalculate player path for next round
+
+                    if self.player.get_location() == self.goal.get_location(): # if goal achieved
+                        self.goal.set_achieved()
+                        print("Reached goal!")
+                        
+                    i += 1
                     self.render()

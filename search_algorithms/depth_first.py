@@ -5,8 +5,9 @@ from search_algorithms.Search_algo import SearchAlgorithm
 Depth-first search
 """
 class DepthFirstSearch(SearchAlgorithm):
-    def __init__(self, maze):
+    def __init__(self, maze, goal):
         self.maze = maze
+        self.goal = goal
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
@@ -20,7 +21,7 @@ class DepthFirstSearch(SearchAlgorithm):
         if (start_x, start_y) in path:
             return None #been here before so no solution
         
-        if self.maze.map[start_y][start_x] == 'G':
+        if (start_x, start_y) == self.goal.get_location():
             path.append((start_x, start_y))
             return path #goal has been found
 
