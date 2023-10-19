@@ -14,10 +14,10 @@ class SearchAlgorithmFactory():
         elif search_algo_type == SearchAlgoType.DEPTH:
             return DepthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.UNIFORM:
-            return UniformCostSearch(maze)
+            return UniformCostSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.GREEDY_A_STAR:
-            return DepthFirstSearch(maze)
+            return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.MINIMAX:
-            return DepthFirstSearch(maze)
+            return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.EXPECTIMAX:
-            return DepthFirstSearch(maze)
+            return BreadthFirstSearch(maze, goal)

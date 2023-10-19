@@ -7,8 +7,9 @@ from search_algorithms.Search_algo import SearchAlgorithm
 Uniform-cost search
 """
 class UniformCostSearch(SearchAlgorithm):
-    def __init__(self, maze):
+    def __init__(self, maze, goal):
         self.maze = maze
+        self.goal = goal
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
@@ -23,7 +24,7 @@ class UniformCostSearch(SearchAlgorithm):
             cost, path = frontier.get()
             x, y = path[-1]  
 
-            if self.maze.map[y][x] == 'G':
+            if (x, y) == self.goal.get_location(): #if goal found
                 return path  
 
             for i, j in SearchAlgorithm.movements:

@@ -19,7 +19,7 @@ class WorldController:
     Update the player
     """
     def update_player(self, action):
-        return self.player.execute(action)
+        self.player.execute(action)
 
     """
     Get the player to calculate its path to the goal as the environment has changed
@@ -82,13 +82,13 @@ class WorldController:
                     print("--- Cycle " + str(i) + " ---")
                     player_action = self.player_decide() #decide players next move
                     ghost_actions = self.ghosts_decide() #decide all ghosts next moves
-                    goal_achieved = self.update_player(player_action)
+                    self.update_player(player_action)
                     if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
                         self.player_calculate_path() #recalculate player path for next round
 
                     if self.player.get_location() == self.goal.get_location(): # if goal achieved
                         self.goal.set_achieved()
                         print("Reached goal!")
-                        
+
                     i += 1
                     self.render()
