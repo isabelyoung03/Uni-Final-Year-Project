@@ -13,7 +13,10 @@ class WorldController:
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 300 
-        self.home_button = IconButton("Home.png", 815, 15, 32, 32)
+        maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
+        self.home_button = IconButton("Home.png", maze_width + 15, 15, 32, 32, True)
+        self.play_button = IconButton("Play.png", maze_width + 50, 18, 32, 32, False)
+        self.pause_button = IconButton("Pause.png", maze_width + 55, 15, 32, 34, True)
 
     def player_decide(self):
         return self.player.decide()
@@ -62,6 +65,8 @@ class WorldController:
         for ghost in self.ghosts:
             ghost.draw(self.screen)
         self.home_button.draw(self.screen)
+        self.play_button.draw(self.screen)
+        self.pause_button.draw(self.screen)
         pygame.display.flip()
 
     """
@@ -73,7 +78,7 @@ class WorldController:
         self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
-        i = 0
+        cycle_count = 0
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -82,17 +87,32 @@ class WorldController:
                     if event.key == pygame.K_q:
                         sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.home_button.rectangle.collidepoint(event.pos):
+                    if self.home_button.handle_event(event):
                         return True #go back to menu page
-                elif event.type == MOVE_AGENTS and not self.goal.get_achieved():
-                    print("--- Cycle " + str(i) + " ---")
-                    player_action = self.player_decide() #decide players next move
-                    ghost_actions = self.ghosts_decide() #decide all ghosts next moves
-                    self.update_player(player_action)
-                    if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
-                        self.player_calculate_path() #recalculate player path for next round
-                    if self.player.get_location() == self.goal.get_location(): #if player reached goal
-                        self.goal.set_achieved()
-                        print("Reached goal!")
-                    i += 1
-                    self.render()
+                    elif self.pause_button.handle_event(event) and not self.goal.get_achieved():
+                        self.pause_button.toggle(True)
+                        self.play_button.toggle(False)
+                    elif self.play_button.handle_event(event) and not self.goal.get_achieved():
+                        self.pause_button.toggle(False)
+                        self.play_button.toggle(True)
+                    elif self.play_button.handle_event(event):
+                        self.pause_button.toggle(False)
+                        self.play_button.toggle(True)
+                elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled():
+                    print("--- Cycle " + str(cycle_count) + " ---")
+                    self.cycle()
+                    cycle_count += 1
+                self.render()
+
+    def cycle(self):
+        player_action = self.player_decide() #decide players next move
+        ghost_actions = self.ghosts_decide() #decide all ghosts next moves
+        self.update_player(player_action)
+        if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
+            self.player_calculate_path() #recalculate player path for next round
+        if self.player.get_location() == self.goal.get_location(): #if player reached goal
+            self.goal.set_achieved()
+            self.play_button.toggle(True)
+            self.pause_button.toggle(True)
+            print("Reached goal!")
+        self.render()

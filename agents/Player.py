@@ -123,7 +123,7 @@ class Player(Agent):
         if action == Action.DOWN:
             self.move_down()
         elif action == Action.LEFT:
-            self.move.left()
+            self.move_left()
         elif action == Action.RIGHT:
             self.move_right()
         elif action == Action.UP:

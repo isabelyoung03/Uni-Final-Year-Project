@@ -15,3 +15,4 @@ Week 4:
     18/10/2023: I have created an enum for ghost behaviour, and created a random movement behaviour to be used in uniform-cost maze.
                 I have made it so that the path to the goal for uniform-cost is only recalculated if any of the ghosts move position.
                 I just completed uniform-cost search for when the ghosts in the maze are static. The player avoids paths with ghosts in.
+    19/10/2023: I have now completed uniform-cost search and starting on adding pause/play/replay buttons to maze screens.
