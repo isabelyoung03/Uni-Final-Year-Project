@@ -91,10 +91,8 @@ class WorldController:
                     self.update_player(player_action)
                     if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
                         self.player_calculate_path() #recalculate player path for next round
-
-                    if self.player.get_location() == self.goal.get_location(): # if goal achieved
+                    if self.player.get_location() == self.goal.get_location(): #if player reached goal
                         self.goal.set_achieved()
                         print("Reached goal!")
-
                     i += 1
                     self.render()

@@ -93,11 +93,12 @@ class Player(Agent):
     """
     def follow_path(self):
         action = Action.IDLE
-        print("Path index: " + str(self.path_index))
-        print("Path to follow: " + str(self.path_to_follow))
         if self.path_to_follow is not None:
             if self.path_index < len(self.path_to_follow):
                 i, j = self.path_to_follow[self.path_index]
+                if ((i,j) == (self.x, self.y)): #if already at next location in path to be followed
+                    self.path_index += 1 
+                    i, j = self.path_to_follow[self.path_index] #get the next location
                 if i - self.x == 1:
                     action = Action.RIGHT
                 elif i - self.x == -1:
@@ -107,8 +108,8 @@ class Player(Agent):
                 elif j - self.y == -1:
                     action = Action.UP
                 self.path_index += 1 
-        print(action)
-        print("-----")
+        if action == Action.IDLE:
+            print("Path to follow: " + str(self.path_to_follow))
         return action
 
     """
