@@ -108,8 +108,6 @@ class Player(Agent):
                 elif j - self.y == -1:
                     action = Action.UP
                 self.path_index += 1 
-        if action == Action.IDLE:
-            print("Path to follow: " + str(self.path_to_follow))
         return action
 
     """
