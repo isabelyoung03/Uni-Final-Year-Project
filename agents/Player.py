@@ -129,3 +129,9 @@ class Player(Agent):
             self.move_right()
         elif action == Action.UP:
             self.move_up()
+
+    """
+    Returns players search algorithm as a string
+    """
+    def search_algo_string(self):
+        return self.search_algorithm.get_enum().value

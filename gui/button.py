@@ -46,7 +46,7 @@ class Button:
             screen.blit(self.text_surface, textRect)
 
     """
-    Handles events such as clicking on the button or hovering over it
+    Handles events such as clicking on the button
     """
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:

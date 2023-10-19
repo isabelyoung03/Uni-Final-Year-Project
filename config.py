@@ -2,7 +2,7 @@
 MENU_SCREEN_WIDTH, MENU_SCREEN_HEIGHT = 600, 600
 
 # Maze maps
-SMALL_MAZE_SCREEN_WIDTH, SMALL_MAZE_SCREEN_HEIGHT = 800, 400
+SMALL_MAZE_SCREEN_WIDTH, SMALL_MAZE_SCREEN_HEIGHT = 1000, 400
 SMALL_MAZE_MAP =    ["+--------------+",
                     "|        XX    |",
                     "|XXX XXX X  XX |",
@@ -12,7 +12,7 @@ SMALL_MAZE_MAP =    ["+--------------+",
                     "|       XX     |",
                     "+--------------+"]
 
-MEDIUM_MAZE_SCREEN_WIDTH, MEDIUM_MAZE_SCREEN_HEIGHT = 800, 800
+MEDIUM_MAZE_SCREEN_WIDTH, MEDIUM_MAZE_SCREEN_HEIGHT = 1000, 800
 MEDIUM_MAZE_MAP =   ["+--------------+",
                     "|        XX    |",
                     "|X XXXXX X  XX |",
@@ -30,7 +30,7 @@ MEDIUM_MAZE_MAP =   ["+--------------+",
                     "|              |",
                     "+--------------+"]
 
-LARGE_MAZE_SCREEN_WIDTH, LARGE_MAZE_SCREEN_HEIGHT = 1300, 800
+LARGE_MAZE_SCREEN_WIDTH, LARGE_MAZE_SCREEN_HEIGHT = 1500, 800
 LARGE_MAZE_MAP =    ["+------------------------+",
                     "|             X        X |",
                     "| XXX XXX XXXXXX XXXXX X |",

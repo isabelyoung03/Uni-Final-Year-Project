@@ -1,6 +1,8 @@
 import sys
 import pygame
+from gui.button import Button
 import config
+from gui.icon_buttton import IconButton
 
 class WorldController:
     def __init__(self, maze, player, ghosts, goal):
@@ -11,6 +13,7 @@ class WorldController:
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 300 
+        self.home_button = IconButton("Home.png", 815, 15, 32, 32)
 
     def player_decide(self):
         return self.player.decide()
@@ -58,14 +61,14 @@ class WorldController:
         self.player.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
+        self.home_button.draw(self.screen)
         pygame.display.flip()
 
     """
     Runs the maze on the screen
     """
     def run(self):
-        pygame.display.set_caption(self.maze.maze_size.to_string() + " Maze")
-        goal_achieved = False
+        pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
         self.render()
         self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
@@ -78,6 +81,9 @@ class WorldController:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.home_button.rectangle.collidepoint(event.pos):
+                        return True #go back to menu page
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved():
                     print("--- Cycle " + str(i) + " ---")
                     player_action = self.player_decide() #decide players next move
