@@ -10,7 +10,7 @@ class WorldController:
         self.goal = goal
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 1000 
+        self.movement_delay = 300 
 
     def player_decide(self):
         return self.player.decide()
