@@ -24,8 +24,9 @@ class GhostListFactory:
 
         elif maze_size == MazeSize.LARGE and search_algorithm_enum == SearchAlgoType.UNIFORM:
             ghost1 = Ghost(5,4, maze, GhostBehaviour.RANDOM)
-            ghost2 = Ghost(22,9, maze, GhostBehaviour.RANDOM)
+            ghost2 = Ghost(22,2, maze, GhostBehaviour.RANDOM)
             ghost3 = Ghost(4,14, maze, GhostBehaviour.RANDOM)
-            return [ghost1, ghost2, ghost3]
+            ghost4 = Ghost(8,9, maze, GhostBehaviour.RANDOM)
+            return [ghost1, ghost2, ghost3, ghost4]
 
         return []

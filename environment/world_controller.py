@@ -3,6 +3,7 @@ import pygame
 from gui.button import Button
 import config
 from gui.icon_buttton import IconButton
+from gui.menu import display_text
 
 class WorldController:
     def __init__(self, maze, player, ghosts, goal):
@@ -13,10 +14,11 @@ class WorldController:
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 300 
-        maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
-        self.home_button = IconButton("Home.png", maze_width + 15, 15, 32, 32, True)
-        self.play_button = IconButton("Play.png", maze_width + 50, 18, 32, 32, False)
-        self.pause_button = IconButton("Pause.png", maze_width + 55, 15, 32, 34, True)
+        self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
+        self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
+        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, False)
+        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, True)
+        self.cycle_count = 0
 
     def player_decide(self):
         return self.player.decide()
@@ -67,6 +69,9 @@ class WorldController:
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
+        if self.goal.get_achieved():
+            display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
+            display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
         pygame.display.flip()
 
     """
@@ -78,7 +83,6 @@ class WorldController:
         self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
-        cycle_count = 0
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -99,9 +103,9 @@ class WorldController:
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled():
-                    print("--- Cycle " + str(cycle_count) + " ---")
+                    print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
-                    cycle_count += 1
+                    self.cycle_count += 1
                 self.render()
 
     def cycle(self):
