@@ -18,15 +18,18 @@ class GhostListFactory:
             return [ghost1]
 
         elif maze_size == MazeSize.MEDIUM and search_algorithm_enum == SearchAlgoType.UNIFORM:
-            ghost1 = Ghost(13,1, maze, GhostBehaviour.RANDOM)
+            ghost1 = Ghost(10,6, maze, GhostBehaviour.RANDOM)
             ghost2 = Ghost(4,14, maze, GhostBehaviour.RANDOM)
-            return [ghost1, ghost2]
+            ghost3 = Ghost(8,8, maze, GhostBehaviour.RANDOM)
+            return [ghost1, ghost2, ghost3]
 
         elif maze_size == MazeSize.LARGE and search_algorithm_enum == SearchAlgoType.UNIFORM:
             ghost1 = Ghost(5,4, maze, GhostBehaviour.RANDOM)
             ghost2 = Ghost(22,2, maze, GhostBehaviour.RANDOM)
             ghost3 = Ghost(4,14, maze, GhostBehaviour.RANDOM)
             ghost4 = Ghost(8,9, maze, GhostBehaviour.RANDOM)
-            return [ghost1, ghost2, ghost3, ghost4]
+            ghost5 = Ghost(12,5, maze, GhostBehaviour.RANDOM)
+            ghost6 = Ghost(15,3, maze, GhostBehaviour.RANDOM)
+            return [ghost1, ghost2, ghost3, ghost4, ghost5, ghost6]
 
         return []
