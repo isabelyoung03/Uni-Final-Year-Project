@@ -20,7 +20,7 @@ class Menu:
         breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 90, 355, SearchAlgoType.BREADTH)
         depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
         uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
-        greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 90, 415, SearchAlgoType.GREEDY_A_STAR)
+        greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 90, 415, SearchAlgoType.A_STAR)
         minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 43, 415, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, 400, 415, SearchAlgoType.EXPECTIMAX)
 
