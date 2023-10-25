@@ -6,7 +6,7 @@ class SearchAlgoType(Enum):
     BREADTH = 'Breadth-First'
     DEPTH = 'Depth-First'
     UNIFORM = 'Uniform-cost'
-    GREEDY = 'Greedy'
+    A_STAR_VS_GREEDY = 'A* vs Greedy'
     A_STAR = 'A*'
     MINIMAX = 'Minimax'
     EXPECTIMAX = 'Expectimax'

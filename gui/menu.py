@@ -20,13 +20,14 @@ class Menu:
         breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 90, 355, SearchAlgoType.BREADTH)
         depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
         uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
-        greedy_a_star = OptionButton('Greedy vs A*', 20, config.GREEN, config.BLACK, 90, 415, SearchAlgoType.A_STAR)
-        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 43, 415, SearchAlgoType.MINIMAX)
-        expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, 400, 415, SearchAlgoType.EXPECTIMAX)
+        a_star = OptionButton('A*', 20, config.GREEN, config.BLACK, 140, 415, SearchAlgoType.A_STAR)
+        greedy_a_star = OptionButton('A* vs Greedy', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 415, SearchAlgoType.A_STAR_VS_GREEDY)
+        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 420, 415, SearchAlgoType.MINIMAX)
+        expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
 
-        self.algo_button_group = ButtonGroup([breadth, depth, uniform, greedy_a_star, minimax, expectimax])
+        self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, greedy_a_star, minimax, expectimax])
 
-        self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 480, 100, 50)
+        self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 540, 100, 50)
 
         self.menu_screen = pygame.display.set_mode((config.MENU_SCREEN_WIDTH, config.MENU_SCREEN_HEIGHT))
 

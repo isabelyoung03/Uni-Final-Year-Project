@@ -38,6 +38,9 @@ class WorldController:
             opponent_locations.append(ghost.get_location())
         self.player.find_path(opponent_locations)
 
+    """
+    Make each ghost decide on its next action
+    """
     def ghosts_decide(self):
         ghost_actions = []
         for ghost in self.ghosts:
@@ -93,7 +96,7 @@ class WorldController:
                         sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_button.handle_event(event):
-                        return True #go back to menu page
+                        return #go back to menu page
                     elif self.pause_button.handle_event(event) and not self.goals[0].get_achieved():
                         self.pause_button.toggle(True)
                         self.play_button.toggle(False)
