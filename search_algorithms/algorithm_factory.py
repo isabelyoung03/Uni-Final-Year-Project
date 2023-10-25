@@ -1,3 +1,4 @@
+from search_algorithms.a_star import AStarSearch
 from search_algorithms.breadth_first import BreadthFirstSearch
 from enums.search_algorithm_type import SearchAlgoType
 from search_algorithms.depth_first import DepthFirstSearch
@@ -15,7 +16,9 @@ class SearchAlgorithmFactory():
             return DepthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.UNIFORM:
             return UniformCostSearch(maze, goal)
-        elif search_algo_type == SearchAlgoType.GREEDY_A_STAR:
+        elif search_algo_type == SearchAlgoType.A_STAR:
+            return AStarSearch(maze, goal)
+        elif search_algo_type == SearchAlgoType.A_STAR_VS_GREEDY:
             return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.MINIMAX:
             return BreadthFirstSearch(maze, goal)

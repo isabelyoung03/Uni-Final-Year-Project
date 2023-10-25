@@ -4,6 +4,7 @@ from agents.player_factory import PlayerFactory
 from enums.search_algorithm_type import SearchAlgoType
 from environment.Goal import Goal
 from environment.Goal_factory import GoalFactory
+from environment.a_star_world_controller import AStarWorldController
 from environment.world_controller import WorldController
 from search_algorithms.algorithm_factory import SearchAlgorithmFactory
 
@@ -17,4 +18,6 @@ class WorldControllerFactory:
         search_algorithm = SearchAlgorithmFactory.create_new(search_algorithm_enum, maze, goals)
         player = PlayerFactory.get_player(maze, search_algorithm)
         ghosts = GhostListFactory.get_ghost_list(maze, search_algorithm_enum)
-        return WorldController(maze, player, ghosts, goals)
+        if search_algorithm_enum == SearchAlgoType.A_STAR:
+            return AStarWorldController(maze, player, ghosts, goals)
+        return WorldController(maze, player, ghosts, goals[0])

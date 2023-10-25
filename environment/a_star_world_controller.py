@@ -1,26 +1,32 @@
 import sys
 import pygame
+from gui.button_group import ButtonGroup
 from gui.button import Button
 import config
 from gui.icon_buttton import IconButton
 from gui.menu import display_text
+from gui.option_button import OptionButton
+from search_algorithms.manhattan_distance import ManhattanDistance
 
 """
-Runs the maze on the screen for a world with one single goal
+Special world controller for the A star only world. Has option to choose heuristic used.
 """
-class WorldController:
-    def __init__(self, maze, player, ghosts, goal):
+class AStarWorldController:
+    def __init__(self, maze, player, ghosts, goals):
         self.maze = maze
         self.player = player
         self.ghosts = ghosts
-        self.goal = goal
+        self.goals = goals
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 300 
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
-        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, False)
-        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, True)
+        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
+        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
+        manhattan = OptionButton('Manhattan Distance', 20, config.GREEN, config.BLACK, 420, 415, ManhattanDistance)
+        heuristic2 = OptionButton('Heuristic Two', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, ManhattanDistance)
+        self.algo_button_group = ButtonGroup([manhattan, heuristic2])
         self.cycle_count = 0
 
     """
@@ -69,16 +75,17 @@ class WorldController:
     Render world on the screen
     """
     def render(self):
+        display_text('A* Heuristic:', 20, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 50, self.screen)
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
-        self.goal.draw(self.screen)
+        self.goals[0].draw(self.screen)
         self.player.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
-        if self.goal.get_achieved():
+        if self.goals[0].get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
         pygame.display.flip()
@@ -102,16 +109,16 @@ class WorldController:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_button.handle_event(event):
                         return #go back to menu page
-                    elif self.pause_button.handle_event(event) and not self.goal.get_achieved():
+                    elif self.pause_button.handle_event(event) and not self.goals[0].get_achieved():
                         self.pause_button.toggle(True)
                         self.play_button.toggle(False)
-                    elif self.play_button.handle_event(event) and not self.goal.get_achieved():
+                    elif self.play_button.handle_event(event) and not self.goals[0].get_achieved():
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                     elif self.play_button.handle_event(event):
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
-                elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled():
+                elif event.type == MOVE_AGENTS and not self.goals[0].get_achieved() and not self.pause_button.get_toggled():
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
                     self.cycle_count += 1
@@ -123,8 +130,8 @@ class WorldController:
         self.update_player(player_action)
         if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
             self.player_calculate_path() #recalculate player path for next round
-        if self.player.get_location() == self.goal.get_location(): #if player reached goal
-            self.goal.set_achieved()
+        if self.player.get_location() == self.goals[0].get_location(): #if player reached goal
+            self.goals[0].set_achieved()
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
             print("Reached goal!")

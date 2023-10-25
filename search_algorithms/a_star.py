@@ -1,16 +1,15 @@
-import math
-from queue import PriorityQueue
 from enums.search_algorithm_type import SearchAlgoType
 from search_algorithms.Search_algo import SearchAlgorithm
+from search_algorithms.manhattan_distance import ManhattanDistance
 
 """
 A* search
 """
 class AStarSearch(SearchAlgorithm):
-    def __init__(self, maze, goals, heuristic):
+    def __init__(self, maze, goals):
         self.maze = maze
         self.goals = goals
-        self.heuristic = heuristic
+        self.heuristic = ManhattanDistance
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
@@ -27,5 +26,8 @@ class AStarSearch(SearchAlgorithm):
     def calculate_distance(self, x, y):
         pass
     
+    def set_heuristic(self, heuristic):
+        self.heuristic = heuristic
+        
     def get_enum(self):
         return SearchAlgoType.A_STAR
