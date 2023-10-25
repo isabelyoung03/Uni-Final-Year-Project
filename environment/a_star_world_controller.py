@@ -80,32 +80,35 @@ class AStarWorldController(WorldController):
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
         while True:
-            self.get_heuristic()
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
+            if self.get_heuristic():
+                return
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
                         sys.exit()
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_q:
-                            sys.exit()
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        if self.home_button.handle_event(event):
-                            return #go back to menu page
-                        elif self.pause_button.handle_event(event) and not self.all_goals_achieved():
-                            self.pause_button.toggle(True)
-                            self.play_button.toggle(False)
-                        elif self.play_button.handle_event(event) and not self.all_goals_achieved():
-                            self.pause_button.toggle(False)
-                            self.play_button.toggle(True)
-                        elif self.play_button.handle_event(event):
-                            self.pause_button.toggle(False)
-                            self.play_button.toggle(True)
-                    elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled():
-                        print("--- Cycle " + str(self.cycle_count) + " ---")
-                        self.cycle()
-                        self.cycle_count += 1
-                    self.render()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.home_button.handle_event(event):
+                        return #go back to menu page
+                    elif self.pause_button.handle_event(event) and not self.all_goals_achieved():
+                        self.pause_button.toggle(True)
+                        self.play_button.toggle(False)
+                    elif self.play_button.handle_event(event) and not self.all_goals_achieved():
+                        self.pause_button.toggle(False)
+                        self.play_button.toggle(True)
+                    elif self.play_button.handle_event(event):
+                        self.pause_button.toggle(False)
+                        self.play_button.toggle(True)
+                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled():
+                    print("--- Cycle " + str(self.cycle_count) + " ---")
+                    self.cycle()
+                    self.cycle_count += 1
+                self.render()
 
+    """
+    Complete one cycle, updating everyone in the maze
+    """
     def cycle(self):
         player_action = self.player_decide() #decide players next move
         ghost_actions = self.ghosts_decide() #decide all ghosts next moves
@@ -119,6 +122,9 @@ class AStarWorldController(WorldController):
             print("Reached goal!")
         self.render()
 
+    """
+    Get the heuristic from the button group until play button is pressed
+    """
     def get_heuristic(self):
         heuristic = None
         while heuristic == None:
@@ -127,7 +133,9 @@ class AStarWorldController(WorldController):
                 if event.type == pygame.QUIT:
                         sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.play_button.handle_event(event): #if start button is pressed
+                    if self.home_button.handle_event(event):
+                        return True #go back to menu page
+                    elif self.play_button.handle_event(event): #if play button is pressed
                         heuristic = self.heuristic_button_group.get_result()
                         self.player.get_search_algorithm().set_heuristic(heuristic) #change A* heuristic
                         self.pause_button.toggle(False)
