@@ -19,14 +19,14 @@ class AStarWorldController:
         self.goals = goals
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 300 
+        self.movement_delay = config.SPEED 
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         manhattan = OptionButton('Manhattan Distance', 20, config.GREEN, config.BLACK, 420, 415, ManhattanDistance)
         heuristic2 = OptionButton('Heuristic Two', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, ManhattanDistance)
-        self.algo_button_group = ButtonGroup([manhattan, heuristic2])
+        self.heuristic_button_group = ButtonGroup([manhattan, heuristic2])
         self.cycle_count = 0
 
     """
@@ -75,19 +75,23 @@ class AStarWorldController:
     Render world on the screen
     """
     def render(self):
-        display_text('A* Heuristic:', 20, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 50, self.screen)
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
         self.goals[0].draw(self.screen)
         self.player.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
+        for goal in self.goals:
+            goal.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
+        self.heuristic_button_group.draw(self.screen)
         if self.goals[0].get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
+        display_text('A* Heuristic:', 20, config.WHITE, self.maze_width + 15, 50, self.screen)
+        self.heuristic_button_group.draw(self.screen)
         pygame.display.flip()
 
     """

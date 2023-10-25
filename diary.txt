@@ -16,3 +16,8 @@ Week 4:
                 I have made it so that the path to the goal for uniform-cost is only recalculated if any of the ghosts move position.
                 I just completed uniform-cost search for when the ghosts in the maze are static. The player avoids paths with ghosts in.
     19/10/2023: I have now completed uniform-cost search and starting on adding pause/play/replay buttons to maze screens.
+
+Week 5: 
+    25/10/2023: Today I have begun working on A* search. This is taking a lot of setup because it needs a special controller
+                becaues it differs so much to the other algorithms I have implemented so far, because it has multiple goals to achieve
+                and also requires options to change which heuristic it uses.

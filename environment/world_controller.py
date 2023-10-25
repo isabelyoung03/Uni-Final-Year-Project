@@ -16,11 +16,11 @@ class WorldController:
         self.goal = goal
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 300 
+        self.movement_delay = config.SPEED 
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
-        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, False)
-        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, True)
+        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
+        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         self.cycle_count = 0
 
     """
