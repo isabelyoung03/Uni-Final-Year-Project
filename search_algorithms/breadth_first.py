@@ -6,9 +6,9 @@ from search_algorithms.Search_algo import SearchAlgorithm
 Breadth-first search 
 """
 class BreadthFirstSearch(SearchAlgorithm):
-    def __init__(self, maze, goal):
+    def __init__(self, maze, goals):
         self.maze = maze
-        self.goal = goal
+        self.goal = goals[0]
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 

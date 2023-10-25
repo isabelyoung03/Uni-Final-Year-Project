@@ -16,11 +16,10 @@ class Player(Agent):
 
     """
 
-    def __init__(self, x, y, search_algorithm, goal):
+    def __init__(self, x, y, search_algorithm):
         Agent.__init__(self, x, y, search_algorithm)
         self.x = x
         self.y = y
-        self.goal = goal
 
         transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
 
