@@ -21,3 +21,5 @@ Week 5:
     25/10/2023: Today I have begun working on A* search. This is taking a lot of setup because it needs a special controller
                 becaues it differs so much to the other algorithms I have implemented so far, because it has multiple goals to achieve
                 and also requires options to change which heuristic it uses.
+Week 6:
+    30/10/2023: 
