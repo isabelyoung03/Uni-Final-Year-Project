@@ -22,4 +22,5 @@ Week 5:
                 becaues it differs so much to the other algorithms I have implemented so far, because it has multiple goals to achieve
                 and also requires options to change which heuristic it uses.
 Week 6:
-    30/10/2023: 
+    30/10/2023: I have created a new Node class to be used in A* search. I am continuing with A* search, and having problems with the program crashing.
+                I have made changes to the A* world controller as A* search will not have opponents.

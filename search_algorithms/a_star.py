@@ -2,7 +2,7 @@ import math
 from enums.search_algorithm_type import SearchAlgoType
 from search_algorithms.Search_algo import SearchAlgorithm
 from search_algorithms.manhattan_distance import ManhattanDistance
-from node import Node
+from search_algorithms.node import Node
 
 """
 A* search
@@ -18,7 +18,7 @@ class AStarSearch(SearchAlgorithm):
     """
     Searches the maze and returns best square to go to next
     """
-    def search(self, start_x, start_y, opponent_locations):
+    def search(self, start_x, start_y):
         open_list = []
         goal_coord = self.goals[0].get_location()
         h = self.heuristic.get_h(start_x, start_y, goal_coord[0], goal_coord[1])
@@ -55,7 +55,7 @@ class AStarSearch(SearchAlgorithm):
                     successor_node = Node(new_x, new_y, g, h, q) # create new node and set parent to q
                     open_list.append(successor_node)
 
-            closed_list.append(q)
+            closed_list.add(q)
         return None
 
     def set_heuristic(self, heuristic):

@@ -13,10 +13,9 @@ from search_algorithms.manhattan_distance import ManhattanDistance
 Special world controller for the A star only world. Has option to choose heuristic used.
 """
 class AStarWorldController(WorldController):
-    def __init__(self, maze, player, ghosts, goals):
+    def __init__(self, maze, player, goals):
         self.maze = maze
         self.player = player
-        self.ghosts = ghosts
         self.goals = goals
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
@@ -54,8 +53,6 @@ class AStarWorldController(WorldController):
         self.maze.display_maze(self.screen)
         self.goals[0].draw(self.screen)
         self.player.draw(self.screen)
-        for ghost in self.ghosts:
-            ghost.draw(self.screen)
         for goal in self.goals:
             goal.draw(self.screen)
         self.home_button.draw(self.screen)
@@ -111,11 +108,8 @@ class AStarWorldController(WorldController):
     """
     def cycle(self):
         player_action = self.player_decide() #decide players next move
-        ghost_actions = self.ghosts_decide() #decide all ghosts next moves
         self.update_player(player_action)
         self.update_goals()
-        if self.update_ghosts(ghost_actions): #if any ghosts move when they execute their next move
-            self.player_calculate_path() #recalculate player path for next round
         if self.all_goals_achieved():
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
@@ -141,3 +135,9 @@ class AStarWorldController(WorldController):
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                 self.render()
+
+    """
+    Get the player to calculate its path to the goal as the environment has changed
+    """
+    def player_calculate_path(self):
+        self.player.find_path()

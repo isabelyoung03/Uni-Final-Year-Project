@@ -17,7 +17,7 @@ class WorldControllerFactory:
         goals = GoalFactory.get_goals(maze, search_algorithm_enum)
         search_algorithm = SearchAlgorithmFactory.create_new(search_algorithm_enum, maze, goals)
         player = PlayerFactory.get_player(maze, search_algorithm)
-        ghosts = GhostListFactory.get_ghost_list(maze, search_algorithm_enum)
         if search_algorithm_enum == SearchAlgoType.A_STAR:
-            return AStarWorldController(maze, player, ghosts, goals)
+            return AStarWorldController(maze, player, goals)
+        ghosts = GhostListFactory.get_ghost_list(maze, search_algorithm_enum)
         return WorldController(maze, player, ghosts, goals[0])

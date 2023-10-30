@@ -76,10 +76,14 @@ class Player(Agent):
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
 
     """
-    Decide on a path to follow based on the search algorithm (only for breadth or depth first search)
+    Decide on a path to follow based on the search algorithm
     """
-    def find_path(self, opponent_locations):
-        path = self.search_algorithm.search(self.x, self.y, opponent_locations)
+    def find_path(self, opponent_locations=None):
+        if opponent_locations is None:
+            path = self.search_algorithm.search(self.x, self.y)
+        else:
+            path = self.search_algorithm.search(self.x, self.y, opponent_locations)
+
         if path:
             print("Updated path to goal! Following...")
             self.path_to_follow = path
