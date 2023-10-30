@@ -9,6 +9,12 @@ class Node:
         self.h = h
         self.parent = parent
     
+    """
+    Calculates f by summing g and h
+    """
+    def get_f(self):
+        return self.g + self.h
+    
     def get_location(self):
         return (self.x, self.y)
     

@@ -16,7 +16,7 @@ class AStarWorldController(WorldController):
     def __init__(self, maze, player, goals):
         self.maze = maze
         self.player = player
-        self.goals = goals
+        self.goals = [goals[0]] #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = config.SPEED 
@@ -28,6 +28,19 @@ class AStarWorldController(WorldController):
         heuristic2 = OptionButton('Heuristic Two', 16, config.GREEN, config.BLACK, self.maze_width + 40, 155, ManhattanDistance)
         self.heuristic_button_group = ButtonGroup([manhattan, heuristic2])
         self.cycle_count = 0
+        self.heuristic = None
+
+    """
+    Get players decision for next action
+    """
+    def player_decide(self):
+        return self.player.decide()
+
+    """
+    Update the player
+    """
+    def update_player(self, action):
+        self.player.execute(action)
 
     """
     Find out of all the goals in the maze have been reached
@@ -44,7 +57,7 @@ class AStarWorldController(WorldController):
     def update_goals(self):
         for goal in self.goals:
             if self.player.get_location() == goal.get_location(): #if player at goal location
-                self.goal.set_achieved()
+                goal.set_achieved()
     """
     Render world on the screen
     """
@@ -85,6 +98,10 @@ class AStarWorldController(WorldController):
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
+                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled():
+                    print("--- Cycle " + str(self.cycle_count) + " ---")
+                    self.cycle()
+                    self.cycle_count += 1
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_button.handle_event(event):
                         return #go back to menu page
@@ -97,10 +114,6 @@ class AStarWorldController(WorldController):
                     elif self.play_button.handle_event(event):
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
-                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled():
-                    print("--- Cycle " + str(self.cycle_count) + " ---")
-                    self.cycle()
-                    self.cycle_count += 1
                 self.render()
 
     """
@@ -120,8 +133,7 @@ class AStarWorldController(WorldController):
     Get the heuristic from the button group until play button is pressed
     """
     def get_heuristic(self):
-        heuristic = None
-        while heuristic == None:
+        while self.heuristic == None:
             for event in pygame.event.get():
                 self.heuristic_button_group.handle_event(event)
                 if event.type == pygame.QUIT:
@@ -130,11 +142,12 @@ class AStarWorldController(WorldController):
                     if self.home_button.handle_event(event):
                         return True #go back to menu page
                     elif self.play_button.handle_event(event): #if play button is pressed
-                        heuristic = self.heuristic_button_group.get_result()
-                        self.player.get_search_algorithm().set_heuristic(heuristic) #change A* heuristic
+                        self.heuristic = self.heuristic_button_group.get_result()
+                        self.player.get_search_algorithm().set_heuristic(self.heuristic) #change A* heuristic
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                 self.render()
+        return False
 
     """
     Get the player to calculate its path to the goal as the environment has changed
