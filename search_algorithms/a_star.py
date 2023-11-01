@@ -18,7 +18,7 @@ class AStarSearch(SearchAlgorithm):
     """
     Searches the maze and returns path to goal
     """
-    def search(self, start_x, start_y):
+    def search(self, start_x: int, start_y: int) -> list:
         open_list = []
         goal_coord = self.goals[0].get_location()
         h = self.heuristic.get_h(start_x, start_y, goal_coord[0], goal_coord[1])
@@ -56,7 +56,7 @@ class AStarSearch(SearchAlgorithm):
                         f = g + h
 
                         if self.exists_in_list(new_x, new_y, open_list, f):
-                                continue
+                            continue
                         if self.exists_in_list(new_x, new_y, closed_list, f):
                             continue
                         else: 
@@ -69,7 +69,7 @@ class AStarSearch(SearchAlgorithm):
     """
     Check if location is already in given list and compare f values
     """
-    def exists_in_list(self, x, y, node_list, f):
+    def exists_in_list(self, x: int, y: int, node_list: list, f: int):
         if any(node.get_location() == (x, y) for node in node_list):
             existing_node = next(node for node in node_list if node.get_location() == (x, y))
             if existing_node.get_f() < f:
@@ -79,11 +79,11 @@ class AStarSearch(SearchAlgorithm):
     """
     Set heuristic function
     """
-    def set_heuristic(self, heuristic):
+    def set_heuristic(self, heuristic) -> None:
         self.heuristic = heuristic
 
     """
     Get enum for this search algorithm
     """
-    def get_enum(self):
+    def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.A_STAR

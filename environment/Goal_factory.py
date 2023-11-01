@@ -10,7 +10,7 @@ Gets the goals for the maze
 """
 class GoalFactory:
     @staticmethod
-    def get_goals(maze, search_algorithm):
+    def get_goals(maze, search_algorithm) -> list[Goal]:
         maze_size = maze.get_maze_size()
         if search_algorithm == SearchAlgoType.A_STAR:
             if maze_size == MazeSize.SMALL:

@@ -1,3 +1,4 @@
+from search_algorithms.Search_algo import SearchAlgorithm
 from search_algorithms.a_star import AStarSearch
 from search_algorithms.breadth_first import BreadthFirstSearch
 from enums.search_algorithm_type import SearchAlgoType
@@ -9,7 +10,7 @@ Factory class for creating a new search algorithm based on the enum and maze sup
 """
 class SearchAlgorithmFactory():
     @staticmethod
-    def create_new(search_algo_type, maze, goal):
+    def create_new(search_algo_type, maze, goal) -> SearchAlgorithm:
         if search_algo_type == SearchAlgoType.BREADTH:
             return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.DEPTH:

@@ -33,7 +33,7 @@ class Ghost(Agent):
 
     Returns true if move successful, otherwise false
     """
-    def move_left(self):
+    def move_left(self) -> bool:
         nextNode = self.map[self.y][self.x-1]
         if nextNode == ' ':
             self.x = self.x - 1
@@ -46,7 +46,7 @@ class Ghost(Agent):
 
     Returns true if move successful, otherwise false
     """
-    def move_right(self):
+    def move_right(self) -> bool:
         nextNode = self.map[self.y][self.x+1]
         if nextNode == ' ':
             self.x = self.x + 1
@@ -59,7 +59,7 @@ class Ghost(Agent):
 
     Returns true if move successful, otherwise false
     """
-    def move_down(self):
+    def move_down(self) -> bool:
         nextNode = self.map[self.y+1][self.x]
         if nextNode == ' ':
             self.y = self.y + 1
@@ -71,7 +71,7 @@ class Ghost(Agent):
 
     Returns true if move successful, otherwise false
     """
-    def move_up(self):
+    def move_up(self) -> bool:
         nextNode = self.map[self.y-1][self.x]
         if nextNode == ' ':
             self.y = self.y - 1
@@ -81,7 +81,7 @@ class Ghost(Agent):
     """
     Draws the ghost on the screen
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         screen_x_coord = self.x*config.SQUARE_SIZE + config.SPRITE_HEIGHT
         screen_y_coord = self.y*config.SQUARE_SIZE + config.SPRITE_WIDTH
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
@@ -91,7 +91,7 @@ class Ghost(Agent):
 
     Returns tAction enum
     """
-    def decide(self):
+    def decide(self) -> Action:
         if self.behaviour == GhostBehaviour.RANDOM:
             random_integer = random.randint(1, 5)
             if random_integer == 1:
@@ -109,7 +109,7 @@ class Ghost(Agent):
     """
     Execute specified action
     """
-    def execute(self, action):
+    def execute(self, action) -> bool:
         if action == Action.DOWN:
             self.move_down()
         elif action == Action.LEFT:

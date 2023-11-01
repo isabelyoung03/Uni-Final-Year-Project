@@ -13,7 +13,7 @@ Factory class for creating a new WorldController
 """
 class WorldControllerFactory:
     @staticmethod
-    def create_new(maze, search_algorithm_enum):
+    def create_new(maze, search_algorithm_enum) -> WorldController:
         goals = GoalFactory.get_goals(maze, search_algorithm_enum)
         search_algorithm = SearchAlgorithmFactory.create_new(search_algorithm_enum, maze, goals)
         player = PlayerFactory.get_player(maze, search_algorithm)

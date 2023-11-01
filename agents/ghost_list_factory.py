@@ -11,7 +11,7 @@ Gets the list of ghosts for a maze based on maze size and search algorithm type
 """
 class GhostListFactory:
     @staticmethod
-    def get_ghost_list(maze, search_algorithm_enum):
+    def get_ghost_list(maze, search_algorithm_enum) -> list:
         maze_size = maze.get_maze_size()
         if maze_size == MazeSize.SMALL and search_algorithm_enum == SearchAlgoType.UNIFORM:
             ghost1 = Ghost(5,4, maze, GhostBehaviour.RANDOM)

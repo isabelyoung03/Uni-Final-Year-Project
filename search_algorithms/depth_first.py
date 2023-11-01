@@ -14,7 +14,7 @@ class DepthFirstSearch(SearchAlgorithm):
     """
     Searches the maze and returns a path to the goal
     """
-    def search(self, start_x, start_y, opponent_locations, path=None):
+    def search(self, start_x, start_y, opponent_locations, path=None) -> list:
         if path is None:
             path = []
 
@@ -37,5 +37,5 @@ class DepthFirstSearch(SearchAlgorithm):
         path.pop()        
         return [] #if no solution found
 
-    def get_enum(self):
+    def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.DEPTH

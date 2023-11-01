@@ -11,13 +11,13 @@ class ButtonGroup():
     """
     Draw each button in the group on the screen
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         for button in self.buttons:
             button.draw(screen)
     """
     Handle events for each button - usually if they are being pressed
     """
-    def handle_event(self, event):
+    def handle_event(self, event) -> None:
         for button in self.buttons:
             if button.handle_event(event):
                 self.selected_button = button

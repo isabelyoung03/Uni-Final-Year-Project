@@ -1,3 +1,4 @@
+from typing import Tuple
 import pygame
 import config
 
@@ -12,7 +13,7 @@ class Goal():
     """
     Draws the goal on the screen if goal not achieved
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         if not self.achieved:
             screen_x_coord = self.x * config.SQUARE_SIZE  + 8
             screen_y_coord = self.y * config.SQUARE_SIZE + 8
@@ -21,17 +22,17 @@ class Goal():
     """
     Sets the goal to achieved
     """
-    def set_achieved(self):
+    def set_achieved(self) -> None:
         self.achieved = True
 
     """
     Return true if goal achieved, otherwise false
     """
-    def get_achieved(self):
+    def get_achieved(self) -> bool:
         return self.achieved
     
     """
     Returns location of goal
     """
-    def get_location(self):
+    def get_location(self) -> Tuple:
         return (self.x, self.y)

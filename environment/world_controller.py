@@ -1,5 +1,6 @@
 import sys
 import pygame
+from enums.action import Action
 from gui.button import Button
 import config
 from gui.icon_buttton import IconButton
@@ -26,19 +27,19 @@ class WorldController:
     """
     Get players decision for next action
     """
-    def player_decide(self):
+    def player_decide(self) -> Action:
         return self.player.decide()
 
     """
     Update the player
     """
-    def update_player(self, action):
+    def update_player(self, action: Action):
         self.player.execute(action)
 
     """
     Get the player to calculate its path to the goal as the environment has changed
     """
-    def player_calculate_path(self):
+    def player_calculate_path(self) -> None:
         opponent_locations = []
         for ghost in self.ghosts:
             opponent_locations.append(ghost.get_location())
@@ -47,7 +48,7 @@ class WorldController:
     """
     Make each ghost decide on its next action
     """
-    def ghosts_decide(self):
+    def ghosts_decide(self) -> list:
         ghost_actions = []
         for ghost in self.ghosts:
             ghost_actions.append(ghost.decide())
@@ -58,7 +59,7 @@ class WorldController:
 
     Return true if any of the ghosts have changed position, otherwise false
     """
-    def update_ghosts(self, ghost_actions):
+    def update_ghosts(self, ghost_actions) -> bool:
         changes = False
         for i in range(len(ghost_actions)):
             if self.ghosts[i].execute(ghost_actions[i]):
@@ -68,7 +69,7 @@ class WorldController:
     """
     Render world on the screen
     """
-    def render(self):
+    def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
         self.goal.draw(self.screen)
@@ -86,7 +87,7 @@ class WorldController:
     """
     Runs the maze on the screen
     """
-    def run(self):
+    def run(self) -> None:
         pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
         self.render()
         self.player_calculate_path()
@@ -117,7 +118,7 @@ class WorldController:
                     self.cycle_count += 1
                 self.render()
 
-    def cycle(self):
+    def cycle(self) -> None:
         player_action = self.player_decide() #decide players next move
         ghost_actions = self.ghosts_decide() #decide all ghosts next moves
         self.update_player(player_action)

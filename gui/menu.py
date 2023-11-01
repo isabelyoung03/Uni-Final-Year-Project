@@ -34,7 +34,7 @@ class Menu:
     """
     Displays the maze selection menu and returns the selected maze size and search algorithm
     """
-    def maze_selection_menu(self):
+    def maze_selection_menu(self) -> None:
         pygame.display.set_caption("Menu")
         maze = None
 
@@ -56,7 +56,7 @@ class Menu:
     """
     Draw the menu screen
     """
-    def draw(self):
+    def draw(self) -> None:
         self.menu_screen.fill(config.BLACK)
 
         transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
@@ -76,7 +76,7 @@ class Menu:
 """
 Display text string on the given screen, of a particular size and colour at location x,y
 """
-def display_text(string, font_size, colour, x, y, screen):
+def display_text(string: str, font_size: int, colour, x:int, y:int, screen):
     font = pygame.font.Font('freesansbold.ttf', font_size)
     text = font.render(string, True, colour)
     textRect = text.get_rect()

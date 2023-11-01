@@ -26,8 +26,8 @@ class AStarWorldController(WorldController):
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         manhattan = OptionButton('Manhattan Distance', 16, config.GREEN, config.BLACK, self.maze_width + 20, 130, ManhattanDistance)
-        heuristic2 = OptionButton('Euclidian Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
-        self.heuristic_button_group = ButtonGroup([manhattan, heuristic2])
+        euclidian = OptionButton('Euclidian Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
+        self.heuristic_button_group = ButtonGroup([manhattan, euclidian])
         self.cycle_count = 0
         self.heuristic = None
 
@@ -62,7 +62,7 @@ class AStarWorldController(WorldController):
     """
     Render world on the screen
     """
-    def render(self):
+    def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
         self.goals[0].draw(self.screen)
@@ -84,7 +84,7 @@ class AStarWorldController(WorldController):
     """
     Runs the maze on the screen
     """
-    def run(self):
+    def run(self) -> None:
         pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
         self.render()
         self.player_calculate_path()
@@ -120,7 +120,7 @@ class AStarWorldController(WorldController):
     """
     Complete one cycle, updating everyone in the maze
     """
-    def cycle(self):
+    def cycle(self) -> None:
         player_action = self.player_decide() #decide players next move
         self.update_player(player_action)
         self.update_goals()
@@ -133,7 +133,7 @@ class AStarWorldController(WorldController):
     """
     Get the heuristic from the button group until play button is pressed
     """
-    def get_heuristic(self):
+    def get_heuristic(self) -> bool:
         while self.heuristic == None:
             for event in pygame.event.get():
                 self.heuristic_button_group.handle_event(event)
@@ -153,5 +153,5 @@ class AStarWorldController(WorldController):
     """
     Get the player to calculate its path to the goal as the environment has changed
     """
-    def player_calculate_path(self):
+    def player_calculate_path(self) -> None:
         self.player.find_path()

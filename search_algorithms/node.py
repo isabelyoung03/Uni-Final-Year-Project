@@ -2,7 +2,7 @@ class Node:
     """
     Node class used in A* search
     """
-    def __init__(self, x, y, g, h, parent):
+    def __init__(self, x:int, y:int, g:int, h:int, parent):
         self.x = x
         self.y = y
         self.g = g
@@ -12,16 +12,16 @@ class Node:
     """
     Calculates f by summing g and h
     """
-    def get_f(self):
+    def get_f(self) -> int:
         return self.g + self.h
     
     def get_location(self):
         return (self.x, self.y)
     
-    def get_g(self):
+    def get_g(self) -> int:
         return self.g
     
-    def get_h(self):
+    def get_h(self) -> int:
         return self.h
     
     def get_parent(self):

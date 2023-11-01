@@ -5,7 +5,7 @@ import config
 Class for a button object which is printed on the screen and handles events when pressed
 """
 class Button:
-    def __init__(self, text, text_size, text_colour, background_colour, x, y, width=None, height=None):
+    def __init__(self, text: str, text_size: int, text_colour, background_colour, x:int, y:int, width=None, height=None):
         self.text = text
         self.text_size = text_size
         self.text_colour = text_colour
@@ -30,7 +30,7 @@ class Button:
     """
     Draws the button on a specfied screen
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         if self.button_with_background:
             pygame.draw.rect(screen, self.background_colour, self.rectangle)
             textRect = self.text_surface.get_rect()
@@ -48,7 +48,7 @@ class Button:
     """
     Handles events such as clicking on the button
     """
-    def handle_event(self, event):
+    def handle_event(self, event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rectangle.collidepoint(event.pos):
                 self.set_selected(not self.selected)
@@ -56,13 +56,13 @@ class Button:
     """
     Set if the button is selected or not, and change colour if it is
     """
-    def set_selected(self, selected):
+    def set_selected(self, selected) -> None:
         self.selected = selected
 
     """
     Get if the button is selected or not
     """
-    def get_selected(self):
+    def get_selected(self) -> bool:
         return self.selected
         
 

@@ -14,9 +14,9 @@ class UniformCostSearch(SearchAlgorithm):
         self.x_axis_length = len(maze.map[0])
 
     """
-    Searches the maze and returns best square to go to next
+    Searches the maze and returns path to goal
     """
-    def search(self, start_x, start_y, opponent_locations):
+    def search(self, start_x:int, start_y:int, opponent_locations: list) -> list:
         frontier = PriorityQueue()
         frontier.put((0, [(start_x, start_y)]))  
 
@@ -38,19 +38,19 @@ class UniformCostSearch(SearchAlgorithm):
                         frontier.put((new_cost, new_path))
         return None
     
-    def get_cost(self, location, opponent_locations):
+    def get_cost(self, location, opponent_locations) -> int:
         cost = 1
         min_distance_to_opponent = min(self.calculate_distance(location, opponent) for opponent in opponent_locations)
         if min_distance_to_opponent <= 2: #if near to a ghost
             cost += 9 #increase cost
         return cost
 
-    def calculate_distance(self, x, y):
+    def calculate_distance(self, x:int, y:int) -> int:
         distance = 0
         for i in range(len(x)):
             distance += (x[i] - y[i]) ** 2
         distance = math.sqrt(distance)
         return distance
     
-    def get_enum(self):
+    def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.UNIFORM

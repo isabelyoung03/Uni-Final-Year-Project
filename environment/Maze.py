@@ -22,7 +22,7 @@ class Maze:
     """ 
     Displays the maze on the screen based on the map for the maze
     """
-    def display_maze(self, screen):
+    def display_maze(self, screen) -> None:
         y = 0
         for i in self.map:
             x = 0
@@ -46,14 +46,14 @@ class Maze:
             y += config.SQUARE_SIZE
 
     #checks if the location is not a barrier
-    def check_valid_location(self, x, y):
+    def check_valid_location(self, x, y) -> bool:
         location = self.map[y][x]
         return location != 'X' and location != '|' and location != '-' and location != '+'
 
     #Return maze size enum
-    def get_maze_size(self):
+    def get_maze_size(self) -> int:
         return self.maze_size
     
     #Return map as a 2D array
-    def get_map(self):
+    def get_map(self) -> list:
         return self.map

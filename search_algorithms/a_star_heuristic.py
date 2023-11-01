@@ -4,5 +4,5 @@ Class for A star heurisitic functions for h
 """
 class AStarHeuristic:
     @abstractmethod
-    def get_h(self):
+    def get_h(self) -> int:
         pass

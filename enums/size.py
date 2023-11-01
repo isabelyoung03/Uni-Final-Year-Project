@@ -11,7 +11,7 @@ class MazeSize(Enum):
     """
     Return the width of the screen for this size maze
     """
-    def get_width(self):
+    def get_width(self) -> int:
         if self == MazeSize.SMALL:
             return config.SMALL_MAZE_SCREEN_WIDTH
         elif self == MazeSize.MEDIUM:
@@ -22,7 +22,7 @@ class MazeSize(Enum):
     """
     Return the height of the screen for this size maze
     """
-    def get_height(self):
+    def get_height(self) -> int:
         if self == MazeSize.SMALL:
             return config.SMALL_MAZE_SCREEN_HEIGHT
         elif self == MazeSize.MEDIUM:
@@ -33,7 +33,7 @@ class MazeSize(Enum):
     """
     Return string representation of enum
     """
-    def to_string(self):
+    def to_string(self) -> str:
         if self == MazeSize.SMALL:
             return "Small"
         elif self == MazeSize.MEDIUM:

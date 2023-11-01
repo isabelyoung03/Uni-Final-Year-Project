@@ -16,14 +16,14 @@ class IconButton(Button):
     """
     Draws the button on a specfied screen
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         if self.visibility:
             screen.blit(self.image, self.rectangle)
 
     """
     Handles events such as clicking on the button
     """
-    def handle_event(self, event):
+    def handle_event(self, event) -> bool:
         if event.type == pygame.MOUSEBUTTONDOWN and self.visibility:
             if self.rectangle.collidepoint(event.pos):
                 return True
@@ -32,11 +32,11 @@ class IconButton(Button):
     """
     Change the visibility of the button
     """
-    def toggle(self, toggled):
+    def toggle(self, toggled) -> None:
         self.visibility = not toggled
 
     """
     Return the visibility of the button
     """
-    def get_toggled(self):
+    def get_toggled(self) -> bool:
         return not self.visibility

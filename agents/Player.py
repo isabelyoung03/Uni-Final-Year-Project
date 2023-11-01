@@ -3,7 +3,8 @@ import pygame
 from agents.Agent import Agent
 import config
 from enums.action import Action
-from enums.search_algorithm_type import SearchAlgoType 
+from enums.search_algorithm_type import SearchAlgoType
+from search_algorithms.Search_algo import SearchAlgorithm 
 
 class Player(Agent):
     """
@@ -16,7 +17,7 @@ class Player(Agent):
 
     """
 
-    def __init__(self, x, y, search_algorithm):
+    def __init__(self, x:int, y:int, search_algorithm:SearchAlgorithm):
         Agent.__init__(self, x, y, search_algorithm)
         self.x = x
         self.y = y
@@ -38,7 +39,7 @@ class Player(Agent):
     """
     Moves player to the square to the left
     """
-    def move_left(self):
+    def move_left(self) -> None:
         self.current_sprite = self.left_sprite
         self.x = self.x - 1
         print("Player at " + str(self.get_location()))
@@ -46,7 +47,7 @@ class Player(Agent):
     """
     Moves player to the square to the right
     """
-    def move_right(self):
+    def move_right(self) -> None:
         self.current_sprite = self.right_sprite
         self.x = self.x + 1
         print("Player at " + str(self.get_location()))
@@ -54,7 +55,7 @@ class Player(Agent):
     """
     Moves player to the square below
     """
-    def move_down(self):
+    def move_down(self) -> None:
         self.current_sprite = self.down_sprite
         self.y = self.y + 1
         print("Player at " + str(self.get_location()))
@@ -62,7 +63,7 @@ class Player(Agent):
     """
     Moves player to the square above
     """
-    def move_up(self):
+    def move_up(self) -> None:
         self.current_sprite = self.up_sprite
         self.y = self.y - 1
         print("Player at " + str(self.get_location()))
@@ -70,7 +71,7 @@ class Player(Agent):
     """
     Draws the player on the screen
     """
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         screen_x_coord = self.x*config.SQUARE_SIZE + config.SPRITE_HEIGHT
         screen_y_coord = self.y*config.SQUARE_SIZE + config.SPRITE_WIDTH
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
@@ -78,7 +79,7 @@ class Player(Agent):
     """
     Decide on a path to follow based on the search algorithm
     """
-    def find_path(self, opponent_locations=None):
+    def find_path(self, opponent_locations=None) -> None:
         if opponent_locations is None:
             path = self.search_algorithm.search(self.x, self.y)
         else:
@@ -94,7 +95,7 @@ class Player(Agent):
     """
     Follow the path from the algorithm - for depth and breadth first
     """
-    def follow_path(self):
+    def follow_path(self) -> Action:
         action = Action.IDLE
         if self.path_to_follow is not None:
             if self.path_index < len(self.path_to_follow):
@@ -114,15 +115,15 @@ class Player(Agent):
         return action
 
     """
-    Decide on a next move
+    Decide on a next move and return action
     """
-    def decide(self):
+    def decide(self) -> Action:
         return self.follow_path()
 
     """
     Execute specified action
     """
-    def execute(self, action):
+    def execute(self, action) -> None:
         if action == Action.DOWN:
             self.move_down()
         elif action == Action.LEFT:
@@ -135,12 +136,12 @@ class Player(Agent):
     """
     Returns players search algorithm as a string
     """
-    def search_algo_string(self):
+    def search_algo_string(self) -> str:
         return self.search_algorithm.get_enum().value
     
     
     """
     Returns players search algorithm
     """
-    def get_search_algorithm(self):
+    def get_search_algorithm(self) -> SearchAlgorithm:
         return self.search_algorithm
