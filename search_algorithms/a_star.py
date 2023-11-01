@@ -2,7 +2,6 @@ import math
 from enums.search_algorithm_type import SearchAlgoType
 from environment.Goal import Goal
 from search_algorithms.Search_algo import SearchAlgorithm
-from search_algorithms.manhattan_distance import ManhattanDistance
 from search_algorithms.node import Node
 
 """
