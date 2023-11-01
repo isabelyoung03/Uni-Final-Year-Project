@@ -14,7 +14,7 @@ class GoalFactory:
         maze_size = maze.get_maze_size()
         if search_algorithm == SearchAlgoType.A_STAR:
             if maze_size == MazeSize.SMALL:
-                return [Goal(14,6), Goal(14,1), Goal(1,1), Goal(1,6)]
+                return [Goal(1,6), Goal(1,1), Goal(14,6), Goal(14,1)]
 
             elif maze_size == MazeSize.MEDIUM:
                 return [Goal(14,14), Goal(14,1), Goal(1,1), Goal(1,14)]
