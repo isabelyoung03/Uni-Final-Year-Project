@@ -11,7 +11,7 @@ class AStarSearch(SearchAlgorithm):
     def __init__(self, maze, goals):
         self.maze = maze
         self.goals = goals
-        self.heuristic = ManhattanDistance
+        self.heuristic = None
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 

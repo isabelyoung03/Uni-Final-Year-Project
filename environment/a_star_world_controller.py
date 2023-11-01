@@ -87,7 +87,6 @@ class AStarWorldController(WorldController):
     def run(self) -> None:
         pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
         self.render()
-        self.player_calculate_path()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
         while True:
@@ -147,6 +146,7 @@ class AStarWorldController(WorldController):
                         self.player.get_search_algorithm().set_heuristic(self.heuristic) #change A* heuristic
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
+                        self.player_calculate_path()
                 self.render()
         return False
 
