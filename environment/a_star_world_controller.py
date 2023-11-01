@@ -17,7 +17,7 @@ class AStarWorldController(WorldController):
     def __init__(self, maze, player, goals):
         self.maze = maze
         self.player = player
-        self.goals = [goals[0]] #start with one goal for now
+        self.goals = goals #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = config.SPEED 

@@ -1,5 +1,6 @@
 import math
 from enums.search_algorithm_type import SearchAlgoType
+from environment.Goal import Goal
 from search_algorithms.Search_algo import SearchAlgorithm
 from search_algorithms.manhattan_distance import ManhattanDistance
 from search_algorithms.node import Node
@@ -19,8 +20,22 @@ class AStarSearch(SearchAlgorithm):
     Searches the maze and returns path to goal
     """
     def search(self, start_x: int, start_y: int) -> list:
+        x = start_x
+        y = start_y
+        path = []
+        for goal in self.goals:
+            path_to_goal = self.get_path_to_goal(x, y, goal)
+            path = path + path_to_goal
+            x = goal.get_location()[0]
+            y = goal.get_location()[1]
+        return path
+    
+    """
+    Returns path to a goal from a location
+    """
+    def get_path_to_goal(self, start_x: int, start_y:int , goal: Goal) -> list:
         open_list = []
-        goal_coord = self.goals[0].get_location()
+        goal_coord = goal.get_location()
         h = self.heuristic.get_h(start_x, start_y, goal_coord[0], goal_coord[1])
         first_node = Node(start_x, start_y, 0, h, None)
         open_list.append(first_node)
@@ -62,9 +77,8 @@ class AStarSearch(SearchAlgorithm):
                         else: 
                             successor_node = Node(new_x, new_y, g, h, q) # Create a new node and set the parent to q
                             open_list.append(successor_node)
-
             closed_list.add(q)
-        return None
+        return None 
 
     """
     Check if location is already in given list and compare f values
