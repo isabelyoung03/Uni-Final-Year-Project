@@ -7,6 +7,7 @@ import config
 from gui.icon_buttton import IconButton
 from gui.menu import display_text
 from gui.option_button import OptionButton
+from search_algorithms.euclidian_distance import EuclidianDistance
 from search_algorithms.manhattan_distance import ManhattanDistance
 
 """
@@ -25,7 +26,7 @@ class AStarWorldController(WorldController):
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         manhattan = OptionButton('Manhattan Distance', 16, config.GREEN, config.BLACK, self.maze_width + 20, 130, ManhattanDistance)
-        heuristic2 = OptionButton('Heuristic Two', 16, config.GREEN, config.BLACK, self.maze_width + 40, 155, ManhattanDistance)
+        heuristic2 = OptionButton('Euclidian Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
         self.heuristic_button_group = ButtonGroup([manhattan, heuristic2])
         self.cycle_count = 0
         self.heuristic = None
@@ -39,13 +40,13 @@ class AStarWorldController(WorldController):
     """
     Update the player
     """
-    def update_player(self, action):
+    def update_player(self, action) -> None:
         self.player.execute(action)
 
     """
     Find out of all the goals in the maze have been reached
     """
-    def all_goals_achieved(self):
+    def all_goals_achieved(self) -> None:
         for goal in self.goals:
             if not goal.get_achieved():
                 return False
@@ -54,7 +55,7 @@ class AStarWorldController(WorldController):
     """
     Update goal if player is at the same location
     """
-    def update_goals(self):
+    def update_goals(self) -> None:
         for goal in self.goals:
             if self.player.get_location() == goal.get_location(): #if player at goal location
                 goal.set_achieved()
