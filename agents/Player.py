@@ -86,7 +86,6 @@ class Player(Agent):
             path = self.search_algorithm.search(self.x, self.y, opponent_locations)
 
         if path:
-            print("Updated path to goal! Following...")
             self.path_to_follow = path
             self.path_index = 0
         else:

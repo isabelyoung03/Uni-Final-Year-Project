@@ -1,5 +1,6 @@
 import sys
 import pygame
+from enums.search_algorithm_type import SearchAlgoType
 from environment.world_controller import WorldController
 from gui.button_group import ButtonGroup
 from gui.button import Button
@@ -120,6 +121,7 @@ class AStarWorldController(WorldController):
     Complete one cycle, updating everyone in the maze
     """
     def cycle(self) -> None:
+        self.player_calculate_path() #update path at each step as next goal may already have been achieved when going to another goal
         player_action = self.player_decide() #decide players next move
         self.update_player(player_action)
         self.update_goals()
