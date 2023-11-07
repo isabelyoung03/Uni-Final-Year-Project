@@ -23,10 +23,11 @@ class AStarSearch(SearchAlgorithm):
         y = start_y
         path = []
         for goal in self.goals:
-            path_to_goal = self.get_path_to_goal(x, y, goal)
-            path = path + path_to_goal
-            x = goal.get_location()[0]
-            y = goal.get_location()[1]
+            if not goal.get_achieved():
+                path_to_goal = self.get_path_to_goal(x, y, goal)
+                path = path + path_to_goal
+                x = goal.get_location()[0]
+                y = goal.get_location()[1]
         return path
     
     """

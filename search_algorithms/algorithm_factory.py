@@ -20,7 +20,7 @@ class SearchAlgorithmFactory():
         elif search_algo_type == SearchAlgoType.A_STAR:
             return AStarSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.A_STAR_VS_GREEDY:
-            return BreadthFirstSearch(maze, goal)
+            return AStarSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.MINIMAX:
             return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.EXPECTIMAX:

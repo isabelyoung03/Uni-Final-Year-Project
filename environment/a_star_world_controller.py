@@ -20,7 +20,7 @@ class AStarWorldController(WorldController):
         self.goals = goals #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = config.SPEED 
+        self.movement_delay = 200
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
@@ -65,10 +65,9 @@ class AStarWorldController(WorldController):
     def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
-        self.goals[0].draw(self.screen)
-        self.player.draw(self.screen)
         for goal in self.goals:
             goal.draw(self.screen)
+        self.player.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
@@ -86,6 +85,7 @@ class AStarWorldController(WorldController):
     """
     def run(self) -> None:
         pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
+        self.update_goals()
         self.render()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)

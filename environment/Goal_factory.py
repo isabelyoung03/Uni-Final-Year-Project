@@ -5,10 +5,37 @@ from enums.search_algorithm_type import SearchAlgoType
 from enums.size import MazeSize
 from environment.Goal import Goal
 
-"""
-Gets the goals for the maze
-"""
 class GoalFactory:
+    """
+    Creates a list of goals with one in each path cell, with the dead ends at the front of the list
+    """
+    @staticmethod     
+    def generate_goals_in_all_cells(maze) -> list:
+        barrier_chars = ['-', 'X', '+', '|']
+        maze_map = maze.get_map()
+        dead_end_cells = [] #give these priority
+        junction_cells = []
+        other_cells = []
+        for i in range(len(maze_map)):
+            for j in range(len(maze_map[i])):
+                if maze_map[i][j] == " ":
+                    surrounding_wall_count = 0
+                    if maze_map[i+1][j] in barrier_chars:
+                        surrounding_wall_count += 1
+                    if maze_map[i-1][j] in barrier_chars:
+                        surrounding_wall_count += 1
+                    if maze_map[i][j+1] in barrier_chars:
+                        surrounding_wall_count += 1
+                    if maze_map[i][j-1] in barrier_chars:
+                        surrounding_wall_count += 1
+                    if surrounding_wall_count == 3:
+                        dead_end_cells.append(Goal(j,i))
+                    elif surrounding_wall_count == 2: #incorrect
+                        junction_cells.append(Goal(j,i))
+                    else:
+                        other_cells.append(Goal(j,i))
+        return dead_end_cells + junction_cells + other_cells
+
     @staticmethod
     def get_goals(maze, search_algorithm) -> list[Goal]:
         maze_size = maze.get_maze_size()
@@ -21,6 +48,8 @@ class GoalFactory:
 
             elif maze_size == MazeSize.LARGE:
                 return [Goal(24,14), Goal(24,1), Goal(1,14), Goal(1,1)]
+        elif search_algorithm == SearchAlgoType.A_STAR_VS_GREEDY:
+            return GoalFactory.generate_goals_in_all_cells(maze)
         else:
             if maze_size == MazeSize.SMALL:
                 return [Goal(14,4)]
