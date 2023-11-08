@@ -30,7 +30,7 @@ class AStarSearch(SearchAlgorithm):
         return path
     
     """
-    Find the next closest goal from the current position that hasn't been achieved
+    Find the next closest goal from the current position that hasn't been achieved yet
     """
     def find_closest_goal(self, x, y):
         closest_goal = 0
