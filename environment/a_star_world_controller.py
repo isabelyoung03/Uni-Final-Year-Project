@@ -47,7 +47,7 @@ class AStarWorldController(WorldController):
     """
     Find out of all the goals in the maze have been reached
     """
-    def all_goals_achieved(self) -> None:
+    def all_goals_achieved(self) -> bool:
         for goal in self.goals:
             if not goal.get_achieved():
                 return False

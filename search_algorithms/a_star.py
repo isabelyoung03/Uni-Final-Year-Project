@@ -22,13 +22,27 @@ class AStarSearch(SearchAlgorithm):
         x = start_x
         y = start_y
         path = []
+        closest_goal = self.find_closest_goal(x, y)
+        path_to_goal = self.get_path_to_goal(x, y, closest_goal)
+        path = path + path_to_goal
+        x = closest_goal.get_location()[0]
+        y = closest_goal.get_location()[1]
+        return path
+    
+    """
+    Find the next closest goal from the current position that hasn't been achieved
+    """
+    def find_closest_goal(self, x, y):
+        closest_goal = 0
+        closest_dist = math.inf
         for goal in self.goals:
             if not goal.get_achieved():
-                path_to_goal = self.get_path_to_goal(x, y, goal)
-                path = path + path_to_goal
-                x = goal.get_location()[0]
-                y = goal.get_location()[1]
-        return path
+                goal_coord = goal.get_location()
+                h = self.heuristic.get_h(x, y, goal_coord[0], goal_coord[1])
+                if h < closest_dist:
+                    closest_dist = h
+                    closest_goal = goal
+        return closest_goal
     
     """
     Returns path to a goal from a location

@@ -14,7 +14,6 @@ class GoalFactory:
         barrier_chars = ['-', 'X', '+', '|']
         maze_map = maze.get_map()
         dead_end_cells = [] #give these priority
-        junction_cells = []
         other_cells = []
         for i in range(len(maze_map)):
             for j in range(len(maze_map[i])):
@@ -28,13 +27,12 @@ class GoalFactory:
                         surrounding_wall_count += 1
                     if maze_map[i][j-1] in barrier_chars:
                         surrounding_wall_count += 1
-                    if surrounding_wall_count == 3:
+                        
+                    if surrounding_wall_count == 3: #is a dead end
                         dead_end_cells.append(Goal(j,i))
-                    elif surrounding_wall_count == 2: #incorrect
-                        junction_cells.append(Goal(j,i))
                     else:
                         other_cells.append(Goal(j,i))
-        return dead_end_cells + junction_cells + other_cells
+        return dead_end_cells + other_cells
 
     @staticmethod
     def get_goals(maze, search_algorithm) -> list[Goal]:

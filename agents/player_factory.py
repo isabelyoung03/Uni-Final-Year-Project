@@ -12,7 +12,7 @@ Gets the player based on the maze size and algorithm type
 """
 class PlayerFactory:
     @staticmethod
-    def get_player(maze, search_algorithm) -> list:
+    def get_player(maze, search_algorithm) -> Player:
         maze_size = maze.get_maze_size()
         player_x = 1
         player_y = 1

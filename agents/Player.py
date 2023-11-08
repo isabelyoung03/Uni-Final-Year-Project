@@ -30,8 +30,7 @@ class Player(Agent):
         self.left_sprite = pygame.transform.scale(pygame.image.load("gui/resources/Left.png"), transformation)
 
         self.current_sprite = self.down_sprite
-
-        self.strict_path = None #strict path to follow for depth-first and breadth-first as no opponents
+        
         self.path_index = 0
 
         self.path_to_follow = None
