@@ -30,3 +30,4 @@ Week 7:
     7/11/2023: I am still a week ahead of where I planned to be at this point.
                 I have completed A* search where there is a cupcake in every cell of the maze.
                 I am trying to find ways to optimise this and find the best possible route.
+    8/11/2023: Today I improved the A* search algorithm by choosing the closest goal to go to next, reducing steps required
