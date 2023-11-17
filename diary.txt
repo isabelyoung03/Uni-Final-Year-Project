@@ -33,4 +33,8 @@ Week 7:
     8/11/2023: Today I improved the A* search algorithm by choosing the closest goal to go to next, reducing steps required
 
 Week 8:
-    15/11/2023: This week I am putting programming on hold to focus on my interim report and presentation.
+    15/11/2023: This week I am putting programming on hold for a bit to focus on my interim report and presentation.
+    17/11/2023: I am adding in tests for the classes that I use. I have spent a long time today trying to deal with an issue
+                with imports and python not being able to import any of my code into the test folder I made.
+                I have been unable to resolve this problem so I have decided to leave all test files in the main directory
+                instead of in a folder called "tests" because this is the only way they work.

@@ -1,5 +1,4 @@
 {
-    "python.analysis.extraPaths": [
-        "./gui"
-    ]
+    "python.testing.cwd": "${workspaceFolder}",
+    "python.analysis.extraPaths": ["./"]
 }
