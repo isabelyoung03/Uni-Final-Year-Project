@@ -1,6 +1,6 @@
 import unittest
 
-from environment.Goal import Goal
+from src.environment.Goal import Goal
 
 class TestGoal(unittest.TestCase):
     def test_goal(self):
