@@ -40,3 +40,4 @@ Week 8:
                 instead of in a folder called "tests" because this is the only way they work.
                 Update: I appear to have fixed this issue now. I need to run "python -m unittest tests.test_goal" from the root 
                 folder to run a test
+                I have written tests for ghost, goal, player and heuristic classes.
