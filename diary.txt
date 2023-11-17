@@ -38,3 +38,5 @@ Week 8:
                 with imports and python not being able to import any of my code into the test folder I made.
                 I have been unable to resolve this problem so I have decided to leave all test files in the main directory
                 instead of in a folder called "tests" because this is the only way they work.
+                Update: I appear to have fixed this issue now. I need to run "python -m unittest tests.test_goal" from the root 
+                folder to run a test
