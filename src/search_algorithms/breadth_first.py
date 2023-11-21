@@ -37,5 +37,8 @@ class BreadthFirstSearch(SearchAlgorithm):
 
         return [] #if no solution found
     
+    """
+    Get enum for this search algorithm
+    """
     def get_enum(self):
         return SearchAlgoType.BREADTH

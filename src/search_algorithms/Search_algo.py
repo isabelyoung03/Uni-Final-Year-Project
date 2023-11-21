@@ -6,7 +6,7 @@ class SearchAlgorithm(ABC):
         self.goals = goals
 
     """
-    Get best move 
+    Get path plan
     """
     @abstractmethod
     def search(self):

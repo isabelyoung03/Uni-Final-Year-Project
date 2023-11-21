@@ -118,6 +118,9 @@ class WorldController:
                     self.cycle_count += 1
                 self.render()
 
+    """
+    Completes a cycle of the world, updating and moving players and ghosts
+    """
     def cycle(self) -> None:
         player_action = self.player_decide() #decide players next move
         ghost_actions = self.ghosts_decide() #decide all ghosts next moves

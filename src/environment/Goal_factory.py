@@ -29,6 +29,9 @@ class GoalFactory:
                         other_cells.append(Goal(j,i))
         return dead_end_cells + other_cells
 
+    """
+    Returns the list of goals for a given maze
+    """
     @staticmethod
     def get_goals(maze, search_algorithm) -> list[Goal]:
         maze_size = maze.get_maze_size()

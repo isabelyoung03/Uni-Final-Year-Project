@@ -12,6 +12,9 @@ from src.search_algorithms.algorithm_factory import SearchAlgorithmFactory
 Factory class for creating a new WorldController
 """
 class WorldControllerFactory:
+    """
+    Creates and returns a new WorldController
+    """
     @staticmethod
     def create_new(maze, search_algorithm_enum) -> WorldController:
         goals = GoalFactory.get_goals(maze, search_algorithm_enum)

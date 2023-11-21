@@ -10,6 +10,9 @@ from src.enums.size import MazeSize
 Gets the list of ghosts for a maze based on maze size and search algorithm type
 """
 class GhostListFactory:
+    """
+    Returns a list of ghosts for each maze
+    """
     @staticmethod
     def get_ghost_list(maze, search_algorithm_enum) -> list:
         maze_size = maze.get_maze_size()

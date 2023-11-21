@@ -89,7 +89,7 @@ class AStarSearch(SearchAlgorithm):
                         if self.exists_in_list(new_x, new_y, closed_list, f):
                             continue
                         else: 
-                            successor_node = Node(new_x, new_y, g, h, q) # Create a new node and set the parent to q
+                            successor_node = Node(new_x, new_y, g, h, q) #create a new node and set the parent to q
                             open_list.append(successor_node)
             closed_list.add(q)
         return None 

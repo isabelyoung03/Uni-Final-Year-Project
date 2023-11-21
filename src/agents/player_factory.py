@@ -11,6 +11,9 @@ from src.enums.size import MazeSize
 Gets the player based on the maze size and algorithm type
 """
 class PlayerFactory:
+    """
+    Returns player object for a given maze
+    """
     @staticmethod
     def get_player(maze, search_algorithm) -> Player:
         maze_size = maze.get_maze_size()

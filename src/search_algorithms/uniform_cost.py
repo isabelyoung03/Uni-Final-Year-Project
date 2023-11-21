@@ -38,6 +38,9 @@ class UniformCostSearch(SearchAlgorithm):
                         frontier.put((new_cost, new_path))
         return None
     
+    """
+    Get the code of going to a location
+    """
     def get_cost(self, location, opponent_locations) -> int:
         cost = 1
         min_distance_to_opponent = min(self.calculate_distance(location, opponent) for opponent in opponent_locations)
@@ -45,6 +48,9 @@ class UniformCostSearch(SearchAlgorithm):
             cost += 9 #increase cost
         return cost
 
+    """
+    Calculate distance between two points, x and y for any number of dimensions
+    """
     def calculate_distance(self, x:int, y:int) -> int:
         distance = 0
         for i in range(len(x)):
@@ -52,5 +58,8 @@ class UniformCostSearch(SearchAlgorithm):
         distance = math.sqrt(distance)
         return distance
     
+    """
+    Get enum for this search algorithm
+    """
     def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.UNIFORM
