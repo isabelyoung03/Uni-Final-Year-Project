@@ -12,6 +12,7 @@ class GoalFactory:
     @staticmethod     
     def generate_goals_in_all_cells(maze) -> list:
         barrier_chars = ['-', 'X', '+', '|']
+        neighbours = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         maze_map = maze.get_map()
         dead_end_cells = [] #give these priority
         other_cells = []
@@ -19,15 +20,9 @@ class GoalFactory:
             for j in range(len(maze_map[i])):
                 if maze_map[i][j] == " ":
                     surrounding_wall_count = 0
-                    if maze_map[i+1][j] in barrier_chars:
-                        surrounding_wall_count += 1
-                    if maze_map[i-1][j] in barrier_chars:
-                        surrounding_wall_count += 1
-                    if maze_map[i][j+1] in barrier_chars:
-                        surrounding_wall_count += 1
-                    if maze_map[i][j-1] in barrier_chars:
-                        surrounding_wall_count += 1
-                        
+                    for x, y in neighbours:
+                        if maze_map[i+x][j+y] in barrier_chars:
+                            surrounding_wall_count += 1
                     if surrounding_wall_count == 3: #is a dead end
                         dead_end_cells.append(Goal(j,i))
                     else:
