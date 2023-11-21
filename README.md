@@ -5,7 +5,7 @@
 This is a Python project using Pygame to model different search algorithms for agents in a maze game of my own design.
 
 ## Getting started 
-1. Navigate to PROJECT directory via the terminal:
+1. Navigate to PROJECT directory via the terminal
 2. Run the main script:
     ```bash
     python3 main.py
