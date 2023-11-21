@@ -41,3 +41,6 @@ Week 8:
                 Update: I appear to have fixed this issue now. I need to run "python -m unittest tests.test_goal" from the root 
                 folder to run a test
                 I have written tests for ghost, goal, player and heuristic classes.
+
+Week 9: 
+    21/11/2023: I am continuing with writing my iterim report. I have created a requirements.txt file and updated README
