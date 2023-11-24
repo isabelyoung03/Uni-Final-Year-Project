@@ -21,13 +21,13 @@ class AStarWorldController(WorldController):
         self.goals = goals #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 200
+        self.movement_delay = config.SPEED
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         manhattan = OptionButton('Manhattan Distance', 16, config.GREEN, config.BLACK, self.maze_width + 20, 130, ManhattanDistance)
-        euclidian = OptionButton('Euclidian Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
+        euclidian = OptionButton('Euclidean Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
         self.heuristic_button_group = ButtonGroup([manhattan, euclidian])
         self.cycle_count = 0
         self.heuristic = None
