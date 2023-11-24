@@ -21,3 +21,6 @@ To install the required dependencies for this project, run the following command
 pip install -r requirements.txt
 ```
 
+## Demo video
+https://youtu.be/oMTAwV9lH40
+
