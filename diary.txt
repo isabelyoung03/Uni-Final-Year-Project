@@ -50,3 +50,5 @@ Week 10:
 
 Week 11:
     5/12/2023: I am continuing with greedy search.
+    6/12/2023: I finished greedy search and am starting the model player as a reflex agent task.
+                To prepare, I have made it so that the maze stops and a message is displayed if the player loses.
