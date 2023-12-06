@@ -19,15 +19,15 @@ class PlayerFactory:
         maze_size = maze.get_maze_size()
         player_x = 1
         player_y = 1
-        if maze_size == MazeSize.SMALL and search_algorithm.get_enum() == SearchAlgoType.A_STAR:
+        if maze_size == MazeSize.SMALL and (search_algorithm.get_enum() == SearchAlgoType.A_STAR or search_algorithm.get_enum() == SearchAlgoType.GREEDY):
             player_x = 6
             player_y = 4
 
-        elif maze_size == MazeSize.MEDIUM and search_algorithm.get_enum() == SearchAlgoType.A_STAR:
+        elif maze_size == MazeSize.MEDIUM and (search_algorithm.get_enum() == SearchAlgoType.A_STAR or search_algorithm.get_enum() == SearchAlgoType.GREEDY):
             player_x = 8
             player_y = 8
 
-        elif maze_size == MazeSize.LARGE and search_algorithm.get_enum() == SearchAlgoType.A_STAR:
+        elif maze_size == MazeSize.LARGE and (search_algorithm.get_enum() == SearchAlgoType.A_STAR or search_algorithm.get_enum() == SearchAlgoType.GREEDY):
             player_x = 12
             player_y = 7
 

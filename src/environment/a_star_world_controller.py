@@ -21,7 +21,7 @@ class AStarWorldController(WorldController):
         self.goals = goals #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = config.SPEED
+        self.movement_delay = 200
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
@@ -72,7 +72,7 @@ class AStarWorldController(WorldController):
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
-        display_text('A* Heuristic:', 18, config.WHITE, self.maze_width + 90, 100, self.screen)
+        display_text('Heuristic:', 18, config.WHITE, self.maze_width + 90, 100, self.screen)
         self.heuristic_button_group.draw(self.screen)
 
         if self.all_goals_achieved():

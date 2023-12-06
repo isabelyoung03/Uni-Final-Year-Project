@@ -44,3 +44,9 @@ Week 8:
 
 Week 9: 
     21/11/2023: I am continuing with writing my iterim report. I have created a requirements.txt file and updated README
+
+Week 10:
+    1/12/2023: I have started writing the code for Greedy search. I have updated my menu page.
+
+Week 11:
+    5/12/2023: I am continuing with greedy search.
