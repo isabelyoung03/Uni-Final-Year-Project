@@ -23,6 +23,7 @@ class WorldController:
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         self.cycle_count = 0
+        self.game_lost = False
 
     """
     Get players decision for next action
@@ -73,7 +74,8 @@ class WorldController:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
         self.goal.draw(self.screen)
-        self.player.draw(self.screen)
+        if not self.game_lost:
+            self.player.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
         self.home_button.draw(self.screen)
@@ -82,6 +84,8 @@ class WorldController:
         if self.goal.get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
+        elif self.game_lost:
+            display_text('Player loses!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
         pygame.display.flip()
 
     """
@@ -94,7 +98,7 @@ class WorldController:
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
         while True:
-            for event in pygame.event.get():
+            for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
@@ -112,7 +116,7 @@ class WorldController:
                     elif self.play_button.handle_event(event):
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
-                elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled():
+                elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
                     self.cycle_count += 1
@@ -132,4 +136,16 @@ class WorldController:
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
             print("Reached goal!")
+        if self.player_caught():
+            self.game_lost = True
+            print("Player has been caught!")
         self.render()
+
+    """
+    Find out if any of the ghosts are on the same location as the player
+    """
+    def player_caught(self) -> bool:
+        for ghost in self.ghosts:
+            if ghost.get_location() == self.player.get_location() :
+                return True
+        return False
