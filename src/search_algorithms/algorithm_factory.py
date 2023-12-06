@@ -1,3 +1,4 @@
+from src.search_algorithms.greedy import GreedySearch
 from src.search_algorithms.Search_algo import SearchAlgorithm
 from src.search_algorithms.a_star import AStarSearch
 from src.search_algorithms.breadth_first import BreadthFirstSearch
@@ -19,8 +20,10 @@ class SearchAlgorithmFactory():
             return UniformCostSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.A_STAR:
             return AStarSearch(maze, goal)
-        elif search_algo_type == SearchAlgoType.A_STAR_VS_GREEDY:
+        elif search_algo_type == SearchAlgoType.A_STAR_ALL_CELLS:
             return AStarSearch(maze, goal)
+        elif search_algo_type == SearchAlgoType.GREEDY:
+            return GreedySearch(maze, goal)
         elif search_algo_type == SearchAlgoType.MINIMAX:
             return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.EXPECTIMAX:

@@ -17,15 +17,17 @@ class Menu:
 
         self.size_button_group = ButtonGroup([small, medium, large])
 
-        breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 90, 355, SearchAlgoType.BREADTH)
+        breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 85, 355, SearchAlgoType.BREADTH)
         depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
         uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
-        a_star = OptionButton('A*', 20, config.GREEN, config.BLACK, 140, 415, SearchAlgoType.A_STAR)
-        greedy_a_star = OptionButton('A* vs Greedy', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 415, SearchAlgoType.A_STAR_VS_GREEDY)
-        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 420, 415, SearchAlgoType.MINIMAX)
+        a_star = OptionButton('A*', 20, config.GREEN, config.BLACK, 125, 415, SearchAlgoType.A_STAR)
+        a_star_all_cells = OptionButton('A* (goals in all)', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 70, 415, SearchAlgoType.A_STAR_ALL_CELLS)
+        greedy = OptionButton('Greedy', 20, config.GREEN, config.BLACK, 430, 415, SearchAlgoType.GREEDY)
+        minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 90, 475, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
+        reflex = OptionButton('Reflex agent', 20, config.GREEN, config.BLACK, 400, 475, SearchAlgoType.GREEDY)
 
-        self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, greedy_a_star, minimax, expectimax])
+        self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex])
 
         self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 540, 100, 50)
 

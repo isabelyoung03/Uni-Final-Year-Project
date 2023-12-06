@@ -5,9 +5,9 @@ from src.search_algorithms.Search_algo import SearchAlgorithm
 from src.search_algorithms.node import Node
 
 """
-A* search
+Greedy Search - this algorithm is very similar to A* but does not consider g which is the cost of the distance from start to current node
 """
-class AStarSearch(SearchAlgorithm):
+class GreedySearch(SearchAlgorithm):
     def __init__(self, maze, goals):
         self.maze = maze
         self.goals = goals
@@ -80,17 +80,14 @@ class AStarSearch(SearchAlgorithm):
                         path.append(goal_coord)
                         return path
                     else:
-                        g = q.get_g() + 1
-                        h = self.heuristic.get_h(new_x, new_y, goal_coord[0], goal_coord[1])
-                        f = g + h
-                        print(f)
-
+                        h = self.heuristic.get_h(new_x, new_y, goal_coord[0], goal_coord[1])  
+                        f = h + 1
                         if self.exists_in_list(new_x, new_y, open_list, f):
                             continue
                         if self.exists_in_list(new_x, new_y, closed_list, f):
                             continue
                         else: 
-                            successor_node = Node(new_x, new_y, g, h, q) #create a new node and set the parent to q
+                            successor_node = Node(new_x, new_y, 0, h, q) #create a new node and set the parent to q
                             open_list.append(successor_node)
             closed_list.add(q)
         return None 
@@ -115,4 +112,4 @@ class AStarSearch(SearchAlgorithm):
     Get enum for this search algorithm
     """
     def get_enum(self) -> SearchAlgoType:
-        return SearchAlgoType.A_STAR
+        return SearchAlgoType.GREEDY
