@@ -11,3 +11,4 @@ class SearchAlgoType(Enum):
     A_STAR_ALL_CELLS = 'A* (goal in all cells)'
     MINIMAX = 'Minimax'
     EXPECTIMAX = 'Expectimax'
+    REFLEX = 'Reflex'

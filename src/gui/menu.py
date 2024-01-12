@@ -25,7 +25,7 @@ class Menu:
         greedy = OptionButton('Greedy', 20, config.GREEN, config.BLACK, 430, 415, SearchAlgoType.GREEDY)
         minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 90, 475, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
-        reflex = OptionButton('Reflex agent', 20, config.GREEN, config.BLACK, 400, 475, SearchAlgoType.GREEDY)
+        reflex = OptionButton('Reflex agent', 20, config.GREEN, config.BLACK, 400, 475, SearchAlgoType.REFLEX)
 
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex])
 

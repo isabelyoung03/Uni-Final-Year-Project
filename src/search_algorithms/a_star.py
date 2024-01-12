@@ -83,7 +83,6 @@ class AStarSearch(SearchAlgorithm):
                         g = q.get_g() + 1
                         h = self.heuristic.get_h(new_x, new_y, goal_coord[0], goal_coord[1])
                         f = g + h
-                        print(f)
 
                         if self.exists_in_list(new_x, new_y, open_list, f):
                             continue

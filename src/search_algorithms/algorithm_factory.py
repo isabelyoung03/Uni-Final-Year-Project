@@ -1,3 +1,4 @@
+from src.search_algorithms.reflex import Reflex
 from src.search_algorithms.greedy import GreedySearch
 from src.search_algorithms.Search_algo import SearchAlgorithm
 from src.search_algorithms.a_star import AStarSearch
@@ -28,3 +29,5 @@ class SearchAlgorithmFactory():
             return BreadthFirstSearch(maze, goal)
         elif search_algo_type == SearchAlgoType.EXPECTIMAX:
             return BreadthFirstSearch(maze, goal)
+        elif search_algo_type == SearchAlgoType.REFLEX:
+            return Reflex(maze, goal)

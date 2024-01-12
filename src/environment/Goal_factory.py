@@ -44,7 +44,7 @@ class GoalFactory:
 
             elif maze_size == MazeSize.LARGE:
                 return [Goal(24,14), Goal(24,1), Goal(1,14), Goal(1,1)]
-        elif search_algorithm == SearchAlgoType.A_STAR_ALL_CELLS or search_algorithm == SearchAlgoType.GREEDY:
+        elif search_algorithm == SearchAlgoType.A_STAR_ALL_CELLS or search_algorithm == SearchAlgoType.GREEDY or search_algorithm == SearchAlgoType.REFLEX:
             return GoalFactory.generate_goals_in_all_cells(maze)
         else:
             if maze_size == MazeSize.SMALL:

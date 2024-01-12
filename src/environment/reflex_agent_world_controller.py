@@ -12,12 +12,13 @@ from src.search_algorithms.euclidian_distance import EuclidianDistance
 from src.search_algorithms.manhattan_distance import ManhattanDistance
 
 """
-Special world controller for the A* search mazes and greedy search maze
+Special world controller for modelling the player as a reflex agent
 """
-class AStarWorldController(WorldController):
-    def __init__(self, maze, player, goals):
+class ReflexAgentWorldController(WorldController):
+    def __init__(self, maze, player, ghosts, goals):
         self.maze = maze
         self.player = player
+        self.ghosts = ghosts
         self.goals = goals #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
@@ -26,9 +27,6 @@ class AStarWorldController(WorldController):
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
-        manhattan = OptionButton('Manhattan Distance', 16, config.GREEN, config.BLACK, self.maze_width + 20, 130, ManhattanDistance)
-        euclidian = OptionButton('Euclidean Distance', 16, config.GREEN, config.BLACK, self.maze_width + 22, 155, EuclidianDistance)
-        self.heuristic_button_group = ButtonGroup([manhattan, euclidian])
         self.cycle_count = 0
         self.heuristic = None
 
@@ -58,7 +56,7 @@ class AStarWorldController(WorldController):
     """
     def update_goals(self) -> None:
         for goal in self.goals:
-            if self.player.get_location() == goal.get_location(): #if player at goal location
+            if self.player.get_location() == goal.get_location(): 
                 goal.set_achieved()
     """
     Render world on the screen
@@ -68,12 +66,12 @@ class AStarWorldController(WorldController):
         self.maze.display_maze(self.screen)
         for goal in self.goals:
             goal.draw(self.screen)
+        for ghost in self.ghosts:
+            ghost.draw(self.screen)
         self.player.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
-        display_text('Heuristic:', 18, config.WHITE, self.maze_width + 90, 100, self.screen)
-        self.heuristic_button_group.draw(self.screen)
 
         if self.all_goals_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 300, self.screen)
@@ -85,7 +83,7 @@ class AStarWorldController(WorldController):
     Runs the maze on the screen
     """
     def run(self) -> None:
-        pygame.display.set_caption(self.maze.maze_size.to_string() + " maze using " + self.player.search_algo_string() + " search")
+        pygame.display.set_caption(self.maze.maze_size.to_string() + " maze modelling player as a reflex agent")
         self.update_goals()
         self.render()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
@@ -137,15 +135,12 @@ class AStarWorldController(WorldController):
     def get_heuristic(self) -> bool:
         while self.heuristic == None:
             for event in pygame.event.get():
-                self.heuristic_button_group.handle_event(event)
                 if event.type == pygame.QUIT:
                         sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_button.handle_event(event):
                         return True #go back to menu page
                     elif self.play_button.handle_event(event): #if play button is pressed
-                        self.heuristic = self.heuristic_button_group.get_result()
-                        self.player.get_search_algorithm().set_heuristic(self.heuristic) #change A* heuristic
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                         self.player_calculate_path()

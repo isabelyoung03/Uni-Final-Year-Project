@@ -1,5 +1,6 @@
 import random
 import pygame
+from src.environment import Goal
 from src.agents.Agent import Agent
 import config
 from src.enums.action import Action
@@ -27,6 +28,8 @@ class Ghost(Agent):
 
         self.map = maze.get_map()
         self.behaviour = behaviour
+
+        self.goal = None
     
     """
     Moves ghost to the square to the left
@@ -87,13 +90,47 @@ class Ghost(Agent):
         screen.blit(self.current_sprite, dest = (screen_x_coord, screen_y_coord))
 
     """
+    Decide on a path to follow based on the search algorithm
+    """
+    def find_path(self, player_location) -> None:
+        print(player_location)
+        path = self.search_algorithm.search(self.x, self.y)
+        if path:
+            self.path_to_follow = path
+            self.path_index = 0
+        else:
+            print("No solution to goal!")
+
+    """
+    Follow the path from the algorithm - for depth and breadth first
+    """
+    def follow_path(self) -> Action:
+        action = Action.IDLE
+        if self.path_to_follow is not None:
+            if self.path_index < len(self.path_to_follow):
+                i, j = self.path_to_follow[self.path_index]
+                if ((i,j) == (self.x, self.y)): #if already at next location in path to be followed
+                    self.path_index += 1 
+                    i, j = self.path_to_follow[self.path_index] #get the next location
+                if i - self.x == 1:
+                    action = Action.RIGHT
+                elif i - self.x == -1:
+                    action = Action.LEFT
+                elif j - self.y == 1:
+                    action = Action.DOWN
+                elif j - self.y == -1:
+                    action = Action.UP
+                self.path_index += 1 
+        return action
+
+    """
     Decide on a next move
 
-    Returns tAction enum
+    Returns Action enum
     """
-    def decide(self) -> Action:
+    def decide(self, player_location=None) -> Action:
         if self.behaviour == GhostBehaviour.RANDOM:
-            random_integer = random.randint(1, 5)
+            random_integer = random.randint(1,4)
             if random_integer == 1:
                 return Action.DOWN
             elif random_integer == 2:
@@ -103,7 +140,9 @@ class Ghost(Agent):
             elif random_integer == 4:
                 return Action.UP
         elif self.behaviour == GhostBehaviour.INTELLIGENT:
-            pass #add intelligence here...
+            print(player_location)
+            self.goal = Goal(player_location)
+            return self.follow_path()
         return Action.IDLE
     
     """
