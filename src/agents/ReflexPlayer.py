@@ -28,7 +28,25 @@ class ReflexPlayer(Player):
     def move_up(self) -> None:
         super().move_up()
 
+    def get_possible_moves(self) -> list:
+        possible_moves = []
+        print("Possible moves:")
+        if self.maze.check_valid_location(self.x + 1, self.y):
+            print("RIGHT")
+            possible_moves.append(Action.RIGHT)
+        if self.maze.check_valid_location(self.x - 1, self.y):
+            print("LEFT")
+            possible_moves.append(Action.LEFT)
+        if self.maze.check_valid_location(self.x, self.y + 1):
+            print("DOWN")
+            possible_moves.append(Action.DOWN)
+        if self.maze.check_valid_location(self.x, self.y - 1):
+            print("UP")
+            possible_moves.append(Action.UP)
+        return possible_moves
+
     def decide(self) -> Action:
+        self.get_possible_moves()
         return Action.DOWN
 
     def execute(self, action) -> None:
