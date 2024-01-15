@@ -25,5 +25,6 @@ class WorldControllerFactory:
             return AStarWorldController(maze, player, goals)
         ghosts = GhostListFactory.get_ghost_list(maze, search_algorithm_enum)
         if search_algorithm_enum == SearchAlgoType.REFLEX:
+            player = PlayerFactory.get_player(maze, search_algorithm)
             return ReflexAgentWorldController(maze, player, ghosts, goals)
         return WorldController(maze, player, ghosts, goals[0])

@@ -34,3 +34,8 @@ class Agent():
     @abstractmethod
     def execute(self, action):
         pass
+
+    
+    # @abstractmethod
+    # def revise(self):
+    #     pass

@@ -15,11 +15,11 @@ from src.search_algorithms.manhattan_distance import ManhattanDistance
 Special world controller for modelling the player as a reflex agent
 """
 class ReflexAgentWorldController(WorldController):
-    def __init__(self, maze, player, ghosts, goals):
+    def __init__(self, maze, player, ghosts, cupcakes):
         self.maze = maze
         self.player = player
         self.ghosts = ghosts
-        self.goals = goals #start with one goal for now
+        self.cupcakes = cupcakes #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 200
@@ -31,22 +31,10 @@ class ReflexAgentWorldController(WorldController):
         self.heuristic = None
 
     """
-    Get players decision for next action
-    """
-    def player_decide(self):
-        return self.player.decide()
-
-    """
-    Update the player
-    """
-    def update_player(self, action) -> None:
-        self.player.execute(action)
-
-    """
     Find out of all the goals in the maze have been reached
     """
     def all_goals_achieved(self) -> bool:
-        for goal in self.goals:
+        for goal in self.cupcakes:
             if not goal.get_achieved():
                 return False
         return True
@@ -55,7 +43,7 @@ class ReflexAgentWorldController(WorldController):
     Update goal if player is at the same location
     """
     def update_goals(self) -> None:
-        for goal in self.goals:
+        for goal in self.cupcakes:
             if self.player.get_location() == goal.get_location(): 
                 goal.set_achieved()
     """
@@ -64,7 +52,7 @@ class ReflexAgentWorldController(WorldController):
     def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
-        for goal in self.goals:
+        for goal in self.cupcakes:
             goal.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
@@ -89,8 +77,6 @@ class ReflexAgentWorldController(WorldController):
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
         while True:
-            if self.get_heuristic():
-                return
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -119,36 +105,12 @@ class ReflexAgentWorldController(WorldController):
     Complete one cycle, updating everyone in the maze
     """
     def cycle(self) -> None:
-        self.player_calculate_path() #update path at each step as next goal may already have been achieved when going to another goal
-        player_action = self.player_decide() #decide players next move
-        self.update_player(player_action)
+        self.player.revise(self.maze, self.ghosts, self.cupcakes)
+        player_action = self.player.decide() #decide players next move
+        self.player.execute(player_action) 
         self.update_goals()
         if self.all_goals_achieved():
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
             print("Reached goal!")
         self.render()
-
-    """
-    Get the heuristic from the button group until play button is pressed
-    """
-    def get_heuristic(self) -> bool:
-        while self.heuristic == None:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                        sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.home_button.handle_event(event):
-                        return True #go back to menu page
-                    elif self.play_button.handle_event(event): #if play button is pressed
-                        self.pause_button.toggle(False)
-                        self.play_button.toggle(True)
-                        self.player_calculate_path()
-                self.render()
-        return False
-
-    """
-    Get the player to calculate its path to the goal as the environment has changed
-    """
-    def player_calculate_path(self) -> None:
-        self.player.find_path()

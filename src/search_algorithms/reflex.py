@@ -9,9 +9,15 @@ Search algorithm used for reflex agents
 """
 class Reflex(SearchAlgorithm):
     def __init__(self, maze, goals):
-        pass
+        self.previous_locations = []
+        self.maze = maze
+        self.goals = goals
+        
     """
     Get enum for this search algorithm
     """
     def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.REFLEX
+    
+    def search():
+        pass
