@@ -22,7 +22,7 @@ class ReflexAgentWorldController(WorldController):
         self.cupcakes = cupcakes #start with one goal for now
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
-        self.movement_delay = 200
+        self.movement_delay = 500
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
