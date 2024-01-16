@@ -18,7 +18,7 @@ class GhostListFactory:
         maze_size = maze.get_maze_size()
         if search_algorithm_enum == SearchAlgoType.UNIFORM or search_algorithm_enum == SearchAlgoType.REFLEX:
             if maze_size == MazeSize.SMALL:
-                ghost1 = Ghost(5,4, maze, GhostBehaviour.RANDOM)
+                ghost1 = Ghost(10,5, maze, GhostBehaviour.RANDOM)
                 return [ghost1]
 
             elif maze_size == MazeSize.MEDIUM:
