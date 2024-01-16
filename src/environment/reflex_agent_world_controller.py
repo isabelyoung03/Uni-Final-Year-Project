@@ -28,7 +28,7 @@ class ReflexAgentWorldController(WorldController):
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         self.cycle_count = 0
-        self.heuristic = None
+        self.game_lost = False
 
     """
     Find out of all the goals in the maze have been reached
@@ -46,6 +46,27 @@ class ReflexAgentWorldController(WorldController):
         for goal in self.cupcakes:
             if self.player.get_location() == goal.get_location(): 
                 goal.set_achieved()
+
+    """
+    Make each ghost decide on its next action
+    """
+    def ghosts_decide(self) -> list:
+        ghost_actions = []
+        for ghost in self.ghosts:
+            ghost_actions.append(ghost.decide())
+        return ghost_actions
+
+    """
+    Update each the ghosts
+
+    Return true if any of the ghosts have changed position, otherwise false
+    """
+    def update_ghosts(self, ghost_actions) -> bool:
+        changes = False
+        for i in range(len(ghost_actions)):
+            if self.ghosts[i].execute(ghost_actions[i]):
+                changes = True
+        return changes
     """
     Render world on the screen
     """
@@ -56,7 +77,8 @@ class ReflexAgentWorldController(WorldController):
             goal.draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
-        self.player.draw(self.screen)
+        if not self.game_lost:
+            self.player.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
@@ -64,7 +86,8 @@ class ReflexAgentWorldController(WorldController):
         if self.all_goals_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 300, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 320, self.screen)
-
+        elif self.game_lost:
+            display_text('Player loses!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
         pygame.display.flip()
 
     """
@@ -83,7 +106,7 @@ class ReflexAgentWorldController(WorldController):
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
-                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled():
+                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
                     self.cycle_count += 1
@@ -107,10 +130,15 @@ class ReflexAgentWorldController(WorldController):
     def cycle(self) -> None:
         self.player.revise(self.maze, self.ghosts, self.cupcakes)
         player_action = self.player.decide() #decide players next move
+        ghost_action = self.ghosts_decide()
         self.player.execute(player_action) 
+        self.update_ghosts(ghost_action)
         self.update_goals()
         if self.all_goals_achieved():
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
             print("Reached goal!")
+        if super().player_caught():
+            self.game_lost = True
+            print("Player has been caught!")
         self.render()
