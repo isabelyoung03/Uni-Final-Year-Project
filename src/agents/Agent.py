@@ -44,3 +44,22 @@ class Agent():
             self.move_right()
         elif action == Action.UP:
             self.move_up()
+
+    """
+    Update internal representation for the maze map, locations of the ghosts and cupcakes not yet eaten
+    """
+    def revise(self, maze, ghosts, cupcakes) -> None:
+        self.maze = maze
+        self.ghosts = ghosts
+        self.cupcakes = cupcakes
+
+    """
+    Check is a move to the given location is valid (aka not a wall or a ghost)
+    Avoiding a square with a ghost in gives the agent the property of rationality
+    """
+    def check_valid_move(self, x, y) -> bool:
+        if not self.maze.check_valid_location(x,y):
+            return False
+        if self.ghost_in_location(x,y):
+             return False
+        return True
