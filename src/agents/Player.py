@@ -118,19 +118,6 @@ class Player(Agent):
         return self.follow_path()
 
     """
-    Execute specified action
-    """
-    def execute(self, action) -> None:
-        if action == Action.DOWN:
-            self.move_down()
-        elif action == Action.LEFT:
-            self.move_left()
-        elif action == Action.RIGHT:
-            self.move_right()
-        elif action == Action.UP:
-            self.move_up()
-
-    """
     Returns players search algorithm as a string
     """
     def search_algo_string(self) -> str:

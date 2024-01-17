@@ -1,42 +1,28 @@
-from abc import abstractmethod
+from src.enums.action import Action
+from src.agents.Agent import Agent
 
-from src.agents import Agent
+"""
+Minimax agent class for agents that use the minimax algorithm to calculate the best move
+"""
 class MinimaxAgent(Agent):
     def __init__(self, x, y):
-        self.x = x #x coord for player in maze map
-        self.y = y #y coord for player in maze map
-
-    """
-    Returns the location of the agent
-    """
-    def get_location(self):
-        return (self.x,self.y)
-
-    @abstractmethod
-    def move_left(self):
-        pass
-
-    @abstractmethod
-    def move_right(self):
-        pass
-
-    @abstractmethod
-    def move_down(self):
-        pass
-
-    @abstractmethod
-    def move_up(self):
-        pass
-
-    @abstractmethod
-    def decide(self):
-        pass
-
-    @abstractmethod
-    def execute(self, action):
-        pass
-
+        super().__init__(x, y)
     
-    # @abstractmethod
-    # def revise(self):
-    #     pass
+    """
+    Evaluates a position in the maze and returns a score.
+    Score is calculated based on distance to goal and closeness to walls and opponents.
+    """
+    def evaluate(x,y):
+        pass
+
+    """
+    Minimax function to get the best action for the agent
+    """
+    def minimax(self) -> Action:
+        pass
+
+    """
+    Decide function of the agent
+    """
+    def decide(self) -> Action:
+        return self.minimax()
