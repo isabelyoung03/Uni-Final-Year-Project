@@ -17,7 +17,7 @@ class Ghost(Agent):
     """
 
     def __init__(self, x, y, maze, behaviour):
-        Agent.__init__(self, x, y, None)
+        Agent.__init__(self, x, y)
 
         transformation = (8*config.PIXEL_SCALE, 12*config.PIXEL_SCALE)
 

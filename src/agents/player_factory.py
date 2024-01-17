@@ -33,7 +33,7 @@ class PlayerFactory:
                 player_x = 12
                 player_y = 7
         
-        if search_algorithm.get_enum() == SearchAlgoType.REFLEX:
+        if search_algorithm.get_enum() == SearchAlgoType.REFLEX or search_algorithm.get_enum() == SearchAlgoType.MINIMAX:
             return ReflexPlayer(player_x, player_y)
         
         return Player(player_x, player_y, search_algorithm)

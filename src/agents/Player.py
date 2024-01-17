@@ -16,11 +16,11 @@ class Player(Agent):
 
     """
 
-    def __init__(self, x:int, y:int, search_algorithm:SearchAlgorithm):
-        Agent.__init__(self, x, y, search_algorithm)
+    def __init__(self, x:int, y:int, search_algorithm:SearchAlgorithm = None):
+        Agent.__init__(self, x, y)
         self.x = x
         self.y = y
-
+        self.search_algorithm = search_algorithm
         transformation = (config.SPRITE_WIDTH*config.PIXEL_SCALE, config.SPRITE_HEIGHT*config.PIXEL_SCALE)
 
         self.down_sprite = pygame.transform.scale(pygame.image.load("src/gui/resources/Down.png"), transformation)

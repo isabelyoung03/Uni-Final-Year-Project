@@ -8,7 +8,7 @@ Reflex Player class that models the player as a reflex agent. Inherits from Play
 """
 class ReflexPlayer(Player):
     def __init__(self, x: int, y: int):
-        super().__init__(x, y, None)
+        super().__init__(x, y)
         self.maze = None
         self.ghosts = None
         self.cupcake = None

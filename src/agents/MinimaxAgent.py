@@ -1,5 +1,7 @@
 from abc import abstractmethod
-class Agent():
+
+from src.agents import Agent
+class MinimaxAgent(Agent):
     def __init__(self, x, y):
         self.x = x #x coord for player in maze map
         self.y = y #y coord for player in maze map
@@ -33,3 +35,8 @@ class Agent():
     @abstractmethod
     def execute(self, action):
         pass
+
+    
+    # @abstractmethod
+    # def revise(self):
+    #     pass
