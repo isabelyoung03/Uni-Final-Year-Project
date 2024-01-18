@@ -1,5 +1,6 @@
 import sys
 import pygame
+from src.environment.WorldState import WorldState
 from src.enums.search_algorithm_type import SearchAlgoType
 from src.environment.world_controller import WorldController
 from src.gui.button_group import ButtonGroup
@@ -128,7 +129,10 @@ class ReflexAgentWorldController(WorldController):
     Complete one cycle, updating everyone in the maze
     """
     def cycle(self) -> None:
-        self.player.revise(self.maze, self.ghosts, self.cupcakes)
+        world_state = WorldState(self.maze, self.ghosts, self.cupcakes, self.player.get_location())
+        self.player.revise(world_state)
+        for ghost in self.ghosts:
+            ghost.revise(world_state)
         player_action = self.player.decide() #decide players next move
         ghost_action = self.ghosts_decide()
         self.player.execute(player_action) 

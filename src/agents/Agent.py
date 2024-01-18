@@ -1,5 +1,5 @@
 from abc import abstractmethod
-
+from src.environment.WorldState import WorldState
 from src.enums.action import Action
 class Agent():
     def __init__(self, x, y):
@@ -48,10 +48,11 @@ class Agent():
     """
     Update internal representation for the maze map, locations of the ghosts and cupcakes not yet eaten
     """
-    def revise(self, maze, ghosts, cupcakes) -> None:
-        self.maze = maze
-        self.ghosts = ghosts
-        self.cupcakes = cupcakes
+    def revise(self, world_state: WorldState) -> None:
+        self.maze = world_state.get_maze()
+        self.ghosts = world_state.get_ghosts()
+        self.cupcakes = world_state.get_cupcakes()
+        self.player_location = world_state.get_player_location()
 
     """
     Check is a move to the given location is valid (aka not a wall or a ghost)
