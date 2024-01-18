@@ -1,7 +1,4 @@
 from src.agents.MinimaxAgent import MinimaxAgent
-from src.search_algorithms.manhattan_distance import ManhattanDistance
-from src.agents.Player import Player
-from src.enums.action import Action
 
 """
 Player that uses minimax to find the best move. Inherits from MinimaxAgent.

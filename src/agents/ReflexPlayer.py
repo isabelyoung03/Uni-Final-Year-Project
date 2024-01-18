@@ -14,6 +14,7 @@ class ReflexPlayer(Player):
         self.cupcake = None
         self.move_memory = []
         self.backtracking = False
+        self.come_back_to_locations = []
 
     def move_left(self) -> None:
         super().move_left()
@@ -33,6 +34,8 @@ class ReflexPlayer(Player):
     def ghost_in_location(self,x,y) -> bool:
         for ghost in self.ghosts:
             if ghost.get_location() == (x,y):
+                if self.uneaten_cupcake_in_location(x,y):
+                    self.come_back_to_locations.append((x,y)) #can't go there currently due to ghost but should try again later
                 return True
         return False
 
@@ -46,27 +49,40 @@ class ReflexPlayer(Player):
         return False
     
     """
-    Check is the move is possible and reasonable
+    Check is the move is possible
     """
     def check_possible_move(self, x, y) -> bool:
         if not self.check_valid_move(x, y):
             return False
-        if not self.uneaten_cupcake_in_location(x,y):
+        if ( #if new location has an opponent in the surrounding squares that could move 
+            self.ghost_in_location(x + 1, y)
+            or self.ghost_in_location(x - 1, y)
+            or self.ghost_in_location(x, y + 1)
+            or self.ghost_in_location(x, y - 1)
+        ):
             return False
         return True #true if valid move with no opponent in cell and an uneaten cupcake
+    
+    """
+    Check if the move is sensible: it is possible and there is a cupcake in the square
+    """
+    def check_sensible_move(self, x, y) -> bool:
+        if not self.uneaten_cupcake_in_location(x,y):
+            return False
+        return self.check_possible_move(x,y)
 
     """
     Get all of the possible moves from the current location
     """  
     def get_possible_moves(self) -> list:
         possible_moves = []
-        if self.check_possible_move(self.x + 1, self.y):
+        if self.check_sensible_move(self.x + 1, self.y):
             possible_moves.append(Action.RIGHT)
-        if self.check_possible_move(self.x - 1, self.y):
+        if self.check_sensible_move(self.x - 1, self.y):
             possible_moves.append(Action.LEFT)
-        if self.check_possible_move(self.x, self.y + 1):
+        if self.check_sensible_move(self.x, self.y + 1):
             possible_moves.append(Action.DOWN)
-        if self.check_possible_move(self.x, self.y - 1):
+        if self.check_sensible_move(self.x, self.y - 1):
             possible_moves.append(Action.UP)
         return possible_moves
     
@@ -77,7 +93,10 @@ class ReflexPlayer(Player):
         if not self.move_memory:
             return Action.IDLE
         previous_location = self.move_memory.pop()
-        return self.move_towards(previous_location[0], previous_location[1])
+        if self.check_possible_move(previous_location[0], previous_location[1]):
+            return self.move_towards(previous_location[0], previous_location[1])
+        else:
+            return Action.IDLE
 
     """
     Move towards a location based on the current location
@@ -101,6 +120,7 @@ class ReflexPlayer(Player):
     """
     def decide(self) -> Action:
         possible_moves = self.get_possible_moves()
+        print(possible_moves)
         if possible_moves == []:
             self.backtracking = True
             return self.backtrack()

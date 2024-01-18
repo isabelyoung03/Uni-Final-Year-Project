@@ -25,7 +25,7 @@ class Menu:
         greedy = OptionButton('Greedy', 20, config.GREEN, config.BLACK, 430, 415, SearchAlgoType.GREEDY)
         minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 90, 475, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
-        reflex = OptionButton('Reflex agent', 20, config.GREEN, config.BLACK, 400, 475, SearchAlgoType.REFLEX)
+        reflex = OptionButton('Reflex', 20, config.GREEN, config.BLACK, 435, 475, SearchAlgoType.REFLEX)
 
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex])
 
@@ -68,7 +68,7 @@ class Menu:
         display_text('Single-Agent and Multi-Agent Search in Maze Games', 20, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 50, self.menu_screen)
         display_text('By Isabel Young', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 125, self.menu_screen)
         display_text('Select maze size', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 200, self.menu_screen)
-        display_text('Select search algorithm', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 315, self.menu_screen)
+        display_text('Select agent type', 16, config.WHITE, config.MENU_SCREEN_WIDTH // 2, 315, self.menu_screen)
         
         self.size_button_group.draw(self.menu_screen)
         self.algo_button_group.draw(self.menu_screen)
