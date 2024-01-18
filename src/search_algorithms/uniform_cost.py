@@ -45,7 +45,7 @@ class UniformCostSearch(SearchAlgorithm):
         cost = 1
         min_distance_to_opponent = min(self.calculate_distance(location, opponent) for opponent in opponent_locations)
         if min_distance_to_opponent <= 2: #if near to a ghost
-            cost += 9 #increase cost
+            cost += 20 #increase cost
         return cost
 
     """

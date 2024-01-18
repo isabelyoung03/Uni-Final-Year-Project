@@ -140,9 +140,9 @@ class Ghost(Agent):
     Returns Action enum
     """
     def decide(self) -> Action:
-        if self.behaviour == GhostBehaviour.RANDOM:
+        if self.behaviour == GhostBehaviour.RANDOM or self.behaviour == GhostBehaviour.RANDOM_CHASE:
             action = self.check_player_nearby()
-            if action:
+            if action and self.behaviour == GhostBehaviour.RANDOM_CHASE:
                 print("Chasing player!")
                 return action
             
