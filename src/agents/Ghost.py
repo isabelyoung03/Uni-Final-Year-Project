@@ -122,14 +122,30 @@ class Ghost(Agent):
                     action = Action.UP
                 self.path_index += 1 
         return action
+    
+    def check_player_nearby(self) -> Action:
+        if self.player_location == (self.x + 1, self.y):
+            return Action.RIGHT
+        if self.player_location == (self.x - 1, self.y):
+            return Action.LEFT
+        if self.player_location == (self.x, self.y + 1):
+            return Action.DOWN
+        if self.player_location == (self.x, self.y - 1):
+            return Action.UP
+        return None
 
     """
     Decide on a next move
 
     Returns Action enum
     """
-    def decide(self, player_location=None) -> Action:
+    def decide(self) -> Action:
         if self.behaviour == GhostBehaviour.RANDOM:
+            action = self.check_player_nearby()
+            if action:
+                print("Chasing player!")
+                return action
+            
             random_integer = random.randint(1,4)
             if random_integer == 1:
                 return Action.DOWN
@@ -139,10 +155,6 @@ class Ghost(Agent):
                 return Action.RIGHT
             elif random_integer == 4:
                 return Action.UP
-        elif self.behaviour == GhostBehaviour.INTELLIGENT:
-            print(player_location)
-            self.goal = Goal(player_location)
-            return self.follow_path()
         return Action.IDLE
     
     """

@@ -1,5 +1,6 @@
 import sys
 import pygame
+from src.environment.WorldState import WorldState
 from src.enums.action import Action
 from src.gui.button import Button
 import config
@@ -126,6 +127,10 @@ class WorldController:
     Completes a cycle of the world, updating and moving players and ghosts
     """
     def cycle(self) -> None:
+        world_state = WorldState(self.maze, self.ghosts, self.goal, self.player.get_location())
+        self.player.revise(world_state)
+        for ghost in self.ghosts:
+            ghost.revise(world_state)
         player_action = self.player_decide() #decide players next move
         ghost_actions = self.ghosts_decide() #decide all ghosts next moves
         self.update_player(player_action)

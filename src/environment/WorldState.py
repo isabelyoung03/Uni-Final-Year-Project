@@ -18,4 +18,4 @@ class WorldState():
         return self.cupcakes
     
     def get_player_location(self):
-        return self.get_player_location
+        return self.player_location
