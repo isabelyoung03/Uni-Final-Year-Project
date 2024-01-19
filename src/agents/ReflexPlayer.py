@@ -14,7 +14,6 @@ class ReflexPlayer(Player):
         self.cupcake = None
         self.move_memory = []
         self.backtracking = False
-        self.come_back_to_locations = []
 
     def move_left(self) -> None:
         super().move_left()
@@ -34,8 +33,6 @@ class ReflexPlayer(Player):
     def ghost_in_location(self,x,y) -> bool:
         for ghost in self.ghosts:
             if ghost.get_location() == (x,y):
-                if self.uneaten_cupcake_in_location(x,y):
-                    self.come_back_to_locations.append((x,y)) #can't go there currently due to ghost but should try again later
                 return True
         return False
 
@@ -49,9 +46,9 @@ class ReflexPlayer(Player):
         return False
     
     """
-    Check is the move is possible
+    Check is the move is possible and away from a ghost
     """
-    def check_possible_move(self, x, y) -> bool:
+    def check_safe_move(self, x, y) -> bool:
         if not self.check_valid_move(x, y):
             return False
         if ( #if new location has an opponent in the surrounding squares that could move 
@@ -69,7 +66,7 @@ class ReflexPlayer(Player):
     def check_sensible_move(self, x, y) -> bool:
         if not self.uneaten_cupcake_in_location(x,y):
             return False
-        return self.check_possible_move(x,y)
+        return self.check_safe_move(x,y)
 
     """
     Get all of the possible moves from the current location
@@ -87,16 +84,46 @@ class ReflexPlayer(Player):
         return possible_moves
     
     """
+    Get possible moves to avoid nearby ghost
+    """
+    def evade_ghost_moves(self) -> list:
+        possible_moves = []
+        if self.check_safe_move(self.x + 1, self.y):
+            possible_moves.append(Action.RIGHT)
+        if self.check_safe_move(self.x - 1, self.y):
+            possible_moves.append(Action.LEFT)
+        if self.check_safe_move(self.x, self.y + 1):
+            possible_moves.append(Action.DOWN)
+        if self.check_safe_move(self.x, self.y - 1):
+            possible_moves.append(Action.UP)
+        return possible_moves
+    
+    """
     Backtrack to previous location
     """
     def backtrack(self) -> Action:
-        if not self.move_memory:
-            return Action.IDLE
-        previous_location = self.move_memory.pop()
-        if self.check_possible_move(previous_location[0], previous_location[1]):
-            return self.move_towards(previous_location[0], previous_location[1])
+        if self.move_memory:
+            previous_location = self.move_memory[-1] #peek
+            if self.check_safe_move(previous_location[0], previous_location[1]):
+                self.move_memory.pop()
+                return self.move_towards(previous_location[0], previous_location[1])
+            else:
+                return self.move_away_from_ghost()
         else:
+            if not self.check_safe_move(self.x, self.y): #if move isn't safe aka there is a ghost close
+                return self.move_away_from_ghost()
             return Action.IDLE
+        
+    """
+    Choose a move to move away from a nearby ghost
+    """
+    def move_away_from_ghost(self) -> Action:
+        print("moving away from ghost")
+        possible_moves = self.evade_ghost_moves()
+        if possible_moves == []:
+            return Action.IDLE
+        self.move_memory.append((self.x, self.y))
+        return possible_moves[0]
 
     """
     Move towards a location based on the current location
@@ -104,23 +131,22 @@ class ReflexPlayer(Player):
     def move_towards(self, goal_x, goal_y) -> Action:
         x_dif = goal_x - self.x
         y_dif = goal_y - self.y
-        if abs(x_dif) >= abs(y_dif):
+        if abs(x_dif) == 1 and y_dif == 0:
             if x_dif > 0:
-                return Action.RIGHT 
-            else:
-                return Action.LEFT
-        else:
+                return Action.RIGHT  
+            else: return Action.LEFT
+        elif x_dif == 0 and abs(y_dif) == 1:
             if y_dif > 0:
                 return Action.DOWN
-            else:
-                return Action.UP
+            else: return Action.UP
+        else:
+            return Action.IDLE
         
     """
     Decide which action to take
     """
     def decide(self) -> Action:
         possible_moves = self.get_possible_moves()
-        print(possible_moves)
         if possible_moves == []:
             self.backtracking = True
             return self.backtrack()
@@ -131,6 +157,7 @@ class ReflexPlayer(Player):
     Execute a given action
     """
     def execute(self, action) -> None:
+        print(self.move_memory)
         if not self.backtracking:
             self.move_memory.append((self.x, self.y))
         if action == Action.DOWN:
