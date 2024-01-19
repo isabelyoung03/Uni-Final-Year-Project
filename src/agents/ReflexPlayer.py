@@ -14,6 +14,9 @@ class ReflexPlayer(Player):
         self.cupcake = None
         self.move_memory = []
         self.backtracking = False
+        self.locations_to_revisit = []
+        self.start_x = x
+        self.start_y = y
 
     def move_left(self) -> None:
         super().move_left()
@@ -118,7 +121,6 @@ class ReflexPlayer(Player):
     Choose a move to move away from a nearby ghost
     """
     def move_away_from_ghost(self) -> Action:
-        print("moving away from ghost")
         possible_moves = self.evade_ghost_moves()
         if possible_moves == []:
             return Action.IDLE
@@ -146,20 +148,27 @@ class ReflexPlayer(Player):
     Decide which action to take
     """
     def decide(self) -> Action:
-        possible_moves = self.get_possible_moves()
-        if possible_moves == []:
+        #if the agent has completed one lap of the world, revisit previous locations again
+        if self.move_memory == [] and self.locations_to_revisit != [] and (self.x, self.y) == (self.start_x, self.start_y):
+            self.move_memory = self.locations_to_revisit[::-1]
+            self.locations_to_revisit = []
             self.backtracking = True
             return self.backtrack()
-        self.backtracking = False
-        return possible_moves[0]
+        else:
+            possible_moves = self.get_possible_moves()
+            if possible_moves == []:
+                self.backtracking = True
+                return self.backtrack()
+            self.backtracking = False
+            return possible_moves[0]
 
     """
     Execute a given action
     """
     def execute(self, action) -> None:
-        print(self.move_memory)
         if not self.backtracking:
             self.move_memory.append((self.x, self.y))
+        self.locations_to_revisit.append((self.x, self.y)) #agents whole path from start
         if action == Action.DOWN:
             self.move_down()
         elif action == Action.LEFT:
