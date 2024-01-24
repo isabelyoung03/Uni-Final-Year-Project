@@ -1,3 +1,4 @@
+from src.environment.minimax_world_controller import MinimaxWorldController
 from src.environment.reflex_agent_world_controller import ReflexAgentWorldController
 from src.agents.Player import Player
 from src.agents.ghost_list_factory import GhostListFactory
@@ -23,8 +24,13 @@ class WorldControllerFactory:
         player = PlayerFactory.get_player(maze, search_algorithm)
         if search_algorithm_enum == SearchAlgoType.A_STAR or search_algorithm_enum == SearchAlgoType.A_STAR_ALL_CELLS or search_algorithm_enum == SearchAlgoType.GREEDY:
             return AStarWorldController(maze, player, goals)
+        
         ghosts = GhostListFactory.get_ghost_list(maze, search_algorithm_enum)
         if search_algorithm_enum == SearchAlgoType.REFLEX:
             player = PlayerFactory.get_player(maze, search_algorithm)
             return ReflexAgentWorldController(maze, player, ghosts, goals)
+        if search_algorithm_enum == SearchAlgoType.MINIMAX:
+            player = PlayerFactory.get_player(maze, search_algorithm)
+            return MinimaxWorldController(maze, player, ghosts, goals)
+        
         return WorldController(maze, player, ghosts, goals[0])

@@ -1,6 +1,7 @@
 """
 Factory class for creating a ghosts for a world
 """
+from src.agents.MinimaxGhost import MinimaxGhost
 from src.agents.Ghost import Ghost
 from src.enums.ghost_behaviour import GhostBehaviour
 from src.enums.search_algorithm_type import SearchAlgoType
@@ -39,4 +40,17 @@ class GhostListFactory:
                 ghost6 = Ghost(15,3, maze, behaviour)
                 ghost7 = Ghost(18,14, maze, behaviour)
                 return [ghost1, ghost2, ghost3, ghost4, ghost5, ghost6, ghost7]
+            
+        if search_algorithm_enum == SearchAlgoType.MINIMAX:
+            if maze_size == MazeSize.SMALL:
+                ghost1 = MinimaxGhost(10,5, maze, GhostBehaviour.INTELLIGENT)
+                return [ghost1]
+
+            elif maze_size == MazeSize.MEDIUM:
+                ghost1 = MinimaxGhost(10,6, maze, GhostBehaviour.INTELLIGENT)
+                return [ghost1]
+
+            elif maze_size == MazeSize.LARGE:
+                ghost1 = MinimaxGhost(5,4, maze, GhostBehaviour.INTELLIGENT)
+                return [ghost1]
         return []

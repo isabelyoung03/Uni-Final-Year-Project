@@ -1,10 +1,9 @@
 """
 Factory class for creating player
 """
+from src.agents.MinimaxPlayer import MinimaxPlayer
 from src.agents.ReflexPlayer import ReflexPlayer
-from src.agents.Ghost import Ghost
 from src.agents.Player import Player
-from src.enums.ghost_behaviour import GhostBehaviour
 from src.enums.search_algorithm_type import SearchAlgoType
 from src.enums.size import MazeSize
 
@@ -33,7 +32,10 @@ class PlayerFactory:
                 player_x = 12
                 player_y = 7
         
-        if search_algorithm.get_enum() == SearchAlgoType.REFLEX or search_algorithm.get_enum() == SearchAlgoType.MINIMAX:
+        if search_algorithm.get_enum() == SearchAlgoType.REFLEX:
             return ReflexPlayer(player_x, player_y)
+        
+        if search_algorithm.get_enum() == SearchAlgoType.MINIMAX:
+            return MinimaxPlayer(player_x, player_y)
         
         return Player(player_x, player_y, search_algorithm)

@@ -154,3 +154,20 @@ class WorldController:
             if ghost.get_location() == self.player.get_location() :
                 return True
         return False
+    
+    """
+    Update goal if player is at the same location
+    """
+    def update_goals(self) -> None:
+        for goal in self.cupcakes:
+            if self.player.get_location() == goal.get_location(): 
+                goal.set_achieved()
+
+    """
+    Find out of all the goals in the maze have been reached
+    """
+    def all_goals_achieved(self) -> bool:
+        for goal in self.goals:
+            if not goal.get_achieved():
+                return False
+        return True

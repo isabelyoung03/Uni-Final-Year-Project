@@ -18,7 +18,7 @@ class AStarWorldController(WorldController):
     def __init__(self, maze, player, goals):
         self.maze = maze
         self.player = player
-        self.goals = goals #start with one goal for now
+        self.goals = goals 
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 200
@@ -43,23 +43,7 @@ class AStarWorldController(WorldController):
     """
     def update_player(self, action) -> None:
         self.player.execute(action)
-
-    """
-    Find out of all the goals in the maze have been reached
-    """
-    def all_goals_achieved(self) -> bool:
-        for goal in self.goals:
-            if not goal.get_achieved():
-                return False
-        return True
-
-    """
-    Update goal if player is at the same location
-    """
-    def update_goals(self) -> None:
-        for goal in self.goals:
-            if self.player.get_location() == goal.get_location(): #if player at goal location
-                goal.set_achieved()
+    
     """
     Render world on the screen
     """
