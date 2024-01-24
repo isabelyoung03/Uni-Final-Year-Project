@@ -34,6 +34,7 @@ class Minimax(SearchAlgorithm):
         for dx, dy in directions:
             if self.maze.check_valid_location(x + dx, y + dy):
                 possible_moves.append((x + dx, y + dy))
+        print(player, possible_moves)
         return possible_moves
 
     """
@@ -49,16 +50,12 @@ class Minimax(SearchAlgorithm):
         if visited_states is None:
             visited_states = set()
 
-        if depth == 0 or self.is_terminal_state(state):
+        if depth == 0 or self.is_terminal_state(state) or state in visited_states:
             if max_turn:
                 return self.player.evaluate(state), None
             return self.ghost.evaluate(state), None
 
         best_move = None
-
-        if state in visited_states:
-            print("Cycle!")
-            return 0
 
         visited_states.add(state)
 
@@ -93,8 +90,16 @@ class Minimax(SearchAlgorithm):
         self.player = player
         self.ghost = ghost
         current_state = State(self.player.get_location(), self.ghost.get_location())
-        best_location = self.minimax(current_state, 1, is_player)[1]
-        return self.get_action_to_location(best_location[0][0], best_location[0][1], player, current_state)
+        minimax = self.minimax(current_state, 4, is_player)
+
+        if minimax[1] is not None:
+            if is_player:
+                best_location = minimax[1][0]
+            else:
+                best_location = minimax[1][1]
+            return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
+        else:
+            return Action.IDLE
 
     """
     Get the move needed to go to location i,j from current location

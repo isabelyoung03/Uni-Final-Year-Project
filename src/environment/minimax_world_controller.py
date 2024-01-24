@@ -14,6 +14,8 @@ class MinimaxWorldController(WorldController):
     def __init__(self, maze, player, ghosts, cupcakes):
         self.maze = maze
         self.player = player
+        self.player.set_goal_location(cupcakes[0].get_location())
+        ghosts[0].set_goal_location(self.player.get_location())
         self.ghosts = [ghosts[0]]
         self.goals = [cupcakes[0]]
         self.cupcakes = self.goals

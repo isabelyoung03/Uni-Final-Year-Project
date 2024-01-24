@@ -1,4 +1,5 @@
 import math
+from src.search_algorithms.manhattan_distance import ManhattanDistance
 from src.enums.search_algorithm_type import SearchAlgoType
 from src.environment.Goal import Goal
 from src.search_algorithms.Search_algo import SearchAlgorithm
@@ -11,12 +12,12 @@ class AStarSearch(SearchAlgorithm):
     def __init__(self, maze, goals):
         self.maze = maze
         self.goals = goals
-        self.heuristic = None
+        self.heuristic = ManhattanDistance
         self.y_axis_length = len(maze.map)
         self.x_axis_length = len(maze.map[0])
 
     """
-    Searches the maze and returns path to goal
+    Searches the maze and returns path to goal from start position
     """
     def search(self, start_x: int, start_y: int) -> list:
         x = start_x
@@ -115,3 +116,9 @@ class AStarSearch(SearchAlgorithm):
     """
     def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.A_STAR
+    
+    def set_maze(self, maze):
+        self.maze = maze
+
+    def set_goals(self, goals):
+        self.goals = goals

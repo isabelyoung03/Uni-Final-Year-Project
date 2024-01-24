@@ -1,3 +1,6 @@
+from src.environment.WorldState import WorldState
+from src.environment.Goal import Goal
+from src.search_algorithms.a_star import AStarSearch
 from src.agents.Ghost import Ghost
 from src.search_algorithms.minimax_state import State
 
@@ -8,6 +11,7 @@ class MinimaxGhost(Ghost):
     def __init__(self, x: int, y: int, maze, behaviour):
         super().__init__(x, y, maze, behaviour)
         self.maze = None
+        self.a_star_search = None
         
     """
     Evaluates a position in the maze and returns a score.
@@ -15,9 +19,12 @@ class MinimaxGhost(Ghost):
     """
     def evaluate(self, state: State):
         (x, y) = state.get_ghost_location()
-        wall_penalty = -5
+        wall_penalty = -10
+        eval_score = 0
+        player_bonus = 100 #bonus for reaching the player
 
-        eval_score = 30
+        distance_to_goal = len(self.a_star_search.search(x,y))
+        eval_score += player_bonus / (distance_to_goal + 1)
 
         surrounding_cells = self.get_surrounding_cells(x, y)
         player_location = state.get_player_location()
@@ -25,12 +32,17 @@ class MinimaxGhost(Ghost):
         for (i, j) in surrounding_cells:
             if not self.maze.check_valid_location(i, j):  #if cell is a wall
                 eval_score += wall_penalty
-            elif (i, j) == player_location:  #if player in cell
-                eval_score += 100
-
-            players_surrounding_cells = self.get_surrounding_cells(player_location[0], player_location[1])
-            for cell in players_surrounding_cells:
-                if cell == (i,j):
-                    eval_score += 30  # maller score increase if player nearby
-
         return eval_score
+    
+    """
+    Update internal representation for the maze map, locations of the ghosts and cupcakes not yet eaten
+    """
+    def revise(self, world_state: WorldState) -> None:
+       super().revise(world_state)
+       self.a_star_search = AStarSearch(self.maze,  [Goal(self.goal_location[0], self.goal_location[1])])
+
+    """
+    Set goal location
+    """
+    def set_goal_location(self, goal_location):
+        self.goal_location = goal_location

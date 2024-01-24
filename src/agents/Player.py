@@ -123,7 +123,6 @@ class Player(Agent):
     def search_algo_string(self) -> str:
         return self.search_algorithm.get_enum().value
     
-    
     """
     Returns players search algorithm
     """
