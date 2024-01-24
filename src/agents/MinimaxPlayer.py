@@ -16,15 +16,21 @@ class MinimaxPlayer(Player):
     def evaluate(self, state: State):
         (x, y) = state.get_player_location()
         wall_penalty = -5
-        opponent_penalty = -10
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        opponent_penalty = -40
+        eval_score = 0
 
-        eval_score = 30
+        surrounding_cells = self.get_surrounding_cells(x, y)
+        ghost_location = state.get_ghost_location()
 
-        for dx, dy in directions:
-            if not self.maze.check_valid_location(x + dx, y + dy): #if cell is a wall
+        for (i, j) in surrounding_cells:
+            if not self.maze.check_valid_location(i, j):  #if cell is a wall
                 eval_score += wall_penalty
-            elif (x + dx, y + dy) == state.get_ghost_location(): #if opponent in cell
+            elif (i, j) == ghost_location:  #if ghost in cell
                 eval_score += opponent_penalty
+
+            ghosts_surrounding_cells = self.get_surrounding_cells(ghost_location[0], ghost_location[1])
+            for cell in ghosts_surrounding_cells:
+                if cell == (i,j):
+                    eval_score += opponent_penalty/2  # smaller score decrease if player nearby
 
         return eval_score

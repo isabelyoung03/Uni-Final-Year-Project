@@ -64,3 +64,10 @@ class Agent():
         if self.ghost_in_location(x,y):
              return False
         return True
+
+    """
+    Get the 4 surrounding cells to a specified cells and return as a list
+    """
+    def get_surrounding_cells(self, x, y):
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        return [(x + dx, y + dy) for dx, dy in directions]
