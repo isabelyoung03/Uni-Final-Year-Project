@@ -17,21 +17,13 @@ class MinimaxGhost(Ghost):
     Evaluates a position in the maze and returns a score.
     Score is calculated based on distance to goal and closeness to walls and opponents.
     """
-    def evaluate(self, state: State):
+    def evaluate(self, state: State) -> int:
         (x, y) = state.get_ghost_location()
-        wall_penalty = -10
         eval_score = 0
         player_bonus = 100 #bonus for reaching the player
 
         distance_to_goal = len(self.a_star_search.search(x,y))
         eval_score += player_bonus / (distance_to_goal + 1)
-
-        surrounding_cells = self.get_surrounding_cells(x, y)
-        player_location = state.get_player_location()
-
-        for (i, j) in surrounding_cells:
-            if not self.maze.check_valid_location(i, j):  #if cell is a wall
-                eval_score += wall_penalty
         return eval_score
     
     """

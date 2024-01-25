@@ -48,7 +48,7 @@ class GoalFactory:
             return GoalFactory.generate_goals_in_all_cells(maze)
         else:
             if maze_size == MazeSize.SMALL:
-                return [Goal(14,4)]
+                return [Goal(7,3)]
 
             elif maze_size == MazeSize.MEDIUM:
                 return [Goal(14,10)]

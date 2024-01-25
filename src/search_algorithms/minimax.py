@@ -34,7 +34,6 @@ class Minimax(SearchAlgorithm):
         for dx, dy in directions:
             if self.maze.check_valid_location(x + dx, y + dy):
                 possible_moves.append((x + dx, y + dy))
-        print(player, possible_moves)
         return possible_moves
 
     """
@@ -44,6 +43,27 @@ class Minimax(SearchAlgorithm):
         return State(player_move, opponent_move)
 
     """
+    Evaluates a state and returns a score
+    """
+    def evaluate(self, state, winning_score=1000, losing_score=-1000):
+        player_location = state.get_player_location()
+        ghost_location = state.get_ghost_location()
+        cupcake_location = self.cupcake.get_location() 
+
+        distance_to_goal = abs(player_location[0] - cupcake_location[0]) + abs(player_location[1] - cupcake_location[1])
+
+        distance_to_ghost = abs(player_location[0] - ghost_location[0]) + abs(player_location[1] - ghost_location[1])
+
+        if state.get_player_location() == cupcake_location:
+            return winning_score
+        elif state.get_ghost_location() == state.get_player_location():
+            return losing_score
+
+        score = distance_to_goal - distance_to_ghost
+
+        return score
+    
+    """
     Minimax algorithm function that is used recursively
     """
     def minimax(self, state: State, depth: int, max_turn: bool, visited_states=None):
@@ -51,15 +71,12 @@ class Minimax(SearchAlgorithm):
             visited_states = set()
 
         if depth == 0 or self.is_terminal_state(state) or state in visited_states:
-            if max_turn:
-                return self.player.evaluate(state), None
-            return self.ghost.evaluate(state), None
+            return self.evaluate(state), None
 
         best_move = None
-
         visited_states.add(state)
 
-        if max_turn:
+        if max_turn:  #player's turn
             max_eval = -math.inf
             for player_move in self.possible_moves(state):
                 for opponent_move in self.possible_moves(state, False):
@@ -68,10 +85,10 @@ class Minimax(SearchAlgorithm):
                     if score > max_eval:
                         max_eval = score
                         best_move = (player_move, opponent_move)
-            visited_states.remove(state)
-            return max_eval, best_move
 
-        else:
+            print(f"Player's turn - Depth: {depth}, Score: {max_eval}, Best Move: {best_move}, State: {state}")
+
+        else:  #ghost's turn
             min_eval = math.inf
             for player_move in self.possible_moves(state):
                 for opponent_move in self.possible_moves(state, False):
@@ -80,8 +97,11 @@ class Minimax(SearchAlgorithm):
                     if score < min_eval:
                         min_eval = score
                         best_move = (player_move, opponent_move)
-            visited_states.remove(state)
-            return min_eval, best_move
+
+            print(f"Ghost's turn - Depth: {depth}, Score: {min_eval}, Best Move: {best_move}, State: {state}")
+
+        visited_states.remove(state)
+        return max_eval if max_turn else min_eval, best_move
 
     """
     Uses the minimax algorithm to get the best move
@@ -90,13 +110,17 @@ class Minimax(SearchAlgorithm):
         self.player = player
         self.ghost = ghost
         current_state = State(self.player.get_location(), self.ghost.get_location())
-        minimax = self.minimax(current_state, 4, is_player)
+        minimax = self.minimax(current_state, 10, is_player)
 
+        best_moves = minimax[1]
+        print(minimax[0])
         if minimax[1] is not None:
             if is_player:
-                best_location = minimax[1][0]
+                best_location = best_moves[0]
+                print("player best move", best_location)
             else:
-                best_location = minimax[1][1]
+                best_location = best_moves[1]
+                print("ghost best move", best_location)
             return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
         else:
             return Action.IDLE

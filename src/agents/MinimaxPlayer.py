@@ -18,12 +18,11 @@ class MinimaxPlayer(Player):
     Evaluates a position in the maze and returns a score.
     Score is calculated based on distance to goal and closeness to walls and opponents.
     """
-    def evaluate(self, state: State):
+    def evaluate(self, state: State) -> int:
         (x, y) = state.get_player_location()
-        wall_penalty = -10
-        opponent_penalty = -50
-        eval_score = 0
+        opponent_penalty = -20
         goal_bonus = 100
+        eval_score = 0
 
         distance_to_goal = len(self.a_star_search.search(x,y))
         eval_score += goal_bonus / (distance_to_goal + 1)
@@ -32,12 +31,8 @@ class MinimaxPlayer(Player):
         ghost_location = state.get_ghost_location()
 
         for (i, j) in surrounding_cells:
-            if not self.maze.check_valid_location(i, j):
-                eval_score += wall_penalty
-
             if (i, j) == ghost_location:
                 eval_score += opponent_penalty
-
         return eval_score
     
     """

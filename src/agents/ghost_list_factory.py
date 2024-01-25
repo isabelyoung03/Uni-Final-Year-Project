@@ -43,7 +43,7 @@ class GhostListFactory:
             
         if search_algorithm_enum == SearchAlgoType.MINIMAX:
             if maze_size == MazeSize.SMALL:
-                ghost1 = MinimaxGhost(10,5, maze, GhostBehaviour.INTELLIGENT)
+                ghost1 = MinimaxGhost(14,1, maze, GhostBehaviour.INTELLIGENT)
                 return [ghost1]
 
             elif maze_size == MazeSize.MEDIUM:

@@ -52,3 +52,14 @@ Week 11:
     5/12/2023: I am continuing with greedy search.
     6/12/2023: I finished greedy search and am starting the model player as a reflex agent task.
                 To prepare, I have made it so that the maze stops and a message is displayed if the player loses.
+
+----------Term 2:-------------
+Week 1: This week I have completed the reflex agent and begun working on making the Minimax world controller.
+
+Week 2: 
+    25/01/2024: I have been struggling with the minimax algorithm. I have written the algorithm and evaluate functions
+                but it is not performing as I expected
+
+    26/01/2024: Still struggling with the minimax algorithm. Trying having just one evaluate function for ghost and player.
+                I think the problem might be caused by the depth, I am not sure if it is actually locating the goal at all
+                due to the depth, but if I increase the depth too much it makes the algorithm so slow.
