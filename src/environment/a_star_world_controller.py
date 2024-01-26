@@ -19,6 +19,7 @@ class AStarWorldController(WorldController):
         self.maze = maze
         self.player = player
         self.goals = goals 
+        self.cupcakes = goals
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
         self.timer = pygame.time.Clock()
         self.movement_delay = 200

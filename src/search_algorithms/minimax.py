@@ -1,4 +1,7 @@
 import math
+from src.enums.size import MazeSize
+from src.environment.Maze import Maze
+from src.environment.Goal import Goal
 from src.search_algorithms.a_star import AStarSearch
 from src.enums.search_algorithm_type import SearchAlgoType
 from src.search_algorithms.Search_algo import SearchAlgorithm
@@ -6,17 +9,18 @@ from src.enums.action import Action
 from src.search_algorithms.minimax_state import State
 
 class Minimax(SearchAlgorithm):
-    def __init__(self, maze, cupcake):
+    def __init__(self, maze: Maze, cupcake: Goal):
         self.maze = maze
         self.cupcake = cupcake
         self.a_star_search = AStarSearch(maze)
+        self.oscillation_history = []
 
     """
     Returns true of the state terminates the game...
     This is true if the player is in the same location as the cupcake or if the opponent
     is in the same location as the player.
     """
-    def is_terminal_state(self, state):
+    def is_terminal_state(self, state) -> bool:
         if state.get_player_location() == self.cupcake.get_location():
             return True
         if state.get_ghost_location() == state.get_player_location():
@@ -26,7 +30,7 @@ class Minimax(SearchAlgorithm):
     """
     Gets the possible moves from a based for either player or opponent
     """
-    def possible_moves(self, state, player=True):
+    def possible_moves(self, state, player=True) -> list:
         possible_moves = []
         if player:
             (x, y) = state.get_player_location()
@@ -41,13 +45,13 @@ class Minimax(SearchAlgorithm):
     """
     Return resulting state after player and opponent moves
     """
-    def result(self, player_move, opponent_move):
+    def result(self, player_move, opponent_move) -> State:
         return State(player_move, opponent_move)
 
     """
     Evaluates a state and returns a score
     """
-    def evaluate(self, state, winning_score=1000, losing_score=-1000):
+    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-100) -> int:
         player_location = state.get_player_location()
         ghost_location = state.get_ghost_location()
         cupcake_location = self.cupcake.get_location() 
@@ -64,10 +68,16 @@ class Minimax(SearchAlgorithm):
             return winning_score
         elif state.get_ghost_location() == state.get_player_location():
             return losing_score
+        
+        current_state_tuple = (state.get_player_location(), state.get_ghost_location())
+        self.oscillation_history.append(current_state_tuple)
+        if len(self.oscillation_history) > 3: #only keep last three states in history
+            self.oscillation_history.pop(0)  
 
+        if len(set(self.oscillation_history)) < len(self.oscillation_history): #if oscillating
+            return oscillation_penalty
+        
         score = distance_to_goal - distance_to_ghost
-        print(state)
-        print(score)
         return score
     
     """
@@ -92,7 +102,7 @@ class Minimax(SearchAlgorithm):
                     max_eval = score
                     best_move = player_move
 
-            print(f"Player's turn - Depth: {depth}, Score: {max_eval}, Best Move: {best_move}, State: {state}")
+            # print(f"Player's turn - Depth: {depth}, Score: {max_eval}, Best Move: {best_move}, State: {state}")
 
         else:  # ghost's turn
             min_eval = math.inf
@@ -103,7 +113,7 @@ class Minimax(SearchAlgorithm):
                     min_eval = score
                     best_move = opponent_move
 
-            print(f"Ghost's turn - Depth: {depth}, Score: {min_eval}, Best Move: {best_move}, State: {state}")
+            # print(f"Ghost's turn - Depth: {depth}, Score: {min_eval}, Best Move: {best_move}, State: {state}")
 
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
@@ -112,14 +122,17 @@ class Minimax(SearchAlgorithm):
     Uses the minimax algorithm to get the best move
     """
     def get_best_move(self, player, ghost, is_player=True):
+        depth = 5
+        if self.maze.get_maze_size() == MazeSize.MEDIUM:
+            depth = 12
+        elif self.maze.get_maze_size() == MazeSize.LARGE:
+            depth = 12
+
         self.player = player
         self.ghost = ghost
         current_state = State(self.player.get_location(), self.ghost.get_location())
-        minimax = self.minimax(current_state, 10, is_player)
-
+        minimax = self.minimax(current_state, depth, is_player)
         best_location = minimax[1]
-        print("best move", best_location)
-
         return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
 
     """

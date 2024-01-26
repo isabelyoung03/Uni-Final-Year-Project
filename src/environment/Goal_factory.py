@@ -51,7 +51,7 @@ class GoalFactory:
                 return [Goal(7,3)]
 
             elif maze_size == MazeSize.MEDIUM:
-                return [Goal(8,4)]
+                return [Goal(9,11)]
 
             elif maze_size == MazeSize.LARGE:
-                return [Goal(22,10)]
+                return [Goal(16,7)]
