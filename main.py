@@ -26,7 +26,8 @@ class MazeSearch:
                 selected_options = menu.maze_selection_menu()
                 maze = selected_options[0]
                 search_algorithm_enum = selected_options[1]
-                world_controller = WorldControllerFactory.create_new(maze, search_algorithm_enum)
+                no_of_opponents = selected_options[2]
+                world_controller = WorldControllerFactory.create_new(maze, search_algorithm_enum, no_of_opponents)
                 if world_controller.run(): #if world_controller returns...
                     break #go back to menu page
 

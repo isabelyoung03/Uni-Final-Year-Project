@@ -44,13 +44,19 @@ class GhostListFactory:
         if search_algorithm_enum == SearchAlgoType.MINIMAX:
             if maze_size == MazeSize.SMALL:
                 ghost1 = MinimaxGhost(1,4, maze, GhostBehaviour.INTELLIGENT)
-                return [ghost1]
+                ghost2 = MinimaxGhost(14,1, maze, behaviour)
+                ghost3 = MinimaxGhost(14,6, maze, behaviour)
+                return [ghost1, ghost2, ghost3]
 
             elif maze_size == MazeSize.MEDIUM:
                 ghost1 = MinimaxGhost(10,6, maze, GhostBehaviour.INTELLIGENT)
-                return [ghost1]
+                ghost2 = MinimaxGhost(4,14, maze, behaviour)
+                ghost3 = MinimaxGhost(2,8, maze, behaviour)
+                return [ghost1, ghost2, ghost3]
 
             elif maze_size == MazeSize.LARGE:
                 ghost1 = MinimaxGhost(5,4, maze, GhostBehaviour.INTELLIGENT)
-                return [ghost1]
+                ghost2 = MinimaxGhost(22,2, maze, behaviour)
+                ghost3 = MinimaxGhost(4,14, maze, behaviour)
+                return [ghost1, ghost2, ghost3]
         return []

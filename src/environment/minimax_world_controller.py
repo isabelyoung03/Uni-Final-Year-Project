@@ -15,8 +15,9 @@ class MinimaxWorldController(WorldController):
         self.maze = maze
         self.player = player
         self.player.set_goal_location(cupcakes[0].get_location())
-        ghosts[0].set_goal_location(self.player.get_location())
-        self.ghosts = [ghosts[0]]
+        for ghost in ghosts:
+            ghost.set_goal_location(self.player.get_location())
+        self.ghosts = ghosts
         self.goals = [cupcakes[0]]
         self.cupcakes = self.goals
         self.screen = pygame.display.set_mode((maze.maze_size.get_width(), maze.maze_size.get_height()))
@@ -36,7 +37,8 @@ class MinimaxWorldController(WorldController):
     def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
-        self.ghosts[0].draw(self.screen)
+        for ghost in self.ghosts:
+            ghost.draw(self.screen)
         self.cupcakes[0].draw(self.screen)
         if not self.game_lost:
             self.player.draw(self.screen)
@@ -89,7 +91,8 @@ class MinimaxWorldController(WorldController):
     def cycle(self) -> None:
         world_state = WorldState(self.maze, self.ghosts, self.goals, self.player.get_location())
         self.player.revise(world_state)
-        self.ghosts[0].revise(world_state)
+        for ghost in self.ghosts:
+            ghost.revise(world_state)
         player_action = self.minimax.get_best_move(self.player, self.ghosts[0], True) #decide method for player
         ghost_action = self.minimax.get_best_move(self.player, self.ghosts[0], False) #decide method for ghost
         self.player.execute(player_action) 

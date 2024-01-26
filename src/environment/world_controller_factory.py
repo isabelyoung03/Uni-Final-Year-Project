@@ -18,7 +18,7 @@ class WorldControllerFactory:
     Creates and returns a new WorldController
     """
     @staticmethod
-    def create_new(maze, search_algorithm_enum) -> WorldController:
+    def create_new(maze, search_algorithm_enum, no_of_opponents=None) -> WorldController:
         goals = GoalFactory.get_goals(maze, search_algorithm_enum)
         search_algorithm = SearchAlgorithmFactory.create_new(search_algorithm_enum, maze, goals)
         player = PlayerFactory.get_player(maze, search_algorithm)
@@ -29,8 +29,9 @@ class WorldControllerFactory:
         if search_algorithm_enum == SearchAlgoType.REFLEX:
             player = PlayerFactory.get_player(maze, search_algorithm)
             return ReflexAgentWorldController(maze, player, ghosts, goals)
+        
         if search_algorithm_enum == SearchAlgoType.MINIMAX:
             player = PlayerFactory.get_player(maze, search_algorithm)
-            return MinimaxWorldController(maze, player, ghosts, goals)
+            return MinimaxWorldController(maze, player, ghosts, goals[:no_of_opponents])
         
         return WorldController(maze, player, ghosts, goals[0])
