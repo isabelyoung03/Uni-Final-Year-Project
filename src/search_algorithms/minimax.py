@@ -1,4 +1,5 @@
 import math
+from src.search_algorithms.a_star import AStarSearch
 from src.enums.search_algorithm_type import SearchAlgoType
 from src.search_algorithms.Search_algo import SearchAlgorithm
 from src.enums.action import Action
@@ -8,6 +9,7 @@ class Minimax(SearchAlgorithm):
     def __init__(self, maze, cupcake):
         self.maze = maze
         self.cupcake = cupcake
+        self.a_star_search = AStarSearch(maze)
 
     """
     Returns true of the state terminates the game...
@@ -50,9 +52,13 @@ class Minimax(SearchAlgorithm):
         ghost_location = state.get_ghost_location()
         cupcake_location = self.cupcake.get_location() 
 
-        distance_to_goal = abs(player_location[0] - cupcake_location[0]) + abs(player_location[1] - cupcake_location[1])
+        #use A* search to find shortest number of moves from player to goal
+        self.a_star_search.set_goal(cupcake_location[0],  cupcake_location[1])
+        distance_to_goal = len(self.a_star_search.search(player_location[0], player_location[1]))
 
-        distance_to_ghost = abs(player_location[0] - ghost_location[0]) + abs(player_location[1] - ghost_location[1])
+        #use A* search to find shortest number of moves from player to ghost
+        self.a_star_search.set_goal(ghost_location[0], ghost_location[1])
+        distance_to_ghost = len(self.a_star_search.search(player_location[0], player_location[1]))
 
         if state.get_player_location() == cupcake_location:
             return winning_score
@@ -60,7 +66,8 @@ class Minimax(SearchAlgorithm):
             return losing_score
 
         score = distance_to_goal - distance_to_ghost
-
+        print(state)
+        print(score)
         return score
     
     """
@@ -68,35 +75,33 @@ class Minimax(SearchAlgorithm):
     """
     def minimax(self, state: State, depth: int, max_turn: bool, visited_states=None):
         if visited_states is None:
-            visited_states = set()
+            visited_states = []
 
         if depth == 0 or self.is_terminal_state(state) or state in visited_states:
             return self.evaluate(state), None
 
         best_move = None
-        visited_states.add(state)
+        visited_states.append(state)
 
-        if max_turn:  #player's turn
+        if max_turn:  # player's turn
             max_eval = -math.inf
             for player_move in self.possible_moves(state):
-                for opponent_move in self.possible_moves(state, False):
-                    new_state = self.result(player_move, opponent_move)
-                    score, _ = self.minimax(new_state, depth - 1, False, visited_states)
-                    if score > max_eval:
-                        max_eval = score
-                        best_move = (player_move, opponent_move)
+                new_state = self.result(player_move, state.get_ghost_location())
+                score, _ = self.minimax(new_state, depth - 1, False, visited_states)
+                if score > max_eval:
+                    max_eval = score
+                    best_move = player_move
 
             print(f"Player's turn - Depth: {depth}, Score: {max_eval}, Best Move: {best_move}, State: {state}")
 
-        else:  #ghost's turn
+        else:  # ghost's turn
             min_eval = math.inf
-            for player_move in self.possible_moves(state):
-                for opponent_move in self.possible_moves(state, False):
-                    new_state = self.result(player_move, opponent_move)
-                    score, _ = self.minimax(new_state, depth - 1, True, visited_states)
-                    if score < min_eval:
-                        min_eval = score
-                        best_move = (player_move, opponent_move)
+            for opponent_move in self.possible_moves(state, player=False):
+                new_state = self.result(state.get_player_location(), opponent_move)
+                score, _ = self.minimax(new_state, depth - 1, True, visited_states)
+                if score < min_eval:
+                    min_eval = score
+                    best_move = opponent_move
 
             print(f"Ghost's turn - Depth: {depth}, Score: {min_eval}, Best Move: {best_move}, State: {state}")
 
@@ -112,18 +117,10 @@ class Minimax(SearchAlgorithm):
         current_state = State(self.player.get_location(), self.ghost.get_location())
         minimax = self.minimax(current_state, 10, is_player)
 
-        best_moves = minimax[1]
-        print(minimax[0])
-        if minimax[1] is not None:
-            if is_player:
-                best_location = best_moves[0]
-                print("player best move", best_location)
-            else:
-                best_location = best_moves[1]
-                print("ghost best move", best_location)
-            return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
-        else:
-            return Action.IDLE
+        best_location = minimax[1]
+        print("best move", best_location)
+
+        return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
 
     """
     Get the move needed to go to location i,j from current location
@@ -152,5 +149,3 @@ class Minimax(SearchAlgorithm):
     
     def search():
         pass
-
-    

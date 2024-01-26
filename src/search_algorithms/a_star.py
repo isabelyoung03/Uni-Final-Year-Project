@@ -9,7 +9,7 @@ from src.search_algorithms.node import Node
 A* search
 """
 class AStarSearch(SearchAlgorithm):
-    def __init__(self, maze, goals):
+    def __init__(self, maze=None, goals=None):
         self.maze = maze
         self.goals = goals
         self.heuristic = ManhattanDistance
@@ -116,9 +116,7 @@ class AStarSearch(SearchAlgorithm):
     """
     def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.A_STAR
-    
-    def set_maze(self, maze):
-        self.maze = maze
 
-    def set_goals(self, goals):
-        self.goals = goals
+    def set_goal(self, x, y):
+        goal = Goal(x, y)
+        self.goals = [goal]
