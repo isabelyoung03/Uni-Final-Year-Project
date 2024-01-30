@@ -32,8 +32,7 @@ class Minimax(SearchAlgorithm):
     Gets the possible moves from a based for either player or opponent
     """
     def possible_moves(self, location) -> list:
-        x = location[0]
-        y = location[1]
+        (x, y) = location
         possible_moves = []
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         for dx, dy in directions:
@@ -52,23 +51,27 @@ class Minimax(SearchAlgorithm):
     """
     def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-100) -> int:
         player_location = state.get_player_location()
-        ghost_location = state.get_ghost_location()[0]
+        ghost_locations = state.get_ghost_locations()
         cupcake_location = self.cupcake.get_location() 
 
         #use A* search to find shortest number of moves from player to goal
         self.a_star_search.set_goal(cupcake_location[0],  cupcake_location[1])
         distance_to_goal = len(self.a_star_search.search(player_location[0], player_location[1]))
 
-        #use A* search to find shortest number of moves from player to ghost
-        self.a_star_search.set_goal(ghost_location[0], ghost_location[1])
-        distance_to_ghost = len(self.a_star_search.search(player_location[0], player_location[1]))
+        #use A* search to find shortest number of moves from player to all ghosts
+        dist_to_all_ghosts = 0
+        for ghost_location in ghost_locations:
+            self.a_star_search.set_goal(ghost_location[0], ghost_location[1])
+            distance_to_ghost = len(self.a_star_search.search(player_location[0], player_location[1]))
+            dist_to_all_ghosts += distance_to_ghost
 
         if state.get_player_location() == cupcake_location:
             return winning_score
-        elif state.get_ghost_location() == state.get_player_location():
-            return losing_score
+        for ghost_location in ghost_locations:
+            if ghost_location == state.get_player_location():
+                return losing_score
         
-        current_state_tuple = (state.get_player_location(), state.get_ghost_location())
+        current_state_tuple = (state.get_player_location(), state.get_ghost_locations())
         self.oscillation_history.append(current_state_tuple)
         if len(self.oscillation_history) > 3: #only keep last three states in history
             self.oscillation_history.pop(0)  
@@ -139,6 +142,9 @@ class Minimax(SearchAlgorithm):
         best_location = minimax[1]
         return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
     
+    """
+    Get the best moves for the ghosts
+    """
     def get_best_moves_for_ghosts(self, player, ghosts):
         depth = 5
         if self.maze.get_maze_size() == MazeSize.MEDIUM:
