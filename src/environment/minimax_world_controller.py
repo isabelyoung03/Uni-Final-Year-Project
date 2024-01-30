@@ -97,7 +97,7 @@ class MinimaxWorldController(WorldController):
         player_action = self.minimax.get_best_move_for_player(self.player, self.ghosts) #decide method for player
         ghost_actions = self.minimax.get_best_moves_for_ghosts(self.player, self.ghosts) #decide method for ghost
         self.player.execute(player_action)
-        for i in range(len(ghost_actions)):
+        for i in range(len(self.ghosts)):
             self.ghosts[i].execute(ghost_actions[i])
 
         self.update_goals()

@@ -107,16 +107,17 @@ class Minimax(SearchAlgorithm):
         else:  #ghost's turn
             min_eval = math.inf
             best_moves = []
-            print(state)
-            for ghost_location in state.get_ghost_locations():
-                for opponent_move in self.possible_moves(ghost_location):
+            for ghost_location in state.get_ghost_locations(): #for each ghost
+                moves_for_ghost = [] 
+                for opponent_move in self.possible_moves(ghost_location): #consdier each possible move
                     new_state = self.result(state.get_player_location(), [opponent_move])
                     score, _ = self.minimax(new_state, depth - 1, True, visited_states)
+                    moves_for_ghost.append((score, opponent_move))
+
                     if score < min_eval:
                         min_eval = score
                         best_moves = [opponent_move]
-                    # elif score == min_eval:
-                    #     best_moves.append(opponent_move)
+
             best_move = best_moves
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
@@ -160,8 +161,10 @@ class Minimax(SearchAlgorithm):
         _, best_moves = self.minimax(current_state, depth, False)
         
         actions = []
-        for i in range(len(best_moves)):
-            actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[0]))
+        for i in range(len(current_state.get_ghost_locations())):
+            actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[i]))
+        print(best_moves)
+        print(actions)
         return actions
 
     """
