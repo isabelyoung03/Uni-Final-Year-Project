@@ -32,6 +32,6 @@ class WorldControllerFactory:
         
         if search_algorithm_enum == SearchAlgoType.MINIMAX:
             player = PlayerFactory.get_player(maze, search_algorithm)
-            return MinimaxWorldController(maze, player, ghosts, goals[:no_of_opponents])
+            return MinimaxWorldController(maze, player, ghosts[:no_of_opponents], goals)
         
         return WorldController(maze, player, ghosts, goals[0])

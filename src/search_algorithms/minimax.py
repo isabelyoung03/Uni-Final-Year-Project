@@ -23,19 +23,18 @@ class Minimax(SearchAlgorithm):
     def is_terminal_state(self, state) -> bool:
         if state.get_player_location() == self.cupcake.get_location():
             return True
-        if state.get_ghost_location() == state.get_player_location():
-            return True
+        for opponent_location in state.get_ghost_locations():
+            if opponent_location == state.get_player_location():
+                return True
         return False
 
     """
     Gets the possible moves from a based for either player or opponent
     """
-    def possible_moves(self, state, player=True) -> list:
+    def possible_moves(self, location) -> list:
+        x = location[0]
+        y = location[1]
         possible_moves = []
-        if player:
-            (x, y) = state.get_player_location()
-        else:
-            (x, y) = state.get_ghost_location()
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         for dx, dy in directions:
             if self.maze.check_valid_location(x + dx, y + dy):
@@ -45,15 +44,15 @@ class Minimax(SearchAlgorithm):
     """
     Return resulting state after player and opponent moves
     """
-    def result(self, player_move, opponent_move) -> State:
-        return State(player_move, opponent_move)
+    def result(self, player_move, opponent_moves: list) -> State:
+        return State(player_move, opponent_moves)
 
     """
     Evaluates a state and returns a score
     """
     def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-100) -> int:
         player_location = state.get_player_location()
-        ghost_location = state.get_ghost_location()
+        ghost_location = state.get_ghost_location()[0]
         cupcake_location = self.cupcake.get_location() 
 
         #use A* search to find shortest number of moves from player to goal
@@ -93,27 +92,29 @@ class Minimax(SearchAlgorithm):
         best_move = None
         visited_states.append(state)
 
-        if max_turn:  # player's turn
+        if max_turn:  #player's turn
             max_eval = -math.inf
-            for player_move in self.possible_moves(state):
-                new_state = self.result(player_move, state.get_ghost_location())
+            for player_move in self.possible_moves(state.get_player_location()):
+                new_state = self.result(player_move, state.get_ghost_locations())
                 score, _ = self.minimax(new_state, depth - 1, False, visited_states)
                 if score > max_eval:
                     max_eval = score
                     best_move = player_move
 
-            # print(f"Player's turn - Depth: {depth}, Score: {max_eval}, Best Move: {best_move}, State: {state}")
-
-        else:  # ghost's turn
+        else:  #ghost's turn
             min_eval = math.inf
-            for opponent_move in self.possible_moves(state, player=False):
+            best_moves = []
+
+            for opponent_move in self.possible_moves(state.get_ghost_locations()[0]):
                 new_state = self.result(state.get_player_location(), opponent_move)
                 score, _ = self.minimax(new_state, depth - 1, True, visited_states)
                 if score < min_eval:
                     min_eval = score
-                    best_move = opponent_move
+                    best_moves = [opponent_move]
+                elif score == min_eval:
+                    best_moves.append(opponent_move)
 
-            # print(f"Ghost's turn - Depth: {depth}, Score: {min_eval}, Best Move: {best_move}, State: {state}")
+            best_move = best_moves
 
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
@@ -121,7 +122,7 @@ class Minimax(SearchAlgorithm):
     """
     Uses the minimax algorithm to get the best move
     """
-    def get_best_move(self, player, ghost, is_player=True):
+    def get_best_move(self, player, ghosts, is_player=True):
         depth = 5
         if self.maze.get_maze_size() == MazeSize.MEDIUM:
             depth = 12
@@ -129,20 +130,41 @@ class Minimax(SearchAlgorithm):
             depth = 12
 
         self.player = player
-        self.ghost = ghost
-        current_state = State(self.player.get_location(), self.ghost.get_location())
+        self.ghosts = ghosts
+        ghost_locations = []
+        for ghost in self.ghosts:
+            ghost_locations.append(ghost.get_location())
+        current_state = State(player.get_location(), ghost_locations)
         minimax = self.minimax(current_state, depth, is_player)
         best_location = minimax[1]
         return self.get_action_to_location(best_location[0], best_location[1], is_player, current_state)
+    
+    def get_best_moves_for_ghosts(self, player, ghosts):
+        depth = 5
+        if self.maze.get_maze_size() == MazeSize.MEDIUM:
+            depth = 12
+        elif self.maze.get_maze_size() == MazeSize.LARGE:
+            depth = 12
+
+        self.player = player
+        self.ghosts = ghosts
+        ghost_locations = []
+        for ghost in self.ghosts:
+            ghost_locations.append(ghost.get_location())
+        current_state = State(player.get_location(), ghost_locations)
+        _, best_moves = self.minimax(current_state, depth, True)
+
+        actions = []
+        for i in range(len(best_moves)):
+            actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[i]))
+        print(actions)
+        return actions
 
     """
     Get the move needed to go to location i,j from current location
     """
-    def get_action_to_location(self, i: int, j: int, player: bool, current_state: State):
-        if player:
-            (x, y) = current_state.get_player_location()
-        else:
-            (x, y) = current_state.get_ghost_location()
+    def get_action_to_location(self, i: int, j: int, current_location):
+        (x, y) = current_location
         action = Action.IDLE
         if i - x == 1:
             action = Action.RIGHT

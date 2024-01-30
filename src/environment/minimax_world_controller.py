@@ -93,11 +93,15 @@ class MinimaxWorldController(WorldController):
         self.player.revise(world_state)
         for ghost in self.ghosts:
             ghost.revise(world_state)
-        player_action = self.minimax.get_best_move(self.player, self.ghosts[0], True) #decide method for player
-        ghost_action = self.minimax.get_best_move(self.player, self.ghosts[0], False) #decide method for ghost
-        self.player.execute(player_action) 
-        self.ghosts[0].execute(ghost_action)
+
+        player_action = self.minimax.get_best_move(self.player, self.ghosts, True) #decide method for player
+        ghost_actions = self.minimax.get_best_moves_for_ghosts(self.player, self.ghosts, False) #decide method for ghost
+        self.player.execute(player_action)
+        for i in range(len(ghost_actions)):
+            self.ghosts[i].execute(ghost_actions[i])
+
         self.update_goals()
+
         if self.all_goals_achieved():
             self.play_button.toggle(True)
             self.pause_button.toggle(True)
