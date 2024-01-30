@@ -13,7 +13,7 @@ class Minimax(SearchAlgorithm):
         self.maze = maze
         self.cupcake = cupcake
         self.a_star_search = AStarSearch(maze)
-        # self.oscillation_history = []
+        self.player_oscillation_history = []
 
     """
     Returns true of the state terminates the game...
@@ -49,7 +49,7 @@ class Minimax(SearchAlgorithm):
     """
     Evaluates a state and returns a score
     """
-    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-100) -> int:
+    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-1000) -> int:
         player_location = state.get_player_location()
         ghost_locations = state.get_ghost_locations()
         cupcake_location = self.cupcake.get_location() 
@@ -71,16 +71,21 @@ class Minimax(SearchAlgorithm):
             if ghost_location == state.get_player_location():
                 return losing_score
         
-        # current_state_tuple = (state.get_player_location(), state.get_ghost_locations())
-        # self.oscillation_history.append(current_state_tuple)
-        # if len(self.oscillation_history) > 3: #only keep last three states in history
-        #     self.oscillation_history.pop(0)  
-
-        # if len(set(self.oscillation_history)) < len(self.oscillation_history): #if oscillating
-        #     return oscillation_penalty
+        if self.player_oscillating(player_location):
+            print("Player oscillating!")
+            return oscillation_penalty
         
         score = distance_to_goal - distance_to_ghost
         return score
+    
+    """
+    If the player is oscillating between the same two locations, incur a penalty
+    """
+    def player_oscillating(self, current_location):
+        self.player_oscillation_history.append(current_location)
+        if len(self.player_oscillation_history) > 3: 
+            self.player_oscillation_history.pop(0)  
+        return len(set(self.player_oscillation_history)) < len(self.player_oscillation_history)
     
     """
     Minimax algorithm function that is used recursively
@@ -116,8 +121,8 @@ class Minimax(SearchAlgorithm):
 
                     if score < min_eval:
                         min_eval = score
-                        best_moves = [opponent_move]
-
+                        best_moves.extend([opponent_move])
+                        
             best_move = best_moves
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
@@ -161,9 +166,13 @@ class Minimax(SearchAlgorithm):
         _, best_moves = self.minimax(current_state, depth, False)
         
         actions = []
-        for i in range(len(current_state.get_ghost_locations())):
-            actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[i]))
         print(best_moves)
+        print(current_state.get_ghost_locations())
+        for i in range(len(current_state.get_ghost_locations())):
+            if best_moves and i < len(best_moves):
+                actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[i]))
+            else:
+                actions.append(Action.IDLE)
         print(actions)
         return actions
 
