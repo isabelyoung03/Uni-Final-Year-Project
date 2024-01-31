@@ -195,7 +195,7 @@ class Minimax(SearchAlgorithm):
                 return 12
         elif opponent_no == 3:
             if maze_size == MazeSize.SMALL:
-                return 3
+                return 7
             elif maze_size == MazeSize.MEDIUM:
                 return 3
             else:
