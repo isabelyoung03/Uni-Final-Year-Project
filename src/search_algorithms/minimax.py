@@ -72,7 +72,6 @@ class Minimax(SearchAlgorithm):
                 return losing_score
         
         if self.player_oscillating(player_location):
-            print("Player oscillating!")
             return oscillation_penalty
         
         score = distance_to_goal - distance_to_ghost
@@ -100,29 +99,33 @@ class Minimax(SearchAlgorithm):
         best_move = None
         visited_states.append(state)
 
-        if max_turn:  #player's turn
+        if max_turn: #player's turn
             max_eval = -math.inf
             for player_move in self.possible_moves(state.get_player_location()):
-                new_state = self.result(player_move, state.get_ghost_locations())
+                new_ghost_locations = state.get_ghost_locations()
+                new_state = self.result(player_move, new_ghost_locations)
                 score, _ = self.minimax(new_state, depth - 1, False, visited_states)
                 if score > max_eval:
                     max_eval = score
                     best_move = player_move
 
-        else:  #ghost's turn
+        else: #ghost's turn
             min_eval = math.inf
             best_moves = []
             for ghost_location in state.get_ghost_locations(): #for each ghost
-                moves_for_ghost = [] 
-                for opponent_move in self.possible_moves(ghost_location): #consdier each possible move
-                    new_state = self.result(state.get_player_location(), [opponent_move])
+                moves_for_ghost = []
+                for opponent_move in self.possible_moves(ghost_location): #consider each possible move
+                    new_ghost_locations = state.get_ghost_locations().copy() 
+                    new_ghost_locations.remove(ghost_location)  
+                    new_ghost_locations.append(opponent_move) 
+                    new_state = self.result(state.get_player_location(), new_ghost_locations)
                     score, _ = self.minimax(new_state, depth - 1, True, visited_states)
                     moves_for_ghost.append((score, opponent_move))
 
                     if score < min_eval:
                         min_eval = score
                         best_moves.extend([opponent_move])
-                        
+
             best_move = best_moves
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
@@ -159,21 +162,20 @@ class Minimax(SearchAlgorithm):
 
         self.player = player
         self.ghosts = ghosts
-        ghost_locations = []
-        for ghost in self.ghosts:
-            ghost_locations.append(ghost.get_location())
-        current_state = State(player.get_location(), ghost_locations)
-        _, best_moves = self.minimax(current_state, depth, False)
-        
+        ghost_locations = [ghost.get_location() for ghost in self.ghosts]
+
+        best_moves = []
+        for i in range(len(ghost_locations)):
+            current_state = State(player.get_location(), [ghost_locations[i]])
+            _, best_move = self.minimax(current_state, depth, False)
+            best_moves.append(best_move[0])
+
         actions = []
-        print(best_moves)
-        print(current_state.get_ghost_locations())
-        for i in range(len(current_state.get_ghost_locations())):
-            if best_moves and i < len(best_moves):
-                actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], current_state.get_ghost_locations()[i]))
+        for i in range(len(ghost_locations)):
+            if best_moves and i < len(best_moves) and best_moves[i] is not None:
+                actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], ghost_locations[i]))
             else:
                 actions.append(Action.IDLE)
-        print(actions)
         return actions
 
     """
