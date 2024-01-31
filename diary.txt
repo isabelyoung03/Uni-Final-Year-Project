@@ -63,3 +63,7 @@ Week 2:
     26/01/2024: Still struggling with the minimax algorithm. Trying having just one evaluate function for ghost and player.
                 I think the problem might be caused by the depth, I am not sure if it is actually locating the goal at all
                 due to the depth, but if I increase the depth too much it makes the algorithm so slow.
+Week 3: 
+    30/01/2024: I have complete minimax for one opponent.
+    31/01/2024: I have completed minimax for multiple opponents. I am also working on updating my UML diagram,
+                and starting the professional issues part of my report.
