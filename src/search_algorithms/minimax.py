@@ -154,11 +154,7 @@ class Minimax(SearchAlgorithm):
     Get the best moves for the ghosts
     """
     def get_best_moves_for_ghosts(self, player, ghosts):
-        depth = 5
-        if self.maze.get_maze_size() == MazeSize.MEDIUM:
-            depth = 12
-        elif self.maze.get_maze_size() == MazeSize.LARGE:
-            depth = 12
+        depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
 
         self.player = player
         self.ghosts = ghosts
@@ -177,6 +173,33 @@ class Minimax(SearchAlgorithm):
             else:
                 actions.append(Action.IDLE)
         return actions
+    
+    """
+    Get depth used for opponent minimax, depending on opponent number and maze size
+    Necessary because higher depth on 3 opponents in a larger maze causes program to be slow
+    """
+    def get_depth(self, maze_size, opponent_no) -> int:
+        if opponent_no == 1:
+            if maze_size == MazeSize.SMALL:
+                return 5
+            elif maze_size == MazeSize.MEDIUM:
+                return 12
+            else:
+                return 12
+        elif opponent_no == 2:
+            if maze_size == MazeSize.SMALL:
+                return 8
+            elif maze_size == MazeSize.MEDIUM:
+                return 10
+            else:
+                return 12
+        elif opponent_no == 3:
+            if maze_size == MazeSize.SMALL:
+                return 3
+            elif maze_size == MazeSize.MEDIUM:
+                return 3
+            else:
+                return 3
 
     """
     Get the move needed to go to location i,j from current location
