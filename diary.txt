@@ -67,3 +67,5 @@ Week 3:
     30/01/2024: I have complete minimax for one opponent.
     31/01/2024: I have completed minimax for multiple opponents. I am also working on updating my UML diagram,
                 and starting the professional issues part of my report.
+    1/02/2024: Today I am starting to work on minimax with alpha-beta pruning. I have made a button on the minimax
+    page to toggle pruning on or off.
