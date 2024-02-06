@@ -145,11 +145,7 @@ class Minimax(SearchAlgorithm):
     Uses the minimax algorithm to get the best move
     """
     def get_best_move_for_player(self, player, ghosts, prune:bool=False):
-        depth = 5
-        if self.maze.get_maze_size() == MazeSize.MEDIUM:
-            depth = 12
-        elif self.maze.get_maze_size() == MazeSize.LARGE:
-            depth = 12
+        depth = self.get_depth(self.maze.get_maze_size(), len(ghosts), prune)
 
         self.player = player
         self.ghosts = ghosts
@@ -165,7 +161,7 @@ class Minimax(SearchAlgorithm):
     Get the best moves for the ghosts
     """
     def get_best_moves_for_ghosts(self, player, ghosts, prune:bool=False):
-        depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
+        depth = self.get_depth(self.maze.get_maze_size(), len(ghosts), prune)
 
         self.player = player
         self.ghosts = ghosts
@@ -186,31 +182,55 @@ class Minimax(SearchAlgorithm):
         return actions
     
     """
-    Get depth used for opponent minimax, depending on opponent number and maze size
+    Get depth used for opponent minimax, depending on opponent number and maze size and if pruning
     Necessary because higher depth on 3 opponents in a larger maze causes program to be slow
     """
-    def get_depth(self, maze_size, opponent_no) -> int:
-        if opponent_no == 1:
-            if maze_size == MazeSize.SMALL:
-                return 5
-            elif maze_size == MazeSize.MEDIUM:
-                return 12
-            else:
-                return 12
-        elif opponent_no == 2:
-            if maze_size == MazeSize.SMALL:
-                return 8
-            elif maze_size == MazeSize.MEDIUM:
-                return 10
-            else:
-                return 12
-        elif opponent_no == 3:
-            if maze_size == MazeSize.SMALL:
-                return 7
-            elif maze_size == MazeSize.MEDIUM:
-                return 3
-            else:
-                return 3
+    def get_depth(self, maze_size, opponent_no, prune) -> int:
+        if prune:
+            if opponent_no == 1:
+                if maze_size == MazeSize.SMALL:
+                    depth = 12
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 12
+                else:
+                    depth = 20
+            elif opponent_no == 2:
+                if maze_size == MazeSize.SMALL:
+                    depth = 10
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 10
+                else:
+                    depth = 16
+            elif opponent_no == 3:
+                if maze_size == MazeSize.SMALL:
+                    depth = 6
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 10
+                else:
+                    depth = 16
+        else:
+            if opponent_no == 1:
+                if maze_size == MazeSize.SMALL:
+                    depth = 6
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 10
+                else:
+                    depth = 12
+            elif opponent_no == 2:
+                if maze_size == MazeSize.SMALL:
+                    depth = 5
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 10
+                else:
+                    depth = 10
+            elif opponent_no == 3:
+                if maze_size == MazeSize.SMALL:
+                    depth = 6
+                elif maze_size == MazeSize.MEDIUM:
+                    depth = 10
+                else:
+                    depth = 10
+        return depth
 
     """
     Get the move needed to go to location i,j from current location
