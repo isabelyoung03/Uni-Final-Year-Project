@@ -89,7 +89,7 @@ class Minimax(SearchAlgorithm):
     """
     Minimax algorithm function that is used recursively
     """
-    def minimax(self, state: State, depth: int, max_turn: bool, visited_states=None):
+    def minimax(self, state: State, depth: int, max_turn: bool, prune:bool, visited_states=None, alpha:int=-math.inf, beta:int=math.inf):
         if visited_states is None:
             visited_states = []
 
@@ -99,41 +99,52 @@ class Minimax(SearchAlgorithm):
         best_move = None
         visited_states.append(state)
 
-        if max_turn: #player's turn
+        if max_turn:  #player's turn
             max_eval = -math.inf
             for player_move in self.possible_moves(state.get_player_location()):
                 new_ghost_locations = state.get_ghost_locations()
                 new_state = self.result(player_move, new_ghost_locations)
-                score, _ = self.minimax(new_state, depth - 1, False, visited_states)
+                score, _ = self.minimax(new_state, depth - 1, False, prune, visited_states, alpha, beta)
                 if score > max_eval:
                     max_eval = score
                     best_move = player_move
 
-        else: #ghost's turn
+                if prune: #if doing alpha-beta pruning
+                    alpha = max(alpha, max_eval)
+                    if beta <= alpha:
+                        break  #prune!
+
+        else:  #ghost's turn
             min_eval = math.inf
             best_moves = []
-            for ghost_location in state.get_ghost_locations(): #for each ghost
+            for ghost_location in state.get_ghost_locations():
                 moves_for_ghost = []
-                for opponent_move in self.possible_moves(ghost_location): #consider each possible move
-                    new_ghost_locations = state.get_ghost_locations().copy() 
-                    new_ghost_locations.remove(ghost_location)  
-                    new_ghost_locations.append(opponent_move) 
+                for opponent_move in self.possible_moves(ghost_location):
+                    new_ghost_locations = state.get_ghost_locations().copy()
+                    new_ghost_locations.remove(ghost_location)
+                    new_ghost_locations.append(opponent_move)
                     new_state = self.result(state.get_player_location(), new_ghost_locations)
-                    score, _ = self.minimax(new_state, depth - 1, True, visited_states)
+                    score, _ = self.minimax(new_state, depth - 1, True, prune, visited_states, alpha, beta)
                     moves_for_ghost.append((score, opponent_move))
 
                     if score < min_eval:
                         min_eval = score
                         best_moves.extend([opponent_move])
 
+                    if prune: #if doing alpha-beta pruning
+                        beta = min(beta, min_eval)
+                        if beta <= alpha:
+                            break #prune!
+
             best_move = best_moves
+
         visited_states.remove(state)
         return max_eval if max_turn else min_eval, best_move
 
     """
     Uses the minimax algorithm to get the best move
     """
-    def get_best_move_for_player(self, player, ghosts):
+    def get_best_move_for_player(self, player, ghosts, prune:bool=False):
         depth = 5
         if self.maze.get_maze_size() == MazeSize.MEDIUM:
             depth = 12
@@ -146,14 +157,14 @@ class Minimax(SearchAlgorithm):
         for ghost in self.ghosts:
             ghost_locations.append(ghost.get_location())
         current_state = State(player.get_location(), ghost_locations)
-        minimax = self.minimax(current_state, depth, True)
+        minimax = self.minimax(current_state, depth, True, prune)
         best_location = minimax[1]
         return self.get_action_to_location(best_location[0], best_location[1], current_state.get_player_location())
     
     """
     Get the best moves for the ghosts
     """
-    def get_best_moves_for_ghosts(self, player, ghosts):
+    def get_best_moves_for_ghosts(self, player, ghosts, prune:bool=False):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
 
         self.player = player
@@ -163,7 +174,7 @@ class Minimax(SearchAlgorithm):
         best_moves = []
         for i in range(len(ghost_locations)):
             current_state = State(player.get_location(), [ghost_locations[i]])
-            _, best_move = self.minimax(current_state, depth, False)
+            _, best_move = self.minimax(current_state, depth, False, prune)
             best_moves.append(best_move[0])
 
         actions = []
