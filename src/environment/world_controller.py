@@ -90,8 +90,7 @@ class WorldController:
         self.pause_button.draw(self.screen)
         if self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
             self.analysis_button.draw(self.screen)
-            if self.analysis_button.get_selected():
-                self.analysed = True
+            if self.analysed:
                 display_text('Results in Results folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
         if self.goal.get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
@@ -130,6 +129,7 @@ class WorldController:
                         self.play_button.toggle(True)
                     if not self.analysed and self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
                         Analysis.analyse(self.maze, self.player)
+                        self.analysed = True
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
