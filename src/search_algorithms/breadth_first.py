@@ -42,3 +42,9 @@ class BreadthFirstSearch(SearchAlgorithm):
     """
     def get_enum(self):
         return SearchAlgoType.BREADTH
+    
+    """
+    Setter for goal
+    """
+    def set_goal(self, goal):
+        self.goal = goal

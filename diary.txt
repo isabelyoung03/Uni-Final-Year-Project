@@ -73,3 +73,5 @@ Week 3:
 Week 4:
     06/02/2024: Today I am implementing Alpha-Beta pruning. So far it has sped up the algorithm, so now I can adjust the depths
                 of the algorithm to allow for more effective searching within a reasonable amount of time.
+    07/02/2024: I have worked on creating an analysis option for the depth and breadth first mazes. This imagines a goal in every cell          
+                of the maze and sees how many moves it takes each algorithm to achieve the goal. These results are then put in a CSV file.

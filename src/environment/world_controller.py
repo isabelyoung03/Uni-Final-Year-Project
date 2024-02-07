@@ -1,5 +1,6 @@
 import sys
 import pygame
+from src.analysis.analyse import Analysis
 import config
 from src.enums import search_algorithm_type
 from src.environment.WorldState import WorldState
@@ -91,7 +92,7 @@ class WorldController:
             self.analysis_button.draw(self.screen)
             if self.analysis_button.get_selected():
                 self.analysed = True
-                display_text('Results in Analysis folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
+                display_text('Results in Results folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
         if self.goal.get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
@@ -128,8 +129,7 @@ class WorldController:
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                     if not self.analysed and self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
-                        if self.analysis_button.handle_event(event):
-                            self.analysis_button.toggle(True)
+                        Analysis.analyse(self.maze, self.player)
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()

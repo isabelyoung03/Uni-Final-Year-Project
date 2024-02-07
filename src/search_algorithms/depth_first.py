@@ -39,3 +39,10 @@ class DepthFirstSearch(SearchAlgorithm):
 
     def get_enum(self) -> SearchAlgoType:
         return SearchAlgoType.DEPTH
+    
+    """
+    Setter for goal
+    """
+    def set_goal(self, goal):
+        self.goal = goal
+
