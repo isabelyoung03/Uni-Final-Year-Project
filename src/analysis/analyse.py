@@ -2,7 +2,11 @@ import csv
 import os
 from src.environment.Goal_factory import GoalFactory
 
-
+"""
+Tests the search algorithm by trying the search algorithm with the single goal in different locations.
+Tries the goal in every possible location in the maze.
+Creates a csv file in /results containing these results.
+"""
 class Analysis:
     def analyse(maze, player):
         search_algorithm = player.get_search_algorithm()
