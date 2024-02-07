@@ -1,9 +1,10 @@
 import sys
 import pygame
+import config
+from src.enums import search_algorithm_type
 from src.environment.WorldState import WorldState
 from src.enums.action import Action
 from src.gui.button import Button
-import config
 from src.gui.icon_buttton import IconButton
 from src.gui.menu import display_text
 
@@ -23,8 +24,12 @@ class WorldController:
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
+        self.search_algorithm_enum = player.get_search_algorithm().get_enum()
+        if self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
+            self.analysis_button = Button('Analyse', 12, config.BLACK, config.WHITE, self.maze_width + 40, 300, 100, 30)
         self.cycle_count = 0
         self.game_lost = False
+        self.analysed = False
 
     """
     Get players decision for next action
@@ -82,6 +87,11 @@ class WorldController:
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
+        if self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
+            self.analysis_button.draw(self.screen)
+            if self.analysis_button.get_selected():
+                self.analysed = True
+                display_text('Results in Analysis folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
         if self.goal.get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
@@ -117,6 +127,9 @@ class WorldController:
                     elif self.play_button.handle_event(event):
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
+                    if not self.analysed and self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
+                        if self.analysis_button.handle_event(event):
+                            self.analysis_button.toggle(True)
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
