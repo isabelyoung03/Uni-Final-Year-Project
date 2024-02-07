@@ -128,12 +128,15 @@ class WorldController:
                         self.pause_button.toggle(False)
                         self.play_button.toggle(True)
                     if not self.analysed and self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
-                        Analysis.analyse(self.maze, self.player)
-                        self.analysed = True
+                        self.analysis_button.handle_event(event)
                 elif event.type == MOVE_AGENTS and not self.goal.get_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
                     print("--- Cycle " + str(self.cycle_count) + " ---")
                     self.cycle()
                     self.cycle_count += 1
+                if self.analysis_button.get_selected():
+                    Analysis.analyse(self.maze, self.player)
+                    self.analysed = True
+                    self.analysis_button.set_selected(False)
                 self.render()
 
     """
@@ -157,6 +160,10 @@ class WorldController:
         if self.player_caught():
             self.game_lost = True
             print("Player has been caught!")
+        if self.analysis_button.get_selected():
+            Analysis.analyse(self.maze, self.player)
+            self.analysed = True
+            self.analysis_button.set_selected(False)
         self.render()
 
     """

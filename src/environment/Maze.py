@@ -3,10 +3,13 @@ import config
 
 class Maze:
     """ A maze which will be displayed on the screen
-        Initiated with a map of the maze
+        Initiated with a map of the maze, map can be overrided
     """
-    def __init__(self, maze_size):
-        self.map = maze_size.value
+    def __init__(self, maze_size, the_map=None):
+        if not the_map:
+            self.map = maze_size.value
+        else:
+            self.map = the_map #override  map
         self.maze_size = maze_size
 
         squareScale = (48,48)

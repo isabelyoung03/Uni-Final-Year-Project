@@ -51,7 +51,12 @@ class Menu:
                         selected_maze_size = self.size_button_group.get_result()
                         selected_search_algo = self.algo_button_group.get_result()
                         no_of_opponents = self.opponent_button_group.get_result()
-                        maze = Maze(selected_maze_size)
+
+                        if selected_search_algo == SearchAlgoType.MINIMAX or selected_search_algo == SearchAlgoType.EXPECTIMAX:
+                            maze = Maze(selected_maze_size, config.SMALL_MAZE_MAP_4)
+                        else:
+                            maze = Maze(selected_maze_size)
+
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)
                 self.opponent_button_group.handle_event(event)
