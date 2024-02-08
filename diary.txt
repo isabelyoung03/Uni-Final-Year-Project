@@ -75,3 +75,4 @@ Week 4:
                 of the algorithm to allow for more effective searching within a reasonable amount of time.
     07/02/2024: I have worked on creating an analysis option for the depth and breadth first mazes. This imagines a goal in every cell          
                 of the maze and sees how many moves it takes each algorithm to achieve the goal. These results are then put in a CSV file.
+    08/02/2024: I have made a property-based test for goal generation, and also a new test for the menu screen results.
