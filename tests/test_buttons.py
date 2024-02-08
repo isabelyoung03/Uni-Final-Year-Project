@@ -1,5 +1,4 @@
 import pygame
-import config
 
 from src.environment.Maze import Maze
 from src.gui.menu import Menu
