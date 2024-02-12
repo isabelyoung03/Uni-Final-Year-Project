@@ -176,8 +176,6 @@ class Minimax(SearchAlgorithm):
         score, best_moves = self.minimax(current_state, depth, False, prune)
 
         actions = []
-        print(best_moves)
-        print(score)
         for i in range(len(ghost_locations)):
             if best_moves and i < len(best_moves) and best_moves[i] is not None:
                 actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], ghost_locations[i]))
@@ -207,7 +205,7 @@ class Minimax(SearchAlgorithm):
                     depth = 16
             elif opponent_no == 3:
                 if maze_size == MazeSize.SMALL:
-                    depth = 6
+                    depth = 8
                 elif maze_size == MazeSize.MEDIUM:
                     depth = 10
                 else:
