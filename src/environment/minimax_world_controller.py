@@ -29,8 +29,8 @@ class MinimaxWorldController(WorldController):
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
         self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
         self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
-        on = OptionButton('On', 20, config.GREY, config.BLACK, self.maze_width + 50, 130, True, selected_colour=config.GREEN)
-        off = OptionButton('Off', 20, config.GREY, config.BLACK, self.maze_width + 110, 130, False)
+        on = OptionButton('On', 20, config.GREY, config.BLACK, self.maze_width + 50, 230, True, selected_colour=config.GREEN)
+        off = OptionButton('Off', 20, config.GREY, config.BLACK, self.maze_width + 110, 230, False)
         self.pruning_button_group = ButtonGroup([on, off])
         self.cycle_count = 0
         self.game_lost = False
@@ -43,16 +43,16 @@ class MinimaxWorldController(WorldController):
     def render(self) -> None:
         self.screen.fill(config.BLACK)
         self.maze.display_maze(self.screen)
+        self.cupcakes[0].draw(self.screen)
         for ghost in self.ghosts:
             ghost.draw(self.screen)
-        self.cupcakes[0].draw(self.screen)
         if not self.game_lost:
             self.player.draw(self.screen)
         self.home_button.draw(self.screen)
         self.play_button.draw(self.screen)
         self.pause_button.draw(self.screen)
 
-        display_text('Alpha-Beta Pruning:', 18, config.WHITE, self.maze_width + 100, 100, self.screen)
+        display_text('Alpha-Beta Pruning:', 18, config.WHITE, self.maze_width + 100, 200, self.screen)
         self.pruning_button_group.draw(self.screen)
 
         if self.goals[0].get_achieved():

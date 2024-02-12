@@ -32,7 +32,7 @@ SMALL_MAZE_MAP_3 = ["+--------------+",
 
 SMALL_MAZE_MAP_4 = ["+--------------+",
                     "|              |",
-                    "| X X X X X XXX|",
+                    "| X X XXX X XXX|",
                     "|         XXX  |",
                     "| XX X X       |",
                     "| XX     XXXX X|",

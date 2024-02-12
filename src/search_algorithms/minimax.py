@@ -173,7 +173,7 @@ class Minimax(SearchAlgorithm):
         ghost_locations = [ghost.get_location() for ghost in self.ghosts]
 
         current_state = State(player.get_location(), ghost_locations)
-        score, best_moves = self.minimax(current_state, depth, False, prune)
+        _, best_moves = self.minimax(current_state, depth, False, prune)
 
         actions = []
         for i in range(len(ghost_locations)):
@@ -213,7 +213,7 @@ class Minimax(SearchAlgorithm):
         else:
             if opponent_no == 1:
                 if maze_size == MazeSize.SMALL:
-                    depth = 6
+                    depth = 10
                 elif maze_size == MazeSize.MEDIUM:
                     depth = 10
                 else:
