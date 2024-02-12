@@ -49,7 +49,7 @@ class Minimax(SearchAlgorithm):
     """
     Evaluates a state and returns a score
     """
-    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-1000) -> int:
+    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-500) -> int:
         player_location = state.get_player_location()
         ghost_locations = state.get_ghost_locations()
         cupcake_location = self.cupcake.get_location() 
@@ -114,27 +114,32 @@ class Minimax(SearchAlgorithm):
                     if beta <= alpha:
                         break  #prune!
 
-        else:  #ghost's turn
+        else:  
             min_eval = math.inf
             best_moves = []
-            for ghost_location in state.get_ghost_locations():
+
+            for i, ghost_location in enumerate(state.get_ghost_locations()):
                 moves_for_ghost = []
+
                 for opponent_move in self.possible_moves(ghost_location):
                     new_ghost_locations = state.get_ghost_locations().copy()
-                    new_ghost_locations.remove(ghost_location)
-                    new_ghost_locations.append(opponent_move)
+                    new_ghost_locations[i] = opponent_move  
                     new_state = self.result(state.get_player_location(), new_ghost_locations)
                     score, _ = self.minimax(new_state, depth - 1, True, prune, visited_states, alpha, beta)
                     moves_for_ghost.append((score, opponent_move))
 
-                    if score < min_eval:
-                        min_eval = score
-                        best_moves.extend([opponent_move])
+                best_move_for_ghost = min(moves_for_ghost, key=lambda t: t[0])
 
-                    if prune: #if doing alpha-beta pruning
-                        beta = min(beta, min_eval)
-                        if beta <= alpha:
-                            break #prune!
+                if best_move_for_ghost[0] < min_eval:
+                    min_eval = best_move_for_ghost[0]
+                    best_moves = [best_move_for_ghost[1]]
+                elif best_move_for_ghost[0] == min_eval:
+                    best_moves.append(best_move_for_ghost[1])
+
+                if prune:  #if doing alpha-beta pruning
+                    beta = min(beta, min_eval)
+                    if beta <= alpha:
+                        break  #prune!
 
             best_move = best_moves
 
@@ -160,20 +165,19 @@ class Minimax(SearchAlgorithm):
     """
     Get the best moves for the ghosts
     """
-    def get_best_moves_for_ghosts(self, player, ghosts, prune:bool=False):
+    def get_best_moves_for_ghosts(self, player, ghosts, prune: bool = False):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts), prune)
 
         self.player = player
         self.ghosts = ghosts
         ghost_locations = [ghost.get_location() for ghost in self.ghosts]
 
-        best_moves = []
-        for i in range(len(ghost_locations)):
-            current_state = State(player.get_location(), [ghost_locations[i]])
-            _, best_move = self.minimax(current_state, depth, False, prune)
-            best_moves.append(best_move[0])
+        current_state = State(player.get_location(), ghost_locations)
+        score, best_moves = self.minimax(current_state, depth, False, prune)
 
         actions = []
+        print(best_moves)
+        print(score)
         for i in range(len(ghost_locations)):
             if best_moves and i < len(best_moves) and best_moves[i] is not None:
                 actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], ghost_locations[i]))
@@ -189,14 +193,14 @@ class Minimax(SearchAlgorithm):
         if prune:
             if opponent_no == 1:
                 if maze_size == MazeSize.SMALL:
-                    depth = 12
+                    depth = 8
                 elif maze_size == MazeSize.MEDIUM:
                     depth = 12
                 else:
                     depth = 20
             elif opponent_no == 2:
                 if maze_size == MazeSize.SMALL:
-                    depth = 10
+                    depth = 8
                 elif maze_size == MazeSize.MEDIUM:
                     depth = 10
                 else:
