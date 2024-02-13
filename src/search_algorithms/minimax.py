@@ -151,11 +151,8 @@ class Minimax(SearchAlgorithm):
     """
     def get_best_move_for_player(self, player, ghosts, prune:bool=False):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts), prune)
-
-        self.player = player
-        self.ghosts = ghosts
         ghost_locations = []
-        for ghost in self.ghosts:
+        for ghost in ghosts:
             ghost_locations.append(ghost.get_location())
         current_state = State(player.get_location(), ghost_locations)
         minimax = self.minimax(current_state, depth, True, prune)
@@ -167,10 +164,7 @@ class Minimax(SearchAlgorithm):
     """
     def get_best_moves_for_ghosts(self, player, ghosts, prune: bool = False):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts), prune)
-
-        self.player = player
-        self.ghosts = ghosts
-        ghost_locations = [ghost.get_location() for ghost in self.ghosts]
+        ghost_locations = [ghost.get_location() for ghost in ghosts]
 
         current_state = State(player.get_location(), ghost_locations)
         _, best_moves = self.minimax(current_state, depth, False, prune)

@@ -130,11 +130,8 @@ class Expectimax(SearchAlgorithm):
     """
     def get_best_move_for_player(self, player, ghosts):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
-
-        self.player = player
-        self.ghosts = ghosts
         ghost_locations = []
-        for ghost in self.ghosts:
+        for ghost in ghosts:
             ghost_locations.append(ghost.get_location())
         current_state = State(player.get_location(), ghost_locations)
         random_number = random.randint(0, 9)
@@ -151,9 +148,6 @@ class Expectimax(SearchAlgorithm):
     """
     def get_best_moves_for_ghosts(self, player, ghosts):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
-
-        self.player = player
-        self.ghosts = ghosts
         ghost_locations = [ghost.get_location() for ghost in self.ghosts]
 
         current_state = State(player.get_location(), ghost_locations)
@@ -223,7 +217,4 @@ class Expectimax(SearchAlgorithm):
         return SearchAlgoType.EXPECTIMAX
     
     def search():
-        pass
-
-    def randomise_move():
         pass
