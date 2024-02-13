@@ -1,3 +1,4 @@
+from src.environment.expectimax_world_controller import ExpectimaxWorldController
 from src.environment.minimax_world_controller import MinimaxWorldController
 from src.environment.reflex_agent_world_controller import ReflexAgentWorldController
 from src.agents.Player import Player
@@ -22,6 +23,7 @@ class WorldControllerFactory:
         goals = GoalFactory.get_goals(maze, search_algorithm_enum)
         search_algorithm = SearchAlgorithmFactory.create_new(search_algorithm_enum, maze, goals)
         player = PlayerFactory.get_player(maze, search_algorithm)
+
         if search_algorithm_enum == SearchAlgoType.A_STAR or search_algorithm_enum == SearchAlgoType.A_STAR_ALL_CELLS or search_algorithm_enum == SearchAlgoType.GREEDY:
             return AStarWorldController(maze, player, goals)
         
@@ -33,5 +35,9 @@ class WorldControllerFactory:
         if search_algorithm_enum == SearchAlgoType.MINIMAX:
             player = PlayerFactory.get_player(maze, search_algorithm)
             return MinimaxWorldController(maze, player, ghosts[:no_of_opponents], goals)
+        
+        if search_algorithm_enum == SearchAlgoType.EXPECTIMAX:
+            player = PlayerFactory.get_player(maze, search_algorithm)
+            return ExpectimaxWorldController(maze, player, ghosts[:no_of_opponents], goals)
         
         return WorldController(maze, player, ghosts, goals[0])

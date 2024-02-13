@@ -1,3 +1,4 @@
+from src.search_algorithms.expectimax import Expectimax
 from src.search_algorithms.minimax import Minimax
 from src.search_algorithms.reflex import Reflex
 from src.search_algorithms.greedy import GreedySearch
@@ -29,6 +30,6 @@ class SearchAlgorithmFactory():
         elif search_algo_type == SearchAlgoType.MINIMAX:
            return Minimax(maze, goal)
         elif search_algo_type == SearchAlgoType.EXPECTIMAX:
-            return BreadthFirstSearch(maze, goal)
+            return Expectimax(maze, goal)
         elif search_algo_type == SearchAlgoType.REFLEX:
             return Reflex(maze, goal)

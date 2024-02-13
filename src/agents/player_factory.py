@@ -35,7 +35,7 @@ class PlayerFactory:
         if search_algorithm.get_enum() == SearchAlgoType.REFLEX:
             return ReflexPlayer(player_x, player_y)
         
-        if search_algorithm.get_enum() == SearchAlgoType.MINIMAX:
+        if search_algorithm.get_enum() == SearchAlgoType.MINIMAX or search_algorithm.get_enum() == SearchAlgoType.EXPECTIMAX:
             if maze_size == MazeSize.MEDIUM:
                 player_x = 8
                 player_y = 8
