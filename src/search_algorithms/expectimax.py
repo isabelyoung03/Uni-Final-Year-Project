@@ -98,21 +98,26 @@ class Expectimax(SearchAlgorithm):
                     max_eval = score
                     best_move = player_move
 
-        else:  
+        else:  #opponent's turn
             min_eval = math.inf
             best_moves = []
+
+            total_probability = 1.0 / len(state.get_ghost_locations())
 
             for i, ghost_location in enumerate(state.get_ghost_locations()):
                 moves_for_ghost = []
 
-                for opponent_move in self.possible_moves(ghost_location):
+                possible_ghosts_moves = self.possible_moves(ghost_location)
+                for opponent_move in possible_ghosts_moves:
                     new_ghost_locations = state.get_ghost_locations().copy()
-                    new_ghost_locations[i] = opponent_move  
+                    new_ghost_locations[i] = opponent_move
                     new_state = self.result(state.get_player_location(), new_ghost_locations)
                     score, _ = self.expectimax(new_state, depth - 1, True, visited_states)
                     moves_for_ghost.append((score, opponent_move))
 
-                best_move_for_ghost = min(moves_for_ghost, key=lambda t: t[0])
+                prob = 1.0 / len(possible_ghosts_moves)
+                expected_score_for_ghost = sum(prob * score for score, _ in moves_for_ghost) * total_probability
+                best_move_for_ghost = (expected_score_for_ghost, moves_for_ghost[0][1]) 
 
                 if best_move_for_ghost[0] < min_eval:
                     min_eval = best_move_for_ghost[0]
@@ -137,6 +142,7 @@ class Expectimax(SearchAlgorithm):
         random_number = random.randint(0, 9)
         if random_number == 0:
             random_move = random.choice(self.possible_moves(player.get_location()))
+            print("Player doing random move")
             return self.get_action_to_location(random_move[0], random_move[1], current_state.get_player_location())
         else:
             expectimax = self.expectimax(current_state, depth, True)
@@ -148,7 +154,7 @@ class Expectimax(SearchAlgorithm):
     """
     def get_best_moves_for_ghosts(self, player, ghosts):
         depth = self.get_depth(self.maze.get_maze_size(), len(ghosts))
-        ghost_locations = [ghost.get_location() for ghost in self.ghosts]
+        ghost_locations = [ghost.get_location() for ghost in ghosts]
 
         current_state = State(player.get_location(), ghost_locations)
         _, best_moves = self.expectimax(current_state, depth, False)
@@ -159,6 +165,7 @@ class Expectimax(SearchAlgorithm):
             if random_number == 0:
                 random_move = random.choice(self.possible_moves(ghost_locations[i]))
                 actions.append(self.get_action_to_location(random_move[0], random_move[1], ghost_locations[i]))
+                print("Ghost doing random move")
             else:
                 if best_moves and i < len(best_moves) and best_moves[i] is not None:
                     actions.append(self.get_action_to_location(best_moves[i][0], best_moves[i][1], ghost_locations[i]))
@@ -180,7 +187,7 @@ class Expectimax(SearchAlgorithm):
                 depth = 12
         elif opponent_no == 2:
             if maze_size == MazeSize.SMALL:
-                depth = 5
+                depth = 8
             elif maze_size == MazeSize.MEDIUM:
                 depth = 10
             else:
