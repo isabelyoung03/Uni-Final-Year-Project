@@ -81,3 +81,4 @@ Week 5:
     12/02/2024: I have fixed an issue I was having with the movements of the ghost opponents not being optimal.
     14/02/2024: I have started to implement the expectimax algorithm. It mostly works but I need to fine tune values for those
                 multi opponent mazes.
+    16/02/2024: I have added the option choose 1 or 3 different mazes for greedy search and A* search (goal in all cells).
