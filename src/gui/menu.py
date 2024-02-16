@@ -16,6 +16,11 @@ class Menu:
         large = OptionButton('Large', 20, config.GREEN, config.BLACK, 400, 240, MazeSize.LARGE)
         self.size_button_group = ButtonGroup([small, medium, large])
 
+        maze1 = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 570, 1)
+        maze2 = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 570, 2)
+        maze3 = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 570, 3)
+        self.maze_group = ButtonGroup([maze1, maze2, maze3])
+
         breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 85, 355, SearchAlgoType.BREADTH)
         depth = OptionButton('Depth-first', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 50, 355, SearchAlgoType.DEPTH)
         uniform = OptionButton('Uniform-cost', 20, config.GREEN, config.BLACK, 400, 355, SearchAlgoType.UNIFORM)
@@ -51,15 +56,16 @@ class Menu:
                         selected_maze_size = self.size_button_group.get_result()
                         selected_search_algo = self.algo_button_group.get_result()
                         no_of_opponents = self.opponent_button_group.get_result()
-
+                        maze_number = self.maze_group.get_result()
                         if selected_maze_size == MazeSize.SMALL and selected_search_algo == SearchAlgoType.MINIMAX or selected_search_algo == SearchAlgoType.EXPECTIMAX:
-                            maze = Maze(selected_maze_size, config.SMALL_MAZE_MAP_4)
+                            maze = Maze(selected_maze_size, the_map=config.SMALL_MAZE_MAP_4)
                         else:
-                            maze = Maze(selected_maze_size)
+                            maze = Maze(selected_maze_size, map_number=maze_number)
 
                 self.size_button_group.handle_event(event)
                 self.algo_button_group.handle_event(event)
                 self.opponent_button_group.handle_event(event)
+                self.maze_group.handle_event(event)
             self.draw()
             pygame.display.flip()
         return (maze, selected_search_algo, no_of_opponents)
@@ -88,6 +94,10 @@ class Menu:
         if selected_algo in [SearchAlgoType.MINIMAX, SearchAlgoType.EXPECTIMAX]:
             display_text('Opponents', 16, config.WHITE, 132, 550, self.menu_screen)
             self.opponent_button_group.draw(self.menu_screen)
+
+        if selected_algo in [SearchAlgoType.GREEDY, SearchAlgoType.A_STAR_ALL_CELLS]:
+            display_text('Maze', 16, config.WHITE, 132, 550, self.menu_screen)
+            self.maze_group.draw(self.menu_screen)
 
 """
 Display text string on the given screen, of a particular size and colour at location x,y

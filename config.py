@@ -83,6 +83,23 @@ MEDIUM_MAZE_MAP_2 = ["+--------------+",
                     "|              |",
                     "+--------------+"]
 
+MEDIUM_MAZE_MAP_3 = ["+--------------+",
+                    "|    X  X    X |",
+                    "| XX XX X XXXX |",
+                    "| X     X      |",
+                    "|XX XXXXXXXXX X|",
+                    "|   X   X   X  |",
+                    "| X X XXXX XXX |",
+                    "| X X XX   X X |",
+                    "| XXX X  X X   |",
+                    "|   X XXXX X X |",
+                    "| XXX      X X |",
+                    "| X XXXX XXX X |",
+                    "|            X |",
+                    "|X X XXXX XX X |",
+                    "|  X    X X    |",
+                    "+--------------+"]
+
 LARGE_MAZE_SCREEN_WIDTH, LARGE_MAZE_SCREEN_HEIGHT = 1500, 800
 LARGE_MAZE_MAP_1 =  ["+------------------------+",
                     "|             X        X |",
@@ -100,7 +117,41 @@ LARGE_MAZE_MAP_1 =  ["+------------------------+",
                     "|X XXX X      XXXXX XXX X|",
                     "|        XXXX            |",
                     "+------------------------+"]
-# GUI settings
+
+LARGE_MAZE_MAP_2 =  ["+------------------------+",
+                    "|           X X   X    X |",
+                    "| XXXXX XX  X     X  X X |",
+                    "| X   X X   X XXX X XX X |",
+                    "| X X X X X XXX     X    |",
+                    "|   X X          X     XX|",
+                    "|XX     X XX XXX XXXXX X |",
+                    "|   X X X X    X X X     |",
+                    "| X X   X XX  XX X X X X |",
+                    "| X XX             XXX X |",
+                    "| X    X XX XX X X XX  X |",
+                    "| XX XXX X  XX X XXXXXXXX|",
+                    "|  X X       X X       X |",
+                    "|X XXX X XXX X XXXXXXXXX |",
+                    "|        XXXXX           |",
+                    "+------------------------+"]
+
+LARGE_MAZE_MAP_3 =  ["+------------------------+",
+                    "|         X          X   |",
+                    "|   X    XXX   X  X XXX  |",
+                    "|  XXX X  X   XXX X  X   |",
+                    "|   X  XX      X  X      |",
+                    "|                        |",
+                    "|  XXXXX XXXX XXXX X  X  |",
+                    "|    X   X    X    X  X  |",
+                    "|    X   XXXX XXXX XXXX  |",
+                    "|    X      X    X    X  |",
+                    "|  XXXXX XXXX XXXX XXXX  |",
+                    "|                        |",
+                    "|  XXX XXX XXX XXX XXX X |",
+                    "|    XXX XXX XXX XXX XXX |",
+                    "|                        |",
+                    "+------------------------+"]
+
 SQUARE_SIZE = 50
 PIXEL_SCALE = 3
 SPRITE_WIDTH = 7

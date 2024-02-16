@@ -1,15 +1,37 @@
 import pygame
 import config
+from src.enums.size import MazeSize
 
 class Maze:
     """ A maze which will be displayed on the screen
         Initiated with a map of the maze, map can be overrided
     """
-    def __init__(self, maze_size, the_map=None):
+    def __init__(self, maze_size, the_map=None, map_number=1):
         if not the_map:
-            self.map = maze_size.value
+            if map_number == 1:
+                self.map = maze_size.value #get default maze size map
+            else:
+                if maze_size == MazeSize.SMALL:
+                    if map_number == 2:
+                        self.map = config.SMALL_MAZE_MAP_2
+                    if map_number == 3:
+                        self.map = config.SMALL_MAZE_MAP_4
+
+                if maze_size == MazeSize.MEDIUM:
+                    if map_number == 2:
+                        self.map = config.MEDIUM_MAZE_MAP_2
+                    if map_number == 3:
+                        self.map = config.MEDIUM_MAZE_MAP_3
+
+                if maze_size == MazeSize.LARGE:
+                    if map_number == 2:
+                        self.map = config.LARGE_MAZE_MAP_2
+                    if map_number == 3:
+                        self.map = config.LARGE_MAZE_MAP_3
+
         else:
-            self.map = the_map #override  map
+            self.map = the_map #override map
+
         self.maze_size = maze_size
 
         squareScale = (48,48)
