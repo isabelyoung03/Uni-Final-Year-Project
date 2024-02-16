@@ -136,6 +136,23 @@ LARGE_MAZE_MAP_2 =  ["+------------------------+",
                     "+------------------------+"]
 
 LARGE_MAZE_MAP_3 =  ["+------------------------+",
+                    "|     XX  X          X   |",
+                    "| X X    XXX   X  X XXX  |",
+                    "| XXXX X  X   XXX X  X   |",
+                    "|   X  XX      XX X    X |",
+                    "| XXX  XXX XX XX     XXX |",
+                    "|   XXXX XXXX XXXX X  X  |",
+                    "| X  X X X    X    X  XX |",
+                    "| XXXX X  X X X XX XXXX  |",
+                    "|    X X    X    X    XX |",
+                    "|  XXX X XXXX XXXX XXXX  |",
+                    "|                        |",
+                    "|X XXX XXX XXX XXX XXX X |",
+                    "|X X XXX XXX XXX XXX XXX |",
+                    "|                        |",
+                    "+------------------------+"]
+
+LARGE_MAZE_MAP_4 =  ["+------------------------+",
                     "|         X          X   |",
                     "|   X    XXX   X  X XXX  |",
                     "|  XXX X  X   XXX X  X   |",

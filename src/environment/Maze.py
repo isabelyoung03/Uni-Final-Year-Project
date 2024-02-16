@@ -7,6 +7,8 @@ class Maze:
         Initiated with a map of the maze, map can be overrided
     """
     def __init__(self, maze_size, the_map=None, map_number=1):
+        if map_number == -1:
+            self.map = maze_size.value
         if not the_map:
             if map_number == 1:
                 self.map = maze_size.value #get default maze size map
