@@ -59,7 +59,7 @@ class Menu:
                         maze_number = self.maze_group.get_result()
                         if selected_search_algo == SearchAlgoType.MINIMAX or selected_search_algo == SearchAlgoType.EXPECTIMAX:
                             if selected_maze_size == MazeSize.SMALL:
-                                maze = Maze(selected_maze_size, the_map=config.SMALL_MAZE_MAP_)
+                                maze = Maze(selected_maze_size, the_map=config.SMALL_MAZE_MAP_4)
                             else: 
                                 maze = Maze(selected_maze_size, map_number=-1)
                         else:
