@@ -2,7 +2,15 @@
 
 ## Single-Agent and Multi-Agent Search in Maze Games by Isabel Young
 
-This is a Python project using Pygame to model different search algorithms for agents in a maze game of my own design.
+This is a Python project using Pygame to model agents using different search algorithms in a maze game of my own design. I have implemented agents that use the following search algorithms:
+- Breadth-first search
+- Depth-first search
+- Uniform-cost search
+- A* search
+- Greedy search
+- Minimax
+- Expectimax
+as well as modelling the player as a simple reflex agent.
 
 ## Getting started 
 1. Navigate to PROJECT directory via the terminal
