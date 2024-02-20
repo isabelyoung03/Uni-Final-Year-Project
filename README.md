@@ -26,7 +26,7 @@ This is a Python project using Pygame to model agents using different search alg
 7. Press the home button if you want to select a new maze/search algorithm
 
 ## Analysis feature
-If you choose Breadth-First or Depth-First, you can press the "Analyse" button to produce a CSV file of results. This CSV file contains the moves the agent takes to reach the goal, for each possible location of the goal. This file is saved into the "results" directory of the project.
+If you choose Breadth-First or Depth-First, you can press the "Analyse" button to produce a CSV file of results. This CSV file contains the number of moves the agent takes to reach the goal, for each possible location of the goal. This file is saved into the "results" directory of the project.
 
 ## Installation
 To install the required dependencies for this project, run the following command:
