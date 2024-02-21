@@ -9,6 +9,9 @@ from src.search_algorithms.Search_algo import SearchAlgorithm
 from src.enums.action import Action
 from src.search_algorithms.minimax_state import State
 
+"""
+Expectimax algorithm
+"""
 class Expectimax(SearchAlgorithm):
     def __init__(self, maze: Maze, cupcake: Goal):
         self.maze = maze
@@ -189,12 +192,12 @@ class Expectimax(SearchAlgorithm):
             if maze_size == MazeSize.SMALL:
                 depth = 8
             elif maze_size == MazeSize.MEDIUM:
-                depth = 10
+                depth = 9
             else:
-                depth = 10
+                depth = 11
         elif opponent_no == 3:
             if maze_size == MazeSize.SMALL:
-                depth = 6
+                depth = 8
             elif maze_size == MazeSize.MEDIUM:
                 depth = 10
             else:

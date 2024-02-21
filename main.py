@@ -1,16 +1,7 @@
-import sys
 
 import pygame
-from src.agents.Player import Player
-from src.environment.Maze import Maze
-import config
 from src.gui.menu import Menu
-from src.gui.button import Button
-from src.gui.option_button import OptionButton
-from src.gui.button_group import ButtonGroup
-from src.search_algorithms.depth_first import DepthFirstSearch
 from src.environment.world_controller_factory import WorldControllerFactory
-from src.search_algorithms.algorithm_factory import SearchAlgorithmFactory
 
 class MazeSearch:
     def __init__(self):
