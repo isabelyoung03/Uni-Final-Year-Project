@@ -49,7 +49,7 @@ class Minimax(SearchAlgorithm):
     """
     Evaluates a state and returns a score
     """
-    def evaluate(self, state, winning_score=1000, losing_score=-1000, oscillation_penalty=-500) -> int:
+    def evaluate(self, state: State, winning_score=1000, losing_score=-1000, oscillation_penalty=-500) -> int:
         player_location = state.get_player_location()
         ghost_locations = state.get_ghost_locations()
         cupcake_location = self.cupcake.get_location() 
