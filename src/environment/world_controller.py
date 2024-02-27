@@ -91,7 +91,7 @@ class WorldController:
         if self.search_algorithm_enum != search_algorithm_type.SearchAlgoType.UNIFORM:
             self.analysis_button.draw(self.screen)
             if self.analysed:
-                display_text('Results in Results folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
+                display_text('Results in /results folder', 14, config.WHITE, self.maze_width + 100, 350, self.screen)
         if self.goal.get_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 100, self.screen)
             display_text('In ' + str(self.cycle_count) + ' moves', 15, config.WHITE, self.maze_width + 95, 120, self.screen)
