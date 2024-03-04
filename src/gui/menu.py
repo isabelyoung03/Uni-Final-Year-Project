@@ -30,7 +30,7 @@ class Menu:
         minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 90, 475, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
         reflex = OptionButton('Reflex', 20, config.GREEN, config.BLACK, 435, 475, SearchAlgoType.REFLEX)
-        human = OptionButton('Human', 20, config.GREEN, config.BLACK, 430, 535, SearchAlgoType.HUMAN)
+        human = OptionButton('Human', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 35, 535, SearchAlgoType.HUMAN)
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex, human])
 
         one = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 570, 1)
@@ -38,7 +38,7 @@ class Menu:
         three = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 570, 3)
         self.opponent_button_group = ButtonGroup([one, two, three])
 
-        self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 540, 100, 50)
+        self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 590, 100, 50)
         self.menu_screen = pygame.display.set_mode((config.MENU_SCREEN_WIDTH, config.MENU_SCREEN_HEIGHT))
 
     """
