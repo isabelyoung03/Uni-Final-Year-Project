@@ -16,9 +16,9 @@ class Menu:
         large = OptionButton('Large', 20, config.GREEN, config.BLACK, 400, 240, MazeSize.LARGE)
         self.size_button_group = ButtonGroup([small, medium, large])
 
-        maze1 = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 570, 1)
-        maze2 = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 570, 2)
-        maze3 = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 570, 3)
+        maze1 = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 620, 1)
+        maze2 = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 620, 2)
+        maze3 = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 620, 3)
         self.maze_group = ButtonGroup([maze1, maze2, maze3])
 
         breadth = OptionButton('Breadth-first', 20, config.GREEN, config.BLACK, 85, 355, SearchAlgoType.BREADTH)
@@ -33,9 +33,9 @@ class Menu:
         human = OptionButton('Human', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 35, 535, SearchAlgoType.HUMAN)
         self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex, human])
 
-        one = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 570, 1)
-        two = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 570, 2)
-        three = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 570, 3)
+        one = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 620, 1)
+        two = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 620, 2)
+        three = OptionButton('3', 20, config.GREEN, config.BLACK, 155, 620, 3)
         self.opponent_button_group = ButtonGroup([one, two, three])
 
         self.start_button = Button('Start', 20, config.BLACK, config.WHITE, 250, 590, 100, 50)
@@ -96,11 +96,11 @@ class Menu:
 
         selected_algo = self.algo_button_group.get_result()
         if selected_algo in [SearchAlgoType.MINIMAX, SearchAlgoType.EXPECTIMAX]:
-            display_text('Opponents', 16, config.WHITE, 132, 550, self.menu_screen)
+            display_text('Opponents', 16, config.WHITE, 132, 600, self.menu_screen)
             self.opponent_button_group.draw(self.menu_screen)
 
         if selected_algo in [SearchAlgoType.GREEDY, SearchAlgoType.A_STAR_ALL_CELLS]:
-            display_text('Maze', 16, config.WHITE, 132, 550, self.menu_screen)
+            display_text('Maze', 16, config.WHITE, 132, 600, self.menu_screen)
             self.maze_group.draw(self.menu_screen)
 
 """
