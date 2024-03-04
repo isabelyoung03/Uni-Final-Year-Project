@@ -2,16 +2,10 @@ import sys
 import pygame
 from src.enums.action import Action
 from src.environment.WorldState import WorldState
-from src.enums.search_algorithm_type import SearchAlgoType
 from src.environment.world_controller import WorldController
-from src.gui.button_group import ButtonGroup
-from src.gui.button import Button
 import config
 from src.gui.icon_buttton import IconButton
 from src.gui.menu import display_text
-from src.gui.option_button import OptionButton
-from src.search_algorithms.euclidian_distance import EuclidianDistance
-from src.search_algorithms.manhattan_distance import ManhattanDistance
 
 """
 Special world controller for modelling the player as a reflex agent
@@ -27,8 +21,6 @@ class HumanWorldController(WorldController):
         self.movement_delay = 300
         self.maze_width = maze.get_maze_size().get_width() - 200 #200 is the space left over for buttons
         self.home_button = IconButton("Home.png", self.maze_width + 15, 15, 32, 32, True)
-        self.play_button = IconButton("Play.png", self.maze_width + 50, 18, 32, 32, True)
-        self.pause_button = IconButton("Pause.png", self.maze_width + 55, 15, 32, 34, False)
         self.cycle_count = 0
         self.game_lost = False
 
@@ -39,6 +31,9 @@ class HumanWorldController(WorldController):
         waiting_for_key = True
         while waiting_for_key:
             for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.home_button.handle_event(event):
+                        return Action.IDLE
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT and self.player.valid_move(Action.LEFT):
                         return Action.LEFT
@@ -100,8 +95,6 @@ class HumanWorldController(WorldController):
         if not self.game_lost:
             self.player.draw(self.screen)
         self.home_button.draw(self.screen)
-        self.play_button.draw(self.screen)
-        self.pause_button.draw(self.screen)
 
         if self.all_goals_achieved():
             display_text('Goal achieved!', 20, config.WHITE, self.maze_width + 95, 300, self.screen)
@@ -119,29 +112,23 @@ class HumanWorldController(WorldController):
         self.render()
         MOVE_AGENTS = pygame.USEREVENT + 1 #event for moving player when it is time
         pygame.time.set_timer(MOVE_AGENTS, self.movement_delay)
+        go_home = False
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+                elif go_home:
+                    return
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         sys.exit()
-                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.pause_button.get_toggled() and not self.game_lost:
-                    print("--- Cycle " + str(self.cycle_count) + " ---")
-                    self.cycle()
-                    self.cycle_count += 1
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_button.handle_event(event):
                         return #go back to menu page
-                    elif self.pause_button.handle_event(event) and not self.all_goals_achieved():
-                        self.pause_button.toggle(True)
-                        self.play_button.toggle(False)
-                    elif self.play_button.handle_event(event) and not self.all_goals_achieved():
-                        self.pause_button.toggle(False)
-                        self.play_button.toggle(True)
-                    elif self.play_button.handle_event(event):
-                        self.pause_button.toggle(False)
-                        self.play_button.toggle(True)
+                elif event.type == MOVE_AGENTS and not self.all_goals_achieved() and not self.game_lost:
+                    print("--- Cycle " + str(self.cycle_count) + " ---")
+                    go_home = self.cycle()
+                    self.cycle_count += 1
                 self.render()
 
     """
@@ -153,13 +140,13 @@ class HumanWorldController(WorldController):
         for ghost in self.ghosts:
             ghost.revise(world_state)
         player_action = self.player_decide() #decide players next move
+        if player_action == Action.IDLE:
+            return True #go back to menu page
         ghost_action = self.ghosts_decide()
         self.player.execute(player_action) 
         self.update_ghosts(ghost_action)
         self.update_goals()
         if self.all_goals_achieved():
-            self.play_button.toggle(True)
-            self.pause_button.toggle(True)
             print("Reached goal!")
         if super().player_caught():
             self.game_lost = True
