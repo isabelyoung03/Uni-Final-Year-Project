@@ -85,3 +85,6 @@ Week 5:
 
 Week 6: 21/02/2024: I have finished Expectimax, and with this all of the requirements for my project.
                     From now on, I will be focusing mostly on the report. 
+
+Week 7: 04/03/2024: I have added another additional feature where the user can choose to play the maze game themselves. I have also rearranged
+                    the menu screen to accomodate this new agent type.
