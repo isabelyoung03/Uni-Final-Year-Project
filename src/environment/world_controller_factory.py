@@ -1,11 +1,10 @@
+from src.environment.human_world_controller import HumanWorldController
 from src.environment.expectimax_world_controller import ExpectimaxWorldController
 from src.environment.minimax_world_controller import MinimaxWorldController
 from src.environment.reflex_agent_world_controller import ReflexAgentWorldController
-from src.agents.Player import Player
 from src.agents.ghost_list_factory import GhostListFactory
 from src.agents.player_factory import PlayerFactory
 from src.enums.search_algorithm_type import SearchAlgoType
-from src.environment.Goal import Goal
 from src.environment.Goal_factory import GoalFactory
 from src.environment.a_star_world_controller import AStarWorldController
 from src.environment.world_controller import WorldController
@@ -39,5 +38,9 @@ class WorldControllerFactory:
         if search_algorithm_enum == SearchAlgoType.EXPECTIMAX:
             player = PlayerFactory.get_player(maze, search_algorithm)
             return ExpectimaxWorldController(maze, player, ghosts[:no_of_opponents], goals)
+        
+        if search_algorithm_enum == SearchAlgoType.HUMAN:
+            player = PlayerFactory.get_player(maze, search_algorithm)
+            return HumanWorldController(maze, player, ghosts, goals)
         
         return WorldController(maze, player, ghosts, goals[0])

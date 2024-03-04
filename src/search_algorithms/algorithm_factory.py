@@ -1,3 +1,4 @@
+from src.search_algorithms.human import Human
 from src.search_algorithms.expectimax import Expectimax
 from src.search_algorithms.minimax import Minimax
 from src.search_algorithms.reflex import Reflex
@@ -33,3 +34,5 @@ class SearchAlgorithmFactory():
             return Expectimax(maze, goal)
         elif search_algo_type == SearchAlgoType.REFLEX:
             return Reflex(maze, goal)
+        elif search_algo_type == SearchAlgoType.HUMAN:
+            return Human(maze, goal)

@@ -2,9 +2,9 @@ from src.enums.search_algorithm_type import SearchAlgoType
 from src.search_algorithms.Search_algo import SearchAlgorithm
 
 """
-Search algorithm used for reflex agents
+Placeholder search algorithm for human vs machine
 """
-class Reflex(SearchAlgorithm):
+class Human(SearchAlgorithm):
     def __init__(self, maze, goals):
         self.previous_locations = []
         self.maze = maze
@@ -14,7 +14,7 @@ class Reflex(SearchAlgorithm):
     Get enum for this search algorithm
     """
     def get_enum(self) -> SearchAlgoType:
-        return SearchAlgoType.REFLEX
+        return SearchAlgoType.HUMAN
     
     def search():
         pass

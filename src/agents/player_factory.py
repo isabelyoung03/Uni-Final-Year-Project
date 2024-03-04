@@ -1,6 +1,7 @@
 """
 Factory class for creating player
 """
+from src.agents.HumanPlayer import HumanPlayer
 from src.agents.MinimaxPlayer import MinimaxPlayer
 from src.agents.ReflexPlayer import ReflexPlayer
 from src.agents.Player import Player
@@ -44,5 +45,8 @@ class PlayerFactory:
                 player_x = 12
                 player_y = 7
             return MinimaxPlayer(player_x, player_y)
+        
+        if search_algorithm.get_enum() == SearchAlgoType.HUMAN:
+            return HumanPlayer(player_x, player_y)
         
         return Player(player_x, player_y, search_algorithm)
