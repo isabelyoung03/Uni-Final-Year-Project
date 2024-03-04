@@ -18,7 +18,7 @@ class GhostListFactory:
     def get_ghost_list(maze, search_algorithm_enum) -> list:
         maze_size = maze.get_maze_size()
         behaviour = GhostBehaviour.RANDOM
-        if search_algorithm_enum == SearchAlgoType.UNIFORM or search_algorithm_enum == SearchAlgoType.REFLEX:
+        if search_algorithm_enum in [SearchAlgoType.UNIFORM, SearchAlgoType.REFLEX, SearchAlgoType.HUMAN]:
             if search_algorithm_enum == SearchAlgoType.UNIFORM:
                 behaviour = GhostBehaviour.RANDOM_CHASE
             if maze_size == MazeSize.SMALL:

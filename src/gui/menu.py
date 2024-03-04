@@ -30,7 +30,8 @@ class Menu:
         minimax = OptionButton('Minimax', 20, config.GREEN, config.BLACK, 90, 475, SearchAlgoType.MINIMAX)
         expectimax = OptionButton('Expectimax', 20, config.GREEN, config.BLACK, config.MENU_SCREEN_WIDTH // 2 - 60, 475, SearchAlgoType.EXPECTIMAX)
         reflex = OptionButton('Reflex', 20, config.GREEN, config.BLACK, 435, 475, SearchAlgoType.REFLEX)
-        self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex])
+        human = OptionButton('Human', 20, config.GREEN, config.BLACK, 430, 535, SearchAlgoType.HUMAN)
+        self.algo_button_group = ButtonGroup([breadth, depth, uniform, a_star, a_star_all_cells, greedy, minimax, expectimax, reflex, human])
 
         one = OptionButton('1', 20, config.GREEN, config.BLACK, 95, 570, 1)
         two = OptionButton('2', 20, config.GREEN, config.BLACK, 125, 570, 2)
