@@ -37,5 +37,5 @@ pip install -r requirements.txt
 ```
 
 ## Demo video
-https://youtu.be/oMTAwV9lH40
+https://youtu.be/wohps3uBbR4?si=-xxacss_Vlsyxicg
 
